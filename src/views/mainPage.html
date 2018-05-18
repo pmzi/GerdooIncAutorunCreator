@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Gerdoo Autorun Creator</title>
 
     <!-- CSS -->
 
@@ -19,7 +19,175 @@
 
     <link rel="stylesheet" href="../css/globals/fonts.css">
 
-    <link rel="stylesheet" href="../css/views/mainPage.css">
+    <link rel="stylesheet" href="../css/views/mainPage.sass">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <aside class="pmd-z-depth" id="mainMenu">
+            <img src="../images/logo.gif" />
+            <ul>
+                <li class="active">
+                    <a href="#">
+                        <i class="material-icons">dashboard</i>
+                        <span>پک‌ها</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">settings</i>
+                        <span>تنظیمات</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">exit_to_app</i>
+                        <span>خروج</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main id="mainWrapper">
+            <div class="tabWrapper pmd-z-depth showTab">
+
+                <header>
+                    <i class="material-icons">
+                        dashboard
+                    </i>
+                    <span>
+                        پک‌ها
+                    </span>
+                </header>
+
+                <div class="row">
+                    <button type="button" class="btn pmd-btn-raised pmd-ripple-effect btn-success">افزود پک</button>
+                </div>
+
+                <div class="row">
+                    <div class="pmd-card pmd-z-depth">
+                        <div class="table-responsive">
+                            <table class="table table-center pmd-table table-hover table-fix">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            عنوان
+                                        </th>
+                                        <th>
+                                            زمان ایجاد
+                                        </th>
+                                        <th>
+                                            آخرین ویرایش
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            1
+                                        </td>
+                                        <td>
+                                            Gerdoo Collection
+                                        </td>
+                                        <td>
+                                            1396/11/11 11:11
+                                        </td>
+                                        <td>
+                                            1396/33/33 33:33
+                                        </td>
+                                        <td>
+                                            <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="ویرایش" href="#" onclick="javascript:void(0)">
+                                                <i class="material-icons">
+                                                    edit
+                                                </i>
+                                            </a>
+                                            <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="حذف" href="#" onclick="javascript:void(0)">
+                                                <i class="material-icons">
+                                                    delete
+                                                </i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="tabWrapper pmd-z-depth">
+
+                <header>
+                    <i class="material-icons">
+                        dashboard
+                    </i>
+                    <span>
+                        تنظیمات
+                    </span>
+                </header>
+
+                <div class="row">
+                        <button type="button" class="btn pmd-btn-raised pmd-ripple-effect btn-success">افزودن سیستم‌عامل</button>
+                    </div>
+    
+                    <div class="row">
+                        <div class="pmd-card pmd-z-depth">
+                            <div class="table-responsive">
+                                <table class="table table-center pmd-table table-hover table-fix">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                عنوان
+                                            </th>
+                                            <th>
+    
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                1
+                                            </td>
+                                            <td>
+                                                Windows XP 32bit
+                                            </td>
+                                            <td>
+                                                <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="ویرایش" href="#" onclick="javascript:void(0)">
+                                                    <i class="material-icons">
+                                                        edit
+                                                    </i>
+                                                </a>
+                                                <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="حذف" href="#" onclick="javascript:void(0)">
+                                                    <i class="material-icons">
+                                                        delete
+                                                    </i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+    
+                    </div>
+
+
+            </div>
+        </main>
+    </div>
 
     <!-- JS -->
 
@@ -36,20 +204,10 @@
 
     <script src="../js/plugins/propeller.min.js"></script>
 
-</head>
+    <script src="../js/globals/global.js"></script>
 
-<body>
-    <div id="wrapper">
-        <aside id="mainMenu">
-            <img />
-            <ul>
-                <li>
-                    <i class="material-icons">event</i>
-                    <span></span>
-                </li>
-            </ul>
-        </aside>
-    </div>
+    <script src="../js/views/MainPage.js"></script>
+
 </body>
 
 </html>

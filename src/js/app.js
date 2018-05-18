@@ -1,8 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import {enableLiveReload} from 'electron-compile';
 
-enableLiveReload();
-
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
@@ -15,8 +13,8 @@ let mainWindow;
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 940,
+    height: 500,
   });
 
   // and load the index.html of the app.
@@ -58,3 +56,5 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+enableLiveReload();
