@@ -1,0 +1,11 @@
+body{
+    direction: rtl;
+}
+#wrapper{
+    width: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: red;
+}
