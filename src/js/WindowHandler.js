@@ -19,7 +19,8 @@ class WindowHandler {
         this._mainWindow = new BrowserWindow({
             width: 940,
             height: 500,
-            show: false
+            show: false,
+            icon: `${__dirname}/../images/logo.gif.ico`
         });
 
         // and load the index.html of the app.
@@ -67,7 +68,8 @@ class WindowHandler {
             height,
             parent,
             modal,
-            show: false
+            show: false,
+            icon: `${__dirname}/../images/logo.gif.ico`
         }))
 
         let currWindow = this._windows[this._windows.length - 1];
