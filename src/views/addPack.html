@@ -21,6 +21,8 @@
 
     <link rel="stylesheet" href="../css/views/pack.sass">
 
+    <link rel="stylesheet" href="../js/plugins/quill/quill.snow.css">
+
 </head>
 
 <body>
@@ -40,7 +42,7 @@
 
             </div>
 
-            <div class="stepPipe active">
+            <div class="stepPipe">
                 <span class="pmd-z-depth">
 
                 </span>
@@ -91,17 +93,101 @@
 
         </header>
 
-        <main>
+        <main id="stepWrapper">
 
             <div id="stepManagerWrapper">
 
-                <div class="stepWrapper">
+                <div class="stepWrapper pmd-z-depth">
 
-                    step1
+                    <h2>
+                        تنظیمات عمومی
+                    </h2>
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                <label for="regular1" class="control-label">
+                                    عنوان مجموعه
+                                </label>
+                                <input type="text" id="regular1" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <div class="col-lg-11 col-sm-10 col-xs-10 col-md-11">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                    <label for="regular1" class="control-label">
+                                        آدرس ذخیره‌ی اتوران
+                                    </label>
+                                    <input type="text" id="regular1" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-sm-2 col-xs-2 col-md-1 buttonWrapper">
+                                <button type="button" class="btn pmd-btn-outline pmd-ripple-effect btn-primary">...</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <h2>
+                        درباره ما
+                    </h2>
+
+                    <div class="row">
+
+                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                            <div class="quillEditor">
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h2>
+                        نکات ضروری قبل از نصب نرم افزار
+                    </h2>
+
+                    <div class="row">
+
+                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                            <div class="quillEditor">
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h2>
+                        تب دلخواه(مطالب)
+                    </h2>
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                <label for="regular1" class="control-label">
+                                    عنوان تب
+                                </label>
+                                <input type="text" id="regular1" class="form-control">
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                            <div class="quillEditor">
+
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 
-                <div class="stepWrapper">
+                <div class="stepWrapper pmd-z-depth withoutBack forActive">
 
                     <aside id="softwareMenu">
 
@@ -117,8 +203,38 @@
 
                     </aside>
 
-                    <div>
-                        step2
+                    <div class="tabWrapper forSoftware">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#generalTab" aria-controls="generalTab" role="tab" data-toggle="tab">عمومی</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#descTab" aria-controls="descTab" role="tab" data-toggle="tab">توضیحات</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#installGuideTab" aria-controls="installGuideTab" role="tab" data-toggle="tab">راهنمای نصب</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#crackTab" aria-controls="crackTab" role="tab" data-toggle="tab">کرک</a>
+                            </li>
+                        </ul>
+                        <div class="pmd-card">
+                            <div class="pmd-card-body">
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="generalTab">A tab provides the affordance for displaying grouped content. A tab label succinctly
+                                        describes the tab’s associated grouping of content.</div>
+                                    <div role="tabpanel" class="tab-pane" id="descTab">Fixed tabs have equal width, calculated either as the view width divided by the number
+                                        of tabs, or based on the widest tab label. To navigate between fixed tabs, touch
+                                        the tab or swipe the content area left or right.</div>
+                                    <div role="tabpanel" class="tab-pane" id="installGuideTab">To navigate between scrollable tabs, touch the tab or swipe the content area left or
+                                        right. To scroll the tabs without navigating, swipe the tabs left or right.</div>
+                                    <div role="tabpanel" class="tab-pane" id="crackTab">To navigate between scrollable tabs, touch the tab or swipe the content area left or
+                                        right. To scroll the tabs sadasdsadasdswithout navigating, swipe the tabs left or right.</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -145,6 +261,8 @@
     <script src="../js/plugins/propeller.min.js"></script>
 
     <script src="../js/globals/global.js"></script>
+
+    <script src="../js/plugins/quill/quill.js"></script>
 
     <script src="../js/views/pack/Step.js"></script>
 
