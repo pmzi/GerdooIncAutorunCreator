@@ -25,9 +25,6 @@ class WindowHandler {
         // and load the index.html of the app.
         this._mainWindow.loadURL(`file://${__dirname}/../views/mainPage.html`);
 
-        // Open the DevTools.
-        this._mainWindow.webContents.openDevTools();
-
         // Emitted when the window is closed.
         this._mainWindow.on('closed', () => {
             // Dereference the window object, usually you would store windows
@@ -51,22 +48,26 @@ class WindowHandler {
 
             // new window
 
-            this.newWindow(arg.width, arg.height, arg.view, arg.parent, arg.modal, arg.arg);
+            if (arg.parent == 'main') {
+                arg.parent = this._mainWindow;
+            }
+
+            this.newWindow(arg.width, arg.height, arg.fullscreen, arg.view, arg.parent, arg.modal, arg.arg);
 
         });
     }
 
-    newWindow(width, height, view, parent = null, modal = false, arg = {
+    newWindow(width, height, fullscreen, view, parent = null, modal = false, arg = {
         name: "test",
         value: null
     }) {
 
         this._windows.push(new BrowserWindow({
-            width: width,
-            height: height,
-            show: false,
+            width,
+            height,
             parent,
-            modal
+            modal,
+            show: false
         }))
 
         let currWindow = this._windows[this._windows.length - 1];
@@ -85,7 +86,12 @@ class WindowHandler {
             currWindow = null;
         });
 
-        currWindow.once('ready-to-show', () => {
+        // make it fullscreen
+
+        currWindow.on('ready-to-show', () => {
+            if (fullscreen) {
+                currWindow.maximize();
+            }
             currWindow.show();
         })
 
