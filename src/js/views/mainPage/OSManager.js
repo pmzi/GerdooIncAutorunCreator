@@ -1,0 +1,5 @@
+class OSManager{
+
+}
+
+new OSManager();
