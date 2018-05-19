@@ -5,12 +5,7 @@ const {remote, ipcRenderer} = require('electron');
 class MainMenu{
     constructor(){
 
-        $(()=>{
-            setTimeout(()=>{
-                ipcRenderer.send('newWindow','');
-            },2000)
-            
-
+        $(()=>{          
             this.initMainMenuEvents();
         })
 

@@ -36,7 +36,7 @@ class WindowHandler {
             this._mainWindow = null;
         });
 
-        this._mainWindow.once('ready-to-show',()=>{
+        this._mainWindow.once('ready-to-show', () => {
             this._mainWindow.show();
         })
 
@@ -47,15 +47,20 @@ class WindowHandler {
     }
 
     initWindowListeners() {
-        ipcMain.once('newWindow', (event, args) => {
-           
+        ipcMain.on('newWindow', (event, arg) => {
+
             // new window
+
+            this.newWindow(arg.width, arg.height, arg.view, arg.parent, arg.modal, arg.arg);
 
         });
     }
 
-    newWindow(width, height, view, parent=null, modal=false, arg = {name:"test",value:null}) {
-        
+    newWindow(width, height, view, parent = null, modal = false, arg = {
+        name: "test",
+        value: null
+    }) {
+
         this._windows.push(new BrowserWindow({
             width: width,
             height: height,
@@ -64,7 +69,7 @@ class WindowHandler {
             modal
         }))
 
-        let currWindow = this._windows[this._windows.length-1];
+        let currWindow = this._windows[this._windows.length - 1];
 
         // and load the index.html of the app.
         currWindow.loadURL(`file://${__dirname}/../views/${view}?${arg.name}=${arg.value}`);
@@ -80,7 +85,7 @@ class WindowHandler {
             currWindow = null;
         });
 
-        currWindow.once('ready-to-show',()=>{
+        currWindow.once('ready-to-show', () => {
             currWindow.show();
         })
 
