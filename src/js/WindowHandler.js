@@ -54,7 +54,7 @@ class WindowHandler {
         });
     }
 
-    newWindow(width, height, view, parent=null, modal=false, arg = {name="test",value=null}) {
+    newWindow(width, height, view, parent=null, modal=false, arg = {name:"test",value:null}) {
         
         this._windows.push(new BrowserWindow({
             width: width,
