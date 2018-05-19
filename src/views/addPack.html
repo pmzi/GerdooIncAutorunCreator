@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +19,117 @@
 
     <link rel="stylesheet" href="../css/globals/fonts.css">
 
-    <link rel="stylesheet" href="../css/views/mainPage.sass">
+    <link rel="stylesheet" href="../css/views/pack.sass">
 
 </head>
-<body>
-    Hey
 
+<body>
+    <div id="wrapper">
+
+        <header id="steps">
+
+            <div class="stepCont pmd-z-depth active">
+
+                <span>
+                    1
+                </span>
+
+                <span>
+                    عمومی
+                </span>
+
+            </div>
+
+            <div class="stepPipe active">
+                <span class="pmd-z-depth">
+
+                </span>
+            </div>
+
+            <div class="stepCont pmd-z-depth">
+                <span>
+                    2
+                </span>
+
+                <span>
+                    نرم‌افزارها
+                </span>
+            </div>
+
+            <div class="stepPipe">
+                <span class="pmd-z-depth">
+
+                </span>
+            </div>
+
+            <div class="stepCont pmd-z-depth">
+                <span>
+                    3
+                </span>
+
+                <span>
+                    موزیک
+                </span>
+            </div>
+
+            <div class="stepPipe">
+                <span class="pmd-z-depth">
+
+                </span>
+            </div>
+
+            <div class="stepCont pmd-z-depth">
+                <span>
+                    4
+                </span>
+
+                <span>
+                    اتمام
+                </span>
+            </div>
+
+
+        </header>
+
+        <main>
+
+            <div id="stepManagerWrapper">
+
+                <div class="stepWrapper">
+
+                    step1
+
+                </div>
+
+                <div class="stepWrapper">
+
+                    <aside id="softwareMenu">
+
+                        <header>
+
+
+
+                        </header>
+
+                        <div id="softwares">
+
+                        </div>
+
+                    </aside>
+
+                    <div>
+                        step2
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- scripts -->
 
     <script>
         if (typeof module === 'object') {
@@ -40,7 +146,8 @@
 
     <script src="../js/globals/global.js"></script>
 
-    <script src="../js/views/mainPage/MainMenu.js"></script>
+    <script src="../js/views/pack/Step.js"></script>
 
 </body>
+
 </html>
