@@ -576,17 +576,17 @@
 
                         <footer>
                             <ul>
-                                <li class="pmd-ripple-effect">
+                                <li data-toggle="modal" data-target="#add-modal" class="pmd-ripple-effect">
                                     <i class="material-icons">
                                         add
                                     </i>
                                 </li>
-                                <li class="pmd-ripple-effect">
+                                <li data-target="#delete-alert-modal" data-toggle="modal" class="pmd-ripple-effect">
                                     <i class="material-icons">
                                         remove
                                     </i>
                                 </li>
-                                <li class="pmd-ripple-effect disabled">
+                                <li data-target="#edit-cat-modal" data-toggle="modal" class="pmd-ripple-effect disabled">
                                     <i class="material-icons">
                                         edit
                                     </i>
@@ -643,6 +643,21 @@
                                                         <option>4</option>
                                                         <option>5</option>
                                                     </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <hr />
+
+                                        <div class="row">
+
+                                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="regular1" class="control-label">
+                                                        نام
+                                                    </label>
+                                                    <input type="text" id="regular1" class="form-control">
                                                 </div>
                                             </div>
 
@@ -746,7 +761,7 @@
                                                     <a class="list-group-item" href="javascript:void(0);">تگ1</a>
                                                 </div>
                                                 <div>
-                                                    <button type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-primary">افزودن</button>
+                                                    <button data-toggle="modal" data-target="#add-tag-modal" type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-primary">افزودن</button>
                                                 </div>
                                             </div>
 
@@ -843,7 +858,8 @@
                                                     <label for="regular1" class="control-label">
                                                         آدرس پتچ
                                                     </label>
-                                                    <input type="text" id="regular1" class="form-control">
+                                                    <input type="text" class="form-control">
+                                                    <p class="help-block"> مثال: setup.exe یا folder/setup.exe </p>
                                                 </div>
                                             </div>
 
@@ -864,6 +880,20 @@
                                 </div>
                             </div>
                         </div>
+                        <footer>
+                            <ul>
+                                <li data-positionX="right" data-positionY="bottom"  data-duration="4000" data-effect="fadeInUp" data-message="تغییرات نرم‌افزار با موفقیت ذخیره شد." data-type="success" class="pmd-alert-toggle pmd-ripple-effect">
+                                    <i class="material-icons">
+                                        done
+                                    </i>
+                                </li>
+                                <li data-toggle="modal" data-target="#search-packs-modal" class="pmd-ripple-effect">
+                                    <i class="material-icons">
+                                        search
+                                    </i>
+                                </li>
+                            </ul>
+                        </footer>
                     </div>
 
                 </div>
@@ -921,10 +951,366 @@
 
                 </div>
 
+                <div class="stepWrapper pmd-z-depth forActive">
+
+                    <h2>
+                        نکات
+                    </h2>
+
+                    <div class="row">
+                        <ul>
+                            <li>
+                                موزیک: موزیک‌های مد نظر خود را در پوشه‌ی muiscs قرار دهید.
+                            </li>
+                            <li>
+                                موزیک: موزیک‌های مد نظر خود را در پوشه‌ی muiscs قرار دهید.
+                            </li>
+                            <li>
+                                موزیک: موزیک‌های مد نظر خود را در پوشه‌ی muiscs قرار دهید.
+                            </li>
+                            <li>
+                                موزیک: موزیک‌های مد نظر خود را در پوشه‌ی muiscs قرار دهید.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <hr>
+
+                    <h2>
+                        خروجی گرفتن
+                    </h2>
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4 output">
+
+                            <span>
+                                خروجی ویندوز
+                            </span>
+
+                            <button type="button" class="btn pmd-btn-outline pmd-ripple-effect btn-success">خروجی بگیر</button>
+
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4 output">
+
+                            <span>
+                                خروجی مک
+                            </span>
+
+                            <button type="button" class="btn pmd-btn-outline pmd-ripple-effect btn-success">خروجی بگیر</button>
+
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4 output">
+
+                            <span>
+                                خروجی لینوکس
+                            </span>
+
+                            <button type="button" class="btn pmd-btn-outline pmd-ripple-effect btn-success">خروجی بگیر</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
         </main>
 
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Delete Modal -->
+
+    <div tabindex="-1" class="modal fade" id="delete-alert-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="pmd-card-title-text">آیا مطمین به حذف این آیتم هستید؟</h2>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        اگر این آیتم را حذف کید تمامی موارد مرتبط به آن نیز حذف می‌شود؛ بطور مثال اگر دی‌وی‌دی را حذف کنید تمامی محتویات درون آن
+                        نیز حذف خواهد شد و قابل بازیابی نخواهد بود.
+                    </p>
+                </div>
+                <div class="pmd-modal-action pmd-modal-bordered text-right">
+                    <button data-dismiss="modal" class="btn pmd-btn-flat pmd-ripple-effect btn-primary" type="button">خیر</button>
+                    <button data-dismiss="modal" type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-danger">موافقم</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Cat modal -->
+
+    <div tabindex="-1" class="modal fade" id="edit-cat-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header pmd-modal-bordered">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h2 class="pmd-card-title-text">ویرایش کتگوری</h2>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-md-6 col-sm-6">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                    <label for="first-name">عنوان</label>
+                                    <input type="text" class="mat-input form-control" value="">
+                                </div>
+                            </div>
+                            <div class="col-lg- col-md-6 col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="regular1" class="control-label">دیسک</label>
+                                    <select class="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <span>
+                                    تگ‌ها
+                                </span>
+                                <div class="list-group pmd-z-depth pmd-list pmd-card-list">
+                                    <a class="list-group-item" href="javascript:void(0);">تگ1</a>
+                                </div>
+                                <div>
+                                    <button data-toggle="modal" data-target="#add-tag-modal" type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-primary">افزودن</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="pmd-modal-action">
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-primary" type="button">ذخیره‌ی تغییرات</button>
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-default" type="button">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add tag modal -->
+
+    <div tabindex="-1" class="modal fade" id="add-tag-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header pmd-modal-bordered">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h2 class="pmd-card-title-text">افزودن تگ</h2>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-md-6 col-sm-6">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                    <label for="first-name">عنوان تگ</label>
+                                    <input type="text" class="mat-input form-control" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="pmd-modal-action">
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-primary" type="button">افزودن</button>
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-default" type="button">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pre add modal -->
+
+    <div tabindex="-1" class="modal fade" id="add-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header pmd-modal-bordered">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h2 class="pmd-card-title-text">افزودن</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="text-align: center">
+                        <button data-toggle="modal" data-target="#add-disk-modal" type="button" class="btn pmd-btn-outline pmd-ripple-effect btn-primary">افزودن دیسک</button>
+                        <button data-toggle="modal" data-target="#add-cat-modal" type="button" class="btn pmd-btn-outline pmd-ripple-effect btn-primary">افزودن کتگوری</button>
+                        <button data-toggle="modal" data-target="#add-soft-modal" type="button" class="btn pmd-btn-outline pmd-ripple-effect btn-primary">افزودن نرم‌افزار</button>
+                    </div>
+                </div>
+                <div class="pmd-modal-action">
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-default" type="button">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add disk modal -->
+
+    <div tabindex="-1" class="modal fade" id="add-disk-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header pmd-modal-bordered">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h2 class="pmd-card-title-text">افزودن دیسک</h2>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-md-6 col-sm-6">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                    <label>شماره دیسک</label>
+                                    <input type="number" min="1" class="mat-input form-control" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-11 col-sm-10 col-xs-10 col-md-11">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                    <label for="regular1" class="control-label">
+                                        پر کردن از روی هارد
+                                    </label>
+                                    <input type="text" id="regular1" class="form-control">
+                                </div>
+                            </div>
+                            <div style="padding: 20px 0px" class="col-lg-1 col-sm-2 col-xs-2 col-md-1 buttonWrapper">
+                                <button type="button" class="btn pmd-btn-outline pmd-ripple-effect btn-primary">...</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="pmd-modal-action">
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-primary" type="button">افزودن</button>
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-default" type="button">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add cat modal -->
+
+    <div tabindex="-1" class="modal fade" id="add-cat-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header pmd-modal-bordered">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h2 class="pmd-card-title-text">افزودن کتگوری</h2>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-md-6 col-sm-6">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                    <label>عنوان کتگوری</label>
+                                    <input type="text" class="mat-input form-control" value="">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xs-12 col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label for="regular1" class="control-label">شماره دیسک</label>
+                                    <select class="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="pmd-modal-action">
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-primary" type="button">افزودن</button>
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-default" type="button">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add software modal -->
+
+    <div tabindex="-1" class="modal fade" id="add-soft-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header pmd-modal-bordered">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h2 class="pmd-card-title-text">افزودن نرم‌افزار</h2>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-md-6 col-sm-6">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                    <label>عنوان کتگوری</label>
+                                    <input type="text" class="mat-input form-control" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label for="regular1" class="control-label">شماره دیسک</label>
+                                    <select class="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xs-12 col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label for="regular1" class="control-label">کتگوری</label>
+                                    <select class="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="pmd-modal-action">
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-primary" type="button">افزودن</button>
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-default" type="button">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search packs modal -->
+
+    <div tabindex="-1" class="modal fade" id="search-packs-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header pmd-modal-bordered">
+                    <h3 class="pmd-card-title-text">جستجو در میان پک‌ها</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="checkbox">
+                        <label class="pmd-checkbox">
+                            <input type="checkbox">
+                            <span for="Ahmedabad">Gerdoo collection</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="pmd-modal-action pmd-modal-bordered text-right">
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-primary pmd-btn-flat" type="button">جستجو</button>
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-default pmd-btn-flat" type="button">بستن</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- scripts -->
