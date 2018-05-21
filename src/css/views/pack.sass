@@ -156,12 +156,130 @@ main#stepWrapper
                                     justify-content: center
                                     align-items: center
                                     height: 100%
+                    #softwares
+                        width: 100%
+                        height: calc(100% - 160px)
+                        overflow: scroll
+                        overflow-x: hidden
+                        direction: ltr
+                        text-align: left
+                        padding: 5px
+                        &>ul
+                            min-height: 30px
+                            display: block!important
+                        & ul
+                            width: 100%
+                            display: none
+                            padding: 0px
+                            margin: 0px
+                            &.catWrapper
+                                padding-left: 20px
+                            &.softWrapper
+                                padding-left: 20px
+                            & li
+                                width: 100%
+                                list-style-type: none
+                                overflow-y: hidden
+                                min-height: 30px
+                                & div
+                                    width: 100%
+                                    height: 30px
+                                    font-size: 12px
+                                    cursor: pointer
+                                    transition-duration: 0.3s
+                                    &:hover
+                                        background-color: #eee
+                                        transition-duration: 0.3s
+                                    &.active
+                                        background-color: #eee
+                                    & i
+                                        float: left
+                                        width: 30px
+                                        height: 30px
+                                        line-height: 30px
+                                        text-align: center
+                                        font-size: 20px
+                                    & span
+                                        width: calc(100% - 30px)
+                                        float: right
+                                        height: 30px
+                                        line-height: 30px
+                                        overflow: hidden
+                                        white-space: nowrap
+                                        text-overflow: ellipsis
+                    &>footer
+                        width: 100%
+                        height: 30px
+                        border-top: 1px solid #eee
+                        ul
+                            padding: 0px
+                            height: 100%
+                            margin: auto
+                            text-align: center
+                            width: 90px
+                            li
+                                float: right
+                                width: 30px
+                                height: 100%
+                                list-style-type: none
+                                cursor: pointer
+                                transition-duration: 0.3s
+                                &:hover
+                                    background-color: #eee
+                                    transition-duration: 0.3s
+                                &.disabled
+                                    opacity: 0.5
+                                    pointer-events: none
+                                i
+                                    width: 100%
+                                    height: 100%
+                                    line-height: 30px
+                                    text-align: center
                 &>.tabWrapper
                     width: calc(100% - 350px)
                     height: 100%
                     position: absolute
                     left: 20px
                     .pmd-card
-                        height: 100%
+                        height: calc(100% - 60px)
                         overflow-y: scroll
+                    #osList
+                        background-color: #eee
+                        padding: 10px 10px
+                        margin-top: 5px
+                        direction: ltr
+                    #softwareImageWrapper
+                        width: 100%
+                        margin-top: 5px
+                        img
+                            width: 100%
+                            height: 150px
+                            border: 1px solid #eee
+                            display: block
+                            margin-bottom: 5px
+                    #tagList
+                        width: 100%
+                        background-color: #eee
+                        padding: 10px
+                        &>ul
+                            li
+                                list-style-type: disc
+                                height: 30px
+                                line-height: 30px
+                                width: 100%
+            &:nth-of-type(3)
+                #themeBgImage
+                    width: 100%
+                    height: 200px
+                    img
+                        width: 100%
+                        height: 100%
+                        max-height: 150px
+                        border: 1px solid #eee
+                        display: block
+                    div
+                        padding: 10px
+
+
+
 
