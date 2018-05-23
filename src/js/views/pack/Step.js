@@ -48,8 +48,7 @@ class Step {
             modules: {
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-                    ['blockquote', 'code-block', 'image'],
-
+                    ['blockquote', 'code-block', 'image','video'],
                     [{
                         'header': 1
                     }, {
@@ -102,7 +101,9 @@ class Step {
 
         $('.quillEditor').each(() => {
             let editor = new Quill('.quillEditor:not(.ql-container)', configs);
-
+            editor.getModule('toolbar').addHandler('video', () => {
+                adddd();
+              });
             editor.format('direction', 'rtl');
             editor.format('align', 'right');
         });
@@ -112,3 +113,6 @@ class Step {
 }
 
 new Step();
+function adddd(){
+    console.log("HERE")
+}
