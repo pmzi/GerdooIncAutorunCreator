@@ -1,0 +1,7 @@
+class Loading{
+
+    
+
+}
+
+new Loading();
