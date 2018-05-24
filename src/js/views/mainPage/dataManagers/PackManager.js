@@ -1,7 +1,7 @@
 const {
     ipcRenderer
 } = require('electron');
-const pack = require('../../models/Pack');
+const pack = require('../../../models/Pack');
 
 class PackManager {
 
@@ -80,6 +80,10 @@ class PackManager {
             pack.add($("#add-pack-modal input[type=text]").val(), (err, newPack) => {
 
                 $("#add-pack-modal").modal('hide');
+
+                this.loadPacks().then(()=>{
+                    this.initEvents();
+                })
 
                 this.addPack(newPack._id, newPack.name);
 

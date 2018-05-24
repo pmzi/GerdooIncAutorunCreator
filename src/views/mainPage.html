@@ -147,7 +147,7 @@
                 <div class="row">
                     <div class="pmd-card pmd-z-depth">
                         <div class="table-responsive">
-                            <table class="table table-center pmd-table table-hover table-fix">
+                            <table id="OSesTable" class="table table-center pmd-table table-hover table-fix">
                                 <thead>
                                     <tr>
                                         <th>
@@ -245,7 +245,7 @@
                     </form>
                 </div>
                 <div class="pmd-modal-action">
-                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-primary" type="button">افزودن</button>
+                    <button class="modalActionButton btn pmd-ripple-effect btn-primary" type="button">افزودن</button>
                     <button data-dismiss="modal" class="btn pmd-ripple-effect btn-default" type="button">بستن</button>
                 </div>
             </div>
@@ -262,7 +262,9 @@
     </script>
 
     <script>
-        require('../js/views/mainPage/PackManager.js');
+        require('../js/views/mainPage/dataManagers/PackManager.js');
+
+        require('../js/views/mainPage/dataManagers/OSManager.js');
     </script>
 
     <script src="../js/plugins/jquery-1.12.1.js"></script>
@@ -272,8 +274,6 @@
     <script src="../js/plugins/propeller.min.js"></script>
 
     <script src="../js/views/mainPage/MainMenu.js"></script>
-
-    <script src="../js/views/mainPage/OSManager.js"></script>
 
 </body>
 
