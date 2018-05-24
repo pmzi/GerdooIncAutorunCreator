@@ -115,16 +115,6 @@
                     </h2>
 
                     <div class="row">
-
-                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                            <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                                <label for="regular1" class="control-label">
-                                    عنوان مجموعه
-                                </label>
-                                <input type="text" id="regular1" class="form-control">
-                            </div>
-                        </div>
-
                         <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                             <div class="col-lg-11 col-sm-10 col-xs-10 col-md-11">
                                 <div class="form-group pmd-textfield pmd-textfield-floating-label">
@@ -1332,10 +1322,26 @@
     <!-- scripts -->
 
     <script>
+        
         if (typeof module === 'object') {
             window.module = module;
             module = undefined;
         }
+
+        // Getting pack id from query selector
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        
+        window._id = getParameterByName('id');
+
     </script>
 
     <script src="../js/plugins/jquery-1.12.1.js"></script>
