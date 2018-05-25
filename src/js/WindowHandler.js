@@ -58,10 +58,7 @@ class WindowHandler {
         });
     }
 
-    newWindow(width, height, fullscreen, view, parent = null, modal = false, arg = {
-        name: "test",
-        value: null
-    }) {
+    newWindow(width, height, fullscreen, view, parent = null, modal = false) {
 
         this._windows.push(new BrowserWindow({
             width,
@@ -75,7 +72,7 @@ class WindowHandler {
         let currWindow = this._windows[this._windows.length - 1];
 
         // and load the index.html of the app.
-        currWindow.loadURL(`file://${__dirname}/../views/${view}?${arg.name}=${arg.value}`);
+        currWindow.loadURL(`file://${__dirname}/../views/${view}`);
 
         // Open the DevTools.
         currWindow.webContents.openDevTools();
