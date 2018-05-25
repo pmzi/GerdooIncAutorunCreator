@@ -103,17 +103,17 @@
                                             1396/33/33 33:33
                                         </td>
                                         <td>
-                                            <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="خروجی اکسل" href="#" onclick="javascript:void(0)">
+                                            <a class="pmd-tooltip excel" data-toggle="tooltip" data-placement="top" title="خروجی اکسل" href="#" onclick="javascript:void(0)">
                                                 <i class="material-icons">
                                                     cloud_download
                                                 </i>
                                             </a>
-                                            <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="ویرایش" href="#" onclick="javascript:void(0)">
+                                            <a class="pmd-tooltip edit" data-toggle="tooltip" data-placement="top" title="ویرایش" href="#" onclick="javascript:void(0)">
                                                 <i class="material-icons">
                                                     edit
                                                 </i>
                                             </a>
-                                            <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="حذف" href="#" onclick="javascript:void(0)">
+                                            <a class="pmd-tooltip delete" data-toggle="tooltip" data-placement="top" title="حذف" href="#" onclick="javascript:void(0)">
                                                 <i class="material-icons">
                                                     delete
                                                 </i>
@@ -195,6 +195,51 @@
     </div>
 
     <!-- Modals -->
+
+    <!-- Delete Modal for pack -->
+
+    <div tabindex="-1" class="modal fade" id="delete-pack-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="pmd-card-title-text">آیا مطمین به حذف این آیتم هستید؟</h2>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        آیا مطمین به حذف این آیتم هستید؟ این عمل غیرقابل بازگشت می باشد.
+                    </p>
+                </div>
+                <div class="pmd-modal-action pmd-modal-bordered text-right">
+                        <button data-dismiss="modal" type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-danger modalActionButton">موافقم</button>
+                    <button data-dismiss="modal" class="btn pmd-btn-flat pmd-ripple-effect btn-primary" type="button">خیر</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete modal for os -->
+
+    <div tabindex="-1" class="modal fade" id="delete-os-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="pmd-card-title-text">آیا مطمین به حذف این آیتم هستید؟</h2>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        آیا مطمین به حذف این آیتم هستید؟ این عمل غیرقابل بازگشت می باشد.
+                    </p>
+                </div>
+                <div class="pmd-modal-action pmd-modal-bordered text-right">
+                        <button data-dismiss="modal" type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-danger modalActionButton">موافقم</button>
+                    <button data-dismiss="modal" class="btn pmd-btn-flat pmd-ripple-effect btn-primary" type="button">خیر</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add pack -->
 
     <div tabindex="-1" class="modal fade" id="add-pack-modal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
