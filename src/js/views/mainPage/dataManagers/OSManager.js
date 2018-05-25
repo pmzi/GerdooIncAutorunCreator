@@ -75,8 +75,6 @@ class OSManager{
 
         });
 
-        // edit events
-
         // delete events
 
 
