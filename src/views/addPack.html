@@ -121,7 +121,7 @@
                                     <label for="regular1" class="control-label">
                                         آدرس ذخیره‌ی اتوران
                                     </label>
-                                    <input type="text" id="regular1" class="form-control">
+                                    <input type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-1 col-sm-2 col-xs-2 col-md-1 buttonWrapper">
@@ -171,7 +171,7 @@
                                 <label for="regular1" class="control-label">
                                     عنوان تب
                                 </label>
-                                <input type="text" id="regular1" class="form-control">
+                                <input type="text" class="form-control">
                             </div>
                         </div>
 
@@ -184,6 +184,12 @@
 
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
+
+                        <button type="button" class="saveBtn btn pmd-btn-raised pmd-ripple-effect btn-primary">ذخیره تغییرات</button>
+
                     </div>
 
                 </div>
@@ -1342,6 +1348,8 @@
         
         window._id = getParameterByName('id');
 
+        window._name = getParameterByName('name');
+
     </script>
 
     <script src="../js/plugins/jquery-1.12.1.js"></script>
@@ -1349,8 +1357,6 @@
     <script src="../js/plugins/bootstrap.min.js"></script>
 
     <script src="../js/plugins/propeller.min.js"></script>
-
-    <script src="../js/globals/global.js"></script>
 
     <script src="../js/plugins/quill/quill.js"></script>
 
@@ -1362,6 +1368,11 @@
 
     <script>
         require('../js/views/pack/Loading.js');
+
+        // Data managers
+
+        require('../js/views/pack/dataManagers/GeneralInfoManager.js');
+
     </script>
 
 </body>
