@@ -1,4 +1,5 @@
-const 
+const {dialog} = require('electron').remote;
+const fs = require('fs');
 
 class QuillHandler {
 
@@ -85,10 +86,15 @@ class QuillHandler {
                 name: 'video',
                 extensions: ['mkv', 'avi', 'mp4']
             }]
-        });
+        })[0];
 
-        this.insertVideoToEditor(editor, url)(editor, videoAddress)
+        this.insertVideoToEditor(editor, videoAddress)
 
+    }
+
+    copyToLocale(address){
+        
+        fs.copyFileSync(address,`${__dirname}/a.ico`);
     }
 
     addQuillImage(editor) {
@@ -98,8 +104,8 @@ class QuillHandler {
                 name: 'image',
                 extensions: ['png', 'ico', 'jpg', 'jpeg']
             }]
-        });
-
+        })[0];
+        this.copyToLocale(imageAddress)
         this.insertImageToEditor(editor, imageAddress)
     }
 
@@ -114,7 +120,7 @@ class QuillHandler {
         // push image url to rich editor.
         const range = editor.getSelection();
 
-        editor.insertEmbed(range.index, 'image', 'file:///' + url);
+        editor.insertEmbed(range.index, 'image', 'file://' + url);
     }
 
 }
