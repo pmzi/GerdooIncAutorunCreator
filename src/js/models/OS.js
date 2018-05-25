@@ -28,6 +28,10 @@ class OS extends Model{
 
     }
 
+    delete(id, cb){
+        this.db.remove({_id:id},cb);
+    }
+
 }
 
 module.exports = new OS;

@@ -28,7 +28,7 @@ class PackManager {
 
                 packs.forEach((item) => {
 
-                    target.append(`<tr>
+                    target.append(`<tr data-id='${item._id}'>
                     <td>
                         ${i}
                     </td>
@@ -42,17 +42,17 @@ class PackManager {
                         ${item.updatedAt}
                     </td>
                     <td>
-                        <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="خروجی اکسل" href="#" onclick="javascript:void(0)">
+                        <a class="pmd-tooltip excel" data-toggle="tooltip" data-placement="top" title="خروجی اکسل" href="#" onclick="javascript:void(0)">
                             <i class="material-icons">
                                 cloud_download
                             </i>
                         </a>
-                        <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="ویرایش" href="#" onclick="javascript:void(0)">
+                        <a class="pmd-tooltip edit" data-toggle="tooltip" data-placement="top" title="ویرایش" href="#" onclick="javascript:void(0)">
                             <i class="material-icons">
                                 edit
                             </i>
                         </a>
-                        <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="حذف" href="#" onclick="javascript:void(0)">
+                        <a class="pmd-tooltip delete" data-toggle="tooltip" data-placement="top" title="حذف" href="#" onclick="javascript:void(0)">
                             <i class="material-icons">
                                 delete
                             </i>
@@ -81,7 +81,7 @@ class PackManager {
 
                 $("#add-pack-modal").modal('hide');
 
-                this.loadPacks().then(()=>{
+                this.loadPacks().then(() => {
                     this.initEvents();
                 })
 
@@ -91,10 +91,27 @@ class PackManager {
 
         });
 
-        // edit events
+        // Delete pack event
 
-        // delete events
+        let that = this;
 
+        $('#packsTable .delete').click(function () {
+            let id = $(this).parent().parent().attr('data-id');
+            $('#delete-pack-modal .modalActionButton').attr('data-id', id);
+            $('#delete-pack-modal').modal('show');
+        });
+
+        $('#delete-pack-modal .modalActionButton').click(function () {
+            that.deletePack($(this).attr('data-id'));
+        });
+
+    }
+
+    deletePack(id) {
+
+        pack.delete(id,()=>{
+            this.loadPacks();
+        });
 
     }
 

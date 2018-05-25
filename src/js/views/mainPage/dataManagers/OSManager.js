@@ -25,7 +25,7 @@ class OSManager{
 
                 OSes.forEach((item) => {
 
-                    target.append(`<tr>
+                    target.append(`<tr data-id='${item._id}'>
                     <td>
                         ${i}
                     </td>
@@ -33,12 +33,7 @@ class OSManager{
                         ${item.name}
                     </td>
                     <td>
-                        <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="ویرایش" href="#" onclick="javascript:void(0)">
-                            <i class="material-icons">
-                                edit
-                            </i>
-                        </a>
-                        <a class="pmd-tooltip" data-toggle="tooltip" data-placement="top" title="حذف" href="#" onclick="javascript:void(0)">
+                        <a class="pmd-tooltip delete" data-toggle="tooltip" data-placement="top" title="حذف" href="#" onclick="javascript:void(0)">
                             <i class="material-icons">
                                 delete
                             </i>
@@ -77,6 +72,26 @@ class OSManager{
 
         // delete events
 
+
+        let that = this;
+
+        $('#OSesTable .delete').click(function () {
+            let id = $(this).parent().parent().attr('data-id');
+            $('#delete-os-modal .modalActionButton').attr('data-id', id);
+            $('#delete-os-modal').modal('show');
+        });
+
+        $('#delete-os-modal .modalActionButton').click(function () {
+            that.deleteOS($(this).attr('data-id'));
+        });
+
+    }
+
+    deleteOS(id){
+
+        OS.delete(id,()=>{
+            this.loadOSes();
+        });
 
     }
 
