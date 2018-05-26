@@ -1,28 +1,28 @@
-
-
 const Model = require('./Model');
 
-class Cat extends Model{
+class Cat extends Model {
 
-    constructor(){
+    constructor() {
 
         super();
 
         this.dbName = `${window._name}/Cats`;
-        
+
         // let's load the DB
 
         this.loadDatabase(false);
 
     }
 
-    getAllTitles(){
+    getAllTitles() {
 
-        return new Promise((resolve, reject)=>{
-            this.db.find({},{title:1, DVDNumber:-1, tags: -1, _id:1},(err, result)=>{
-                if(err === null){
+        return new Promise((resolve, reject) => {
+            this.db.find({}, {
+                title: 1
+            }, (err, result) => {
+                if (err === null) {
                     resolve(result);
-                }else{
+                } else {
                     reject(err);
                 }
             })
@@ -30,16 +30,37 @@ class Cat extends Model{
 
     }
 
-    add(title, DVDNumber, tags){
+    getTitlesByDVDNumber(DVDNumber) {
+        DVDNumber = parseInt(DVDNumber);
+        return new Promise((resolve, reject) => {
+            this.db.find({
+                DVDNumber
+            }).sort({
+                title: 1
+            }).exec((err, result)=>{
+                if(err === null){
+                    resolve(result);                    
+                }else{
+                    reject();
+                }
+            });
+        });
+    }
+
+    add(title, DVDNumber, tags) {
 
         DVDNumber = parseInt(DVDNumber);
 
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
 
-            this.db.insert({title, DVDNumber, tags},(err)=>{
-                if(err === null){
+            this.db.insert({
+                title,
+                DVDNumber,
+                tags
+            }, (err) => {
+                if (err === null) {
                     resolve();
-                }else{
+                } else {
                     reject(err);
                 }
             });

@@ -9,7 +9,11 @@ class PackContentManager{
 
         this.load().then(()=>{
 
+            this.initializeChangableDVDs();
+
             this.loadDiskNumbers();
+
+            this.loadCats();
 
             this.initEvents();
 
@@ -40,7 +44,7 @@ class PackContentManager{
                         $(this).append(`<option value='${item.number}'>${item.number}</option>`);
                     })
                 });
-
+                $('.changableDVD').trigger('DVDsLoaded')
                 resolve();
             })
         });
@@ -155,6 +159,21 @@ class PackContentManager{
     addDVDContentFromFolder(DVDNumber, address){
 
     }
+
+    initializeChangableDVDs(){
+        
+        // set the action for the onchange event
+        $('.changableDVD').off('change DVDsLoaded').on('change DVDsLoaded',function(){
+            cat.getTitlesByDVDNumber($(this).val()).then((result)=>{
+                let targetSelect = $(this).parent().parent().next().find('select');
+                targetSelect.empty();
+                result.forEach((item)=>{
+                    targetSelect.append(`<option value='${item._id}'>${item.title}</option>`);
+                });
+            });
+        });
+    }
+
 }
 
 new PackContentManager();
