@@ -3,7 +3,9 @@ class SoftwareStep {
     constructor() {
         this.initHeaderEvents();
 
-        this.initSoftwareSectionEvents();
+        $('#softwares').on('reload',()=>{
+            this.initSoftwareSectionEvents();
+        });
     }
 
     // Header methods start

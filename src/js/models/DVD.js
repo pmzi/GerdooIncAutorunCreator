@@ -24,6 +24,20 @@ class DVD extends Model{
 
     }
 
+    fetchAll(){
+        return new Promise((resolve, reject)=>{
+
+            this.db.find({}).sort({number:1}).exec((err, result)=>{
+                if(err === null){
+                    resolve(result);
+                }else{
+                    reject(err);
+                }
+            });
+        })
+
+    }
+
     add(DVDNumber){
 
         DVDNumber = parseInt(DVDNumber);
