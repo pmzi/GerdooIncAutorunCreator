@@ -2,13 +2,13 @@
 
 const Model = require('./Model');
 
-class Software extends Model{
+class Cat extends Model{
 
     constructor(){
 
         super();
 
-        this.dbName = `${window._name}/Softwares`;
+        this.dbName = `${window._name}/Cats`;
         
         // let's load the DB
 
@@ -18,4 +18,4 @@ class Software extends Model{
 
 }
 
-module.exports = new Software;
+module.exports = new Cat;

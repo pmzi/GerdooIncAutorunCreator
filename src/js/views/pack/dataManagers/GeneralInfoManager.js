@@ -56,7 +56,7 @@ class GeneralInfoManager{
         let quillEditors = $('.stepWrapper:nth-of-type(1) .quillEditor>div:first-of-type');
         
         let inputs = $('.stepWrapper:nth-of-type(1) input[type=text]');
-        console.log(quillEditors)
+        
         generalInfo.update(inputs[0].value,quillEditors[0].innerHTML,quillEditors[1].innerHTML,inputs[1].value,quillEditors[2].innerHTML,()=>{
             console.log('updated')
         });
