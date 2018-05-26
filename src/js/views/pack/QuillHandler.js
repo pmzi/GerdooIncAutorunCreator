@@ -97,7 +97,7 @@ class QuillHandler {
 
         videoAddress = this.copyToLocale(videoAddress);
 
-        this.insertVideoToEditor(editor, videoAddress)
+        this.insertVideoToEditor(editor, `../dbs/${window._name}/assets/${videoAddress}`)
 
     }
 
@@ -117,7 +117,7 @@ class QuillHandler {
         
         fs.copyFileSync(address,newAddress);
         
-        return newAddress;
+        return fileName+ext;
 
     }
 
@@ -137,21 +137,23 @@ class QuillHandler {
         }
 
         imageAddress = this.copyToLocale(imageAddress)
-        this.insertImageToEditor(editor, imageAddress)
+
+        this.insertImageToEditor(editor, `../dbs/${window._name}/assets/${imageAddress}`);
+
     }
 
     insertVideoToEditor(editor, url) {
         // push image url to rich editor.
         const range = editor.getSelection();
 
-        editor.insertEmbed(range.index, 'video', 'file:///' + url);
+        editor.insertEmbed(range.index, 'video',  url);
     }
 
     insertImageToEditor(editor, url) {
         // push image url to rich editor.
         const range = editor.getSelection();
 
-        editor.insertEmbed(range.index, 'image', 'file://' + url);
+        editor.insertEmbed(range.index, 'image', url);
     }
 
 }
