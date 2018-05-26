@@ -98,6 +98,32 @@ class PackContentManager{
 
         });
 
+        // events for add software
+
+        $('#add-soft-modal .modalActionButton').click(()=>{
+
+            let inputs = $('#add-soft-modal input');
+
+            let selects = $('#add-soft-modal select');
+
+            let tags = [];
+
+            $('#add-soft-modal .tagsCont>a').each((index,elem)=>{
+                tags.push(elem.textContent);
+            })
+
+            // inputs[0] is software name, selects[0] is DVDNumber, selects[1] is category and tags is the tags
+
+            software.add(inputs[0].value, selects[0].value, selects[1].value, tags).then(()=>{
+
+                $('#add-soft-modal').modal('hide');
+
+            }).catch(()=>{
+
+            })
+
+        });
+
     }
 
     addDVDContentFromFolder(DVDNumber, address){
