@@ -118,14 +118,14 @@
                         <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                             <div class="col-lg-11 col-sm-10 col-xs-10 col-md-11">
                                 <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                                    <label for="regular1" class="control-label">
+                                    <label class="control-label">
                                         آدرس ذخیره‌ی اتوران
                                     </label>
-                                    <input type="text" class="form-control">
+                                    <input data-this="autorunLocation" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-1 col-sm-2 col-xs-2 col-md-1 buttonWrapper">
-                                <button type="button" class="btn pmd-btn-outline pmd-ripple-effect btn-primary">...</button>
+                                <button type="button" class="btn pmd-btn-outline pmd-ripple-effect btn-primary dialogBtn" data-props="openDirectory" data-exts="" data-name="Open Directory" data-for="autorunLocation">...</button>
                             </div>
                         </div>
 
@@ -719,10 +719,10 @@
                                                 </span>
                                                 <div id="softwareImageWrapper">
 
-                                                    <img src="" alt="Software Image" />
+                                                    <img data-this="softwareImage" src="" alt="Software Image" />
 
                                                     <div>
-                                                        <button type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-primary">افزودن</button>
+                                                        <button type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-primary dialogBtn" data-for='softwareImage' data-props='openFile' data-exts='jpeg,jpg,png,gif,ico' data-name='Open Image'>افزودن</button>
                                                         <button type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-danger">حذف</button>
                                                     </div>
 
@@ -916,10 +916,10 @@
                     <div class="row">
 
                         <div id="themeBgImage">
-                            <img src="" />
+                            <img data-this="backImage" src="" />
 
                             <div>
-                                <button type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-primary">افزودن</button>
+                                <button type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-primary dialogBtn" data-for="backImage" data-props="openFile" data-exts="png,ico,jpg,jpeg,gif" data-name="images">افزودن</button>
                                 <button type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-danger">حذف</button>
                             </div>
                         </div>
@@ -1364,11 +1364,10 @@
 
     <script src="../js/plugins/quill/quill.js"></script>
 
-    <script src="../js/views/pack/Step.js"></script>
-
     <script src="../js/views/pack/SoftwareStep.js"></script>
 
-    <script>
+    <script>    
+        require('../js/views/pack/Step.js');
 
         require('../js/views/pack/QuillHandler.js');
 
