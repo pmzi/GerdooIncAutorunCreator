@@ -46,6 +46,30 @@ class PackContentManager{
         });
     }
 
+    /**
+     * Loads the cats in related comboboxes
+     */
+
+    loadCats(){
+        return new Promise((resolve, reject)=>{
+
+            cat.getAllTitles().then((result)=>{
+
+                $('.catsList').each(function(){
+
+                    $(this).empty();
+
+                    result.forEach((item)=>{
+                        $(this).append(`<option value='${item._id}'>${item.title}</option>`);
+                    })
+
+                });
+
+            });
+            
+        });
+    }
+
     initEvents() {
 
         // events for add dvd
@@ -89,6 +113,8 @@ class PackContentManager{
             // inputs[0] is for catTitle, selects[0] is for DVDnumber and tags are the tags array
 
             cat.add(inputs[0].value, selects[0].value, tags).then(()=>{
+
+                this.loadCats();
                 
                 $('#add-cat-modal').modal('hide');
 

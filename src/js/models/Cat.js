@@ -16,6 +16,20 @@ class Cat extends Model{
 
     }
 
+    getAllTitles(){
+
+        return new Promise((resolve, reject)=>{
+            this.db.find({},{title:1, DVDNumber:-1, tags: -1, _id:1},(err, result)=>{
+                if(err === null){
+                    resolve(result);
+                }else{
+                    reject(err);
+                }
+            })
+        });
+
+    }
+
     add(title, DVDNumber, tags){
 
         DVDNumber = parseInt(DVDNumber);
