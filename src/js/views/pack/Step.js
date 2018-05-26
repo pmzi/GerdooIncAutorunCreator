@@ -1,3 +1,6 @@
+const {dialog} = require('electron').remote;
+const FileManager = require('../globals/FileManager');
+
 class Step {
 
     constructor() {
@@ -5,6 +8,8 @@ class Step {
         this.initEvents();
 
         this.initializeTagAddSystem();
+
+        this.initializeDialogSystem();
 
     }
 
@@ -60,7 +65,48 @@ class Step {
         });
     }
 
-    
+    initializeDialogSystem(){
+
+        $('.dialogBtn').click(function(){
+            
+            let exts = $(this).attr('data-exts').split(',');
+
+            let name = $(this).attr('data-name');
+
+            let props = $(this).attr('data-props').split(',');
+
+            let address = dialog.showOpenDialog({
+                properties: props,
+                filters: [{
+                    name,
+                    extensions: exts
+                }]
+            });
+            if(address){
+
+                address = address[0];
+
+                let dataFor = $(this).attr('data-for');
+                let forElem = $(`[data-this=${dataFor}]`);
+
+                switch(forElem.prop('tagName').toLowerCase()){
+                    case "input":
+                    forElem.val(address);
+                    break;
+                    case "img":
+
+                    // copy it to locale
+
+                    address = FileManager.copyToLocale(address);
+                    
+                    forElem.attr('src',address);
+                    break;
+                }
+
+            }
+        });
+
+    }
 
 }
 
