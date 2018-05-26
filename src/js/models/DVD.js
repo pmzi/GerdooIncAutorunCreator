@@ -14,6 +14,44 @@ class DVD extends Model{
 
         this.loadDatabase(false);
 
+        this.index();
+
+    }
+
+    index(){
+
+        this.db.ensureIndex({fieldName:'number',unique:true});
+
+    }
+
+    add(DVDNumber){
+
+        DVDNumber = parseInt(DVDNumber);
+
+        return new Promise((resolve, reject)=>{
+
+            this.db.insert({number:DVDNumber},(err)=>{
+                if(!err){
+                    resolve();
+                }else{
+                    reject(err);
+                }
+            });
+
+        });
+
+    }
+
+    getDVDNumbers(){
+        return new Promise((resolve, reject)=>{
+            this.db.find({},{number:1, _id: 0}).sort({number:1}).exec((err, result)=>{
+                if(err === null){
+                    resolve(result);
+                }else{
+                    reject(err);
+                }
+            });
+        });
     }
 
 }
