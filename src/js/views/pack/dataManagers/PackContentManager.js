@@ -59,7 +59,7 @@ class PackContentManager {
 
                                     // let's add software's element
 
-                                    currCatElem.append(`<li>
+                                    currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
                                     <div class="pmd-ripple-effect">
                                         <i class="material-icons">events</i>
                                         <span>${singleSoftware.title}</span>
@@ -71,6 +71,8 @@ class PackContentManager {
                                         // We are finished;)
 
                                         $('#softwares').trigger('reload');
+
+                                        this.initSoftwareEvents();
 
                                         resolve();
                                     }
@@ -218,6 +220,63 @@ class PackContentManager {
 
     }
 
+    initSoftwareEvents(){
+
+        let that = this;
+
+        $('#softwares ul.softWrapper>li').off('click').click(function(e){
+            e.stopPropagation()
+            let softwareId = $(this).attr('data-software-id');
+
+            software.getById(softwareId).then((result)=>{
+
+                // Let's load the software
+
+                let inputs = $('.tabWrapper input:not([type=checkbox])');
+                let selects = $('.tabWrapper select');
+                let quills = $('.tabWrapper .quillEditor>div:first-of-type');
+                let textarea = $('.tabWrapper textarea');
+
+                // setting the dvd number
+                $(selects[0]).find(`[value=${result.DVDnumber}]`).attr('selected','true').trigger('change');
+                // setting the cat  
+                $(selects[1]).on('changed',function(){
+                    $(this).find(`[value=${result.cat}]`).attr('selected','true')
+                })
+                // setting the name 
+                inputs[0].value = result.title;
+                // setting the image address
+                $('#softwareImageWrapper img').attr('src',result.image);
+                // setting the oses
+                // @todo
+                // setting the setup
+                inputs[1].value = result.setup;
+                // setting the program address
+                inputs[2].value = result.programAddress;
+                // setting the tags
+                // @todo
+                // setting web address
+                // @todo
+                // set faDesc
+                quills[0].innerHTML = result.faDesc;
+                // setting en desc
+                quills[1].innerHTML = result.enDesc;
+                // setting the fa guide
+                quills[2].innerHTML = result.faGuide;
+                // setting the en guide
+                quills[3].innerHTML = result.enGuide;
+                // setting the crack
+                inputs[4].value = result.crack;
+                // setting the patch
+                inputs[5].value = result.patch;
+                // setting the serial numbers
+                textarea.textContent = result.serial;
+            });
+
+        });
+
+    }
+
     addDVDContentFromFolder(DVDNumber, address) {
 
     }
@@ -232,6 +291,7 @@ class PackContentManager {
                 result.forEach((item) => {
                     targetSelect.append(`<option value='${item._id}'>${item.title}</option>`);
                 });
+                $(targetSelect).trigger('changed');
             });
         });
     }

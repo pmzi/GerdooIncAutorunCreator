@@ -42,7 +42,10 @@ class SoftwareStep {
     // Soft list methods
 
     initSoftwareSectionEvents() {
-        $('#softwares ul:not(.softWrapper) li').click(function (e) {
+
+        // For slide down and slide up animation
+
+        $('#softwares ul:not(.softWrapper) li').off('click').click(function (e) {
             e.stopPropagation()
             
             $(this).children('ul').slideToggle(500);
@@ -58,7 +61,10 @@ class SoftwareStep {
             }
 
         });
+
     }
+
+    
 
 }
 

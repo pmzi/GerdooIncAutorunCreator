@@ -30,6 +30,20 @@ class Software extends Model{
         })
     }
 
+    getById(id){
+        return new Promise((resolve, reject)=>{
+
+            this.db.findOne({_id:id},(err, result)=>{
+                if(err === null){
+                    resolve(result)
+                }else{
+                    reject(err)
+                }
+            });
+
+        });
+    }
+
     add(title, DVDnumber, cat, tags, oses = [], image = null, setup = null, programAddress = null, webAddress = null, isRecommended = false, faDesc = null, enDesc = null, faGuide = null, enGuide = null, crack = null, patch = null, serial = null){
 
         return new Promise((resolve, reject)=>{
