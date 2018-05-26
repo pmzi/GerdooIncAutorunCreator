@@ -4,6 +4,8 @@ class Step {
 
         this.initEvents();
 
+        this.initializeTagAddSystem();
+
     }
 
     initEvents() {
@@ -39,6 +41,24 @@ class Step {
         })
 
     }    
+
+    /**
+     * For add tag systems
+     */
+
+    initializeTagAddSystem(){
+        $('.tagsCont>a').click(function(){
+            $(this).remove();
+        });
+        $('.addTagModalBtn').click(function(){
+            $('#add-tag-modal').modal('show');
+            $('#add-tag-modal .modalActionButton').off('click').click(()=>{
+                let tagName = $('#add-tag-modal input[type=text]').val();
+                $(this).parent().prev().append(`<a class="list-group-item" href="javascript:void(0);">${tagName}</a>`);
+                $('#add-tag-modal').modal('hide');
+            });
+        });
+    }
 
 }
 

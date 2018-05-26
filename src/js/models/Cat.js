@@ -16,6 +16,24 @@ class Cat extends Model{
 
     }
 
+    add(title, DVDNumber, tags){
+
+        DVDNumber = parseInt(DVDNumber);
+
+        return new Promise((resolve, reject)=>{
+
+            this.db.insert({title, DVDNumber, tags},(err)=>{
+                if(err === null){
+                    resolve();
+                }else{
+                    reject(err);
+                }
+            });
+
+        });
+
+    }
+
 }
 
 module.exports = new Cat;
