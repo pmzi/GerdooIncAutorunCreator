@@ -1,6 +1,7 @@
 const {dialog} = require('electron').remote;
 const fs = require('fs');
 const path = require('path');
+const FileManager = require('../globals/FileManager');
 
 class QuillHandler {
 
@@ -95,29 +96,9 @@ class QuillHandler {
             videoAddress = videoAddress[0];
         }
 
-        videoAddress = this.copyToLocale(videoAddress);
+        videoAddress = FileManager.copyToLocale(videoAddress);
 
-        this.insertVideoToEditor(editor, `../dbs/${window._name}/assets/${videoAddress}`)
-
-    }
-
-    copyToLocale(address){
-        
-        let ext = path.extname(address);
-
-        let fileName = Date.now();
-
-        let newPath = path.join(__dirname,'../../../dbs',window._name,'assets');
-
-        let newAddress = newPath+'/'+fileName+ext;
-
-        if(!fs.existsSync(newPath)){
-            fs.mkdirSync(newPath);
-        }
-        
-        fs.copyFileSync(address,newAddress);
-        
-        return fileName+ext;
+        this.insertVideoToEditor(editor, videoAddress)
 
     }
 
@@ -136,9 +117,9 @@ class QuillHandler {
             imageAddress = imageAddress[0];
         }
 
-        imageAddress = this.copyToLocale(imageAddress)
+        imageAddress = FileManager.copyToLocale(imageAddress)
 
-        this.insertImageToEditor(editor, `../dbs/${window._name}/assets/${imageAddress}`);
+        this.insertImageToEditor(editor, imageAddress);
 
     }
 
