@@ -13,10 +13,6 @@ class FileManager{
         let newPath = path.join(__dirname,'../../../dbs',window._name,'assets');
         
         let newAddress = newPath+'/'+fileName+ext;
-
-        if(!fs.existsSync(newPath)){
-            fs.mkdirSync(newPath);
-        }
         
         fs.copyFileSync(address,newAddress);
 

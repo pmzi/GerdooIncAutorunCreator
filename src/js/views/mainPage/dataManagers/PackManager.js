@@ -1,6 +1,8 @@
 const {
     ipcRenderer
 } = require('electron');
+const fs = require('fs');
+const path = require('path');
 const pack = require('../../../models/Pack');
 
 class PackManager {
@@ -79,6 +81,8 @@ class PackManager {
 
             pack.add($("#add-pack-modal input[type=text]").val(), (err, newPack) => {
 
+                this.copyAssets(newPack.name);
+
                 $("#add-pack-modal").modal('hide');
 
                 this.loadPacks().then(() => {
@@ -114,6 +118,25 @@ class PackManager {
         });
 
     }
+
+    copyAssets(name){
+
+        // Let's create the pack directory
+        let pathToPack = path.join(__dirname,'../../../../dbs',name);
+        console.log(pathToPack)
+        fs.mkdirSync(pathToPack);
+
+        // let's create the assets dir
+
+        fs.mkdirSync(path.join(pathToPack,'assets'));
+        
+        // let's copy the oses
+        
+        fs.copyFileSync(path.join(pathToPack, '../', 'OSes.db'), pathToPack+'/OSes.db');
+
+
+    }
+
 
     addPack(id, name) {
         ipcRenderer.send('newWindow', {
