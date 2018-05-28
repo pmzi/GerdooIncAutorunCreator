@@ -47,8 +47,18 @@ class SoftwareStep {
 
         $('#softwares ul:not(.softWrapper) li').off('click').click(function (e) {
             e.stopPropagation()
+
+            let targetUl = $(this).children('ul');
+
+            if(targetUl.css('height') == '0px'){
+                let liChilds = targetUl.children('li').length;
+
+            targetUl.css({'height':(liChilds*30)+'px'});
+            }else{
+                targetUl.css({'height':'0px'});
+            }
             
-            $(this).children('ul').slideToggle(500);
+            
 
             $('#softwares .active').removeClass('active');
 
