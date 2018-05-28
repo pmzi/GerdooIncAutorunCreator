@@ -38,7 +38,7 @@ class PackContentManager {
 
                 // let's add DVD's element
 
-                $('#softwares>ul').append(`<li data-dvd-number='${singleDVD.number}'><div class="pmd-ripple-effect">
+                $('#softwares>ul').append(`<li data-dvd-number='${singleDVD.number}'><div>
                 <i class="material-icons">adjust</i>
                 <span>DVD ${singleDVD.number}</span>
             </div><ul class='catWrapper'></ul></li>`);
@@ -50,7 +50,7 @@ class PackContentManager {
                 for (let singleCat of cats) {
                     // let's add cat's element
 
-                    currDVDElem.append(`<li data-cat-id='${singleCat._id}'><div class="pmd-ripple-effect">
+                    currDVDElem.append(`<li data-cat-id='${singleCat._id}'><div>
                     <i class="material-icons">events</i>
                     <span>${singleCat.title}</span>
                 </div><ul class='softWrapper'></ul></li>`);
@@ -63,7 +63,7 @@ class PackContentManager {
                         // let's add software's element
 
                         currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
-                        <div class="pmd-ripple-effect">
+                        <div>
                             <i class="material-icons">events</i>
                             <span>${singleSoftware.title}</span>
                         </div>
@@ -143,13 +143,17 @@ class PackContentManager {
             // inputs[0] is dvd number && inputs[1] is dvd content address
 
             DVD.add(inputs[0].value).then(() => {
-                this.loadDiskNumbers();
-                this.load();
                 if (inputs[1].value !== '') {
-                    this.addDVDContentFromFolder(inputs[0].value, inputs[1].value);
+                    this.addDVDContentFromFolder(inputs[0].value, inputs[1].value).then(()=>{
+                        this.load();
+                        
+                    })
                 } else {
+                    this.load();
                     $('#add-disk-modal').modal('hide');
                 }
+
+                this.loadDiskNumbers();
 
             }).catch((err) => {
                 console.log(err)
