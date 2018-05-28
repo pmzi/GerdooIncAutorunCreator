@@ -1,7 +1,9 @@
 const DVD = require('../../../models/DVD');
 const software = require('../../../models/Software');
 const cat = require('../../../models/Cat');
+const path = require('path');
 
+const fs = require('fs');
 
 class PackContentManager {
     constructor() {
@@ -22,9 +24,9 @@ class PackContentManager {
 
     }
 
-    async load(){
+    async load() {
 
-        return new Promise(async (resolve, reject)=>{
+        return new Promise(async (resolve, reject) => {
 
             // let's empty the menu
 
@@ -32,7 +34,7 @@ class PackContentManager {
 
             let DVDs = await DVD.fetchAll();
 
-            for(let singleDVD of DVDs){
+            for (let singleDVD of DVDs) {
 
                 // let's add DVD's element
 
@@ -45,7 +47,7 @@ class PackContentManager {
 
                 let cats = await cat.getTitlesByDVDNumber(singleDVD.number);
 
-                for(let singleCat of cats){
+                for (let singleCat of cats) {
                     // let's add cat's element
 
                     currDVDElem.append(`<li data-cat-id='${singleCat._id}'><div class="pmd-ripple-effect">
@@ -57,7 +59,7 @@ class PackContentManager {
 
                     let softwares = await software.getSoftwaresByCat(singleCat._id);
 
-                    for(let singleSoftware of softwares){
+                    for (let singleSoftware of softwares) {
                         // let's add software's element
 
                         currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
@@ -66,7 +68,7 @@ class PackContentManager {
                             <span>${singleSoftware.title}</span>
                         </div>
                     </li>`);
-                    }   
+                    }
 
                 }
 
@@ -214,15 +216,15 @@ class PackContentManager {
 
     }
 
-    initSoftwareEvents(){
+    initSoftwareEvents() {
 
         let that = this;
 
-        $('#softwares ul.softWrapper>li').off('click').click(function(e){
+        $('#softwares ul.softWrapper>li').off('click').click(function (e) {
             e.stopPropagation()
             let softwareId = $(this).attr('data-software-id');
 
-            software.getById(softwareId).then((result)=>{
+            software.getById(softwareId).then((result) => {
 
                 // Let's load the software
 
@@ -232,17 +234,17 @@ class PackContentManager {
                 let textarea = $('.tabWrapper textarea');
 
                 // setting the dvd number
-                $(selects[0]).find(`[value=${result.DVDnumber}]`).attr('selected','true').trigger('change');
+                $(selects[0]).find(`[value=${result.DVDnumber}]`).attr('selected', 'true').trigger('change');
                 // setting the cat  
-                $(selects[1]).on('changed',function(){
-                    $(this).find(`[value=${result.cat}]`).attr('selected','true')
+                $(selects[1]).on('changed', function () {
+                    $(this).find(`[value=${result.cat}]`).attr('selected', 'true')
                 })
                 // setting the name 
                 inputs[0].value = result.title;
                 // setting the version
                 inputs[1].value = result.version;
                 // setting the image address
-                $('#softwareImageWrapper img').attr('src',result.image);
+                $('#softwareImageWrapper img').attr('src', result.image);
                 // setting the oses
                 // @todo
                 // setting the setup
@@ -273,7 +275,38 @@ class PackContentManager {
 
     }
 
-    addDVDContentFromFolder(DVDNumber, address) {
+    async addDVDContentFromFolder(DVDNumber, address) {
+        return new Promise(async (resolve, reject) => {
+            if (fs.existsSync(address)) {
+
+                let catsDirectories = fs.readdirSync(address);
+
+                for (let catDirectory of catsDirectories) {
+                    // Adding the category
+                    if (fs.existsSync(path.join(address,catDirectory)) && fs.lstatSync(path.join(address,catDirectory)).isDirectory()) {
+                        let newCat = await cat.add(catDirectory, DVDNumber, []);
+
+                        let softwaresInTheCat = fs.readdirSync(path.join(address, catDirectory));
+
+                        for (let singleSoft of softwaresInTheCat) {
+                            if (fs.existsSync(path.join(address,singleSoft)) && fs.lstatSync(path.join(address,singleSoft)).isDirectory()) {
+                                await software.add(singleSoft, null, DVDNumber, newCat._id, []);
+                            }
+
+                        }
+                    }
+
+
+                }
+
+                resolve();
+
+            } else {
+                // Address doesn't exists
+                reject(-1);
+            }
+        });
+
 
     }
 

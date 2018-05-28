@@ -57,9 +57,9 @@ class Cat extends Model {
                 title,
                 DVDNumber,
                 tags
-            }, (err) => {
+            }, (err, cat) => {
                 if (err === null) {
-                    resolve();
+                    resolve(cat);
                 } else {
                     reject(err);
                 }
