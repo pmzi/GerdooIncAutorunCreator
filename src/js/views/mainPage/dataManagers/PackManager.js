@@ -109,6 +109,16 @@ class PackManager {
             that.deletePack($(this).attr('data-id'));
         });
 
+        // edit pack event
+
+        $('#packsTable .edit').click(function () {
+            let id = $(this).parent().parent().attr('data-id');
+            pack.getById(id,(err, packForEdit)=>{
+                that.addPack(id, packForEdit.name);
+            })
+            
+        });
+
     }
 
     deletePack(id) {

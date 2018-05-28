@@ -34,6 +34,12 @@ class Pack extends Model{
 
     }
 
+    getById(id,cb){
+
+        this.db.findOne({_id:id},cb)
+
+    }
+
 }
 
 module.exports = new Pack;
