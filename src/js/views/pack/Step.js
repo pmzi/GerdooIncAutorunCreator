@@ -51,15 +51,15 @@ class Step {
      * For add tag systems
      */
 
-    initializeTagAddSystem(){
-        $('.tagsCont>a').click(function(){
-            $(this).remove();
-        });
+    initializeTagAddSystem(){ 
         $('.addTagModalBtn').click(function(){
             $('#add-tag-modal').modal('show');
             $('#add-tag-modal .modalActionButton').off('click').click(()=>{
                 let tagName = $('#add-tag-modal input[type=text]').val();
                 $(this).parent().prev().append(`<a class="list-group-item" href="javascript:void(0);">${tagName}</a>`);
+                $('.tagsCont>a').off('click').click(function(){
+                    $(this).remove();
+                });
                 $('#add-tag-modal').modal('hide');
             });
         });

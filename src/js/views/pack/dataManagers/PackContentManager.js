@@ -252,15 +252,28 @@ class PackContentManager {
                 // setting the image address
                 $('#softwareImageWrapper img').attr('src', result.image);
                 // setting the oses
-                // @todo
+                console.log($('.tabWrapper input:checked'))
+                $('.tabWrapper input:checked').attr('checked',false)
+                for(let os of result.oses){
+                    if(os.trim()!=''){
+                        $('.tabWrapper').find(`input[type=checkbox][value=${os}]`).prop('checked',true);
+                    }
+                }
                 // setting the setup
                 inputs[2].value = result.setup;
                 // setting the program address
                 inputs[3].value = result.programAddress;
                 // setting the tags
-                // @todo
+                let tagsCont = $('.tabWrapper .tagsCont');
+                tagsCont.empty();
+                for(let tag of result.tags){
+                    tagsCont.append(`<a class="list-group-item" href="javascript:void(0);">${tag}</a>`);
+                }
+                $('.tagsCont>a').off('click').click(function(){
+                    $(this).remove();
+                });
                 // setting web address
-                // @todo
+                inputs[4].value = result.webAddress;
                 // set faDesc
                 quills[0].innerHTML = result.faDesc;
                 // setting en desc
