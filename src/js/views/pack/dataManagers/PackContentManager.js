@@ -22,73 +22,67 @@ class PackContentManager {
 
     }
 
-    load() {
-        return new Promise((resolve, reject) => {
+    async load(){
+
+        return new Promise(async (resolve, reject)=>{
 
             // let's empty the menu
 
             $('#softwares>ul').empty();
 
-            DVD.fetchAll().then((DVDs) => {
+            let DVDs = await DVD.fetchAll();
 
-                DVDs.forEach((singleDVD) => {
+            for(let singleDVD of DVDs){
 
-                    // let's add DVD's element
+                // let's add DVD's element
 
-                    $('#softwares>ul').append(`<li data-dvd-number='${singleDVD.number}'><div class="pmd-ripple-effect">
-                    <i class="material-icons">adjust</i>
-                    <span>DVD ${singleDVD.number}</span>
-                </div><ul class='catWrapper'></ul></li>`);
+                $('#softwares>ul').append(`<li data-dvd-number='${singleDVD.number}'><div class="pmd-ripple-effect">
+                <i class="material-icons">adjust</i>
+                <span>DVD ${singleDVD.number}</span>
+            </div><ul class='catWrapper'></ul></li>`);
 
-                    let currDVDElem = $(`#softwares>ul>li[data-dvd-number=${singleDVD.number}]>ul`);
+                let currDVDElem = $(`#softwares>ul>li[data-dvd-number=${singleDVD.number}]>ul`);
 
-                    cat.getTitlesByDVDNumber(singleDVD.number).then((cats) => {
-                        cats.forEach((singleCat) => {
+                let cats = await cat.getTitlesByDVDNumber(singleDVD.number);
 
-                            // let's add cat's element
+                for(let singleCat of cats){
+                    // let's add cat's element
 
-                            currDVDElem.append(`<li data-cat-id='${singleCat._id}'><div class="pmd-ripple-effect">
+                    currDVDElem.append(`<li data-cat-id='${singleCat._id}'><div class="pmd-ripple-effect">
+                    <i class="material-icons">events</i>
+                    <span>${singleCat.title}</span>
+                </div><ul class='softWrapper'></ul></li>`);
+
+                    let currCatElem = $(`#softwares [data-cat-id=${singleCat._id}]>ul`);
+
+                    let softwares = await software.getSoftwaresByCat(singleCat._id);
+
+                    for(let singleSoftware of softwares){
+                        // let's add software's element
+
+                        currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
+                        <div class="pmd-ripple-effect">
                             <i class="material-icons">events</i>
-                            <span>${singleCat.title}</span>
-                        </div><ul class='softWrapper'></ul></li>`);
+                            <span>${singleSoftware.title}</span>
+                        </div>
+                    </li>`);
+                    }   
 
-                            let currCatElem = $(`#softwares [data-cat-id=${singleCat._id}]>ul`);
-
-                            software.getSoftwaresByCat(singleCat._id).then((softwares) => {
-                                softwares.forEach((singleSoftware) => {
-
-                                    // let's add software's element
-
-                                    currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
-                                    <div class="pmd-ripple-effect">
-                                        <i class="material-icons">events</i>
-                                        <span>${singleSoftware.title}</span>
-                                    </div>
-                                </li>`);
-
-                                    if (singleDVD.number === DVDs[DVDs.length - 1].number) {
-
-                                        // We are finished;)
-
-                                        $('#softwares').trigger('reload');
-
-                                        this.initSoftwareEvents();
-
-                                        resolve();
-                                    }
-
-                                });
-                            })
-                        });
-                    })
-
-                });
-
-            })
+                }
 
 
+            }
 
-        })
+            // We are finished;)
+
+            $('#softwares').trigger('reload');
+
+            this.initSoftwareEvents();
+
+            resolve();
+
+        });
+
     }
 
     /**
