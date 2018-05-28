@@ -200,9 +200,9 @@ class PackContentManager {
                 tags.push(elem.textContent);
             })
 
-            // inputs[0] is software name, selects[0] is DVDNumber, selects[1] is category and tags is the tags
+            // inputs[0] is software name, inputs[1] is the software version, selects[0] is DVDNumber, selects[1] is category and tags is the tags
 
-            software.add(inputs[0].value, selects[0].value, selects[1].value, tags).then(() => {
+            software.add(inputs[0].value, inputs[1].value, selects[0].value, selects[1].value, tags).then(() => {
                 this.load();
                 $('#add-soft-modal').modal('hide');
 
@@ -239,14 +239,16 @@ class PackContentManager {
                 })
                 // setting the name 
                 inputs[0].value = result.title;
+                // setting the version
+                inputs[1].value = result.version;
                 // setting the image address
                 $('#softwareImageWrapper img').attr('src',result.image);
                 // setting the oses
                 // @todo
                 // setting the setup
-                inputs[1].value = result.setup;
+                inputs[2].value = result.setup;
                 // setting the program address
-                inputs[2].value = result.programAddress;
+                inputs[3].value = result.programAddress;
                 // setting the tags
                 // @todo
                 // setting web address
