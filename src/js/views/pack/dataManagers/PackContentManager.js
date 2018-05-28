@@ -1,5 +1,6 @@
 const DVD = require('../../../models/DVD');
 const software = require('../../../models/Software');
+const FileManager = require('../../globals/FileManager');
 const cat = require('../../../models/Cat');
 const path = require('path');
 
@@ -146,7 +147,7 @@ class PackContentManager {
                 if (inputs[1].value !== '') {
                     this.addDVDContentFromFolder(inputs[0].value, inputs[1].value).then(()=>{
                         this.load();
-                        
+                        $('#add-disk-modal').modal('hide');
                     })
                 } else {
                     this.load();
@@ -235,6 +236,7 @@ class PackContentManager {
                 let inputs = $('.tabWrapper input:not([type=checkbox])');
                 let selects = $('.tabWrapper select');
                 let quills = $('.tabWrapper .quillEditor>div:first-of-type');
+                
                 let textarea = $('.tabWrapper textarea');
 
                 // setting the dvd number
@@ -294,7 +296,43 @@ class PackContentManager {
 
                         for (let singleSoft of softwaresInTheCat) {
                             if (fs.existsSync(path.join(address,singleSoft)) && fs.lstatSync(path.join(address,singleSoft)).isDirectory()) {
-                                await software.add(singleSoft, null, DVDNumber, newCat._id, []);
+
+                                // check if gerdoo.txt file exists
+
+                                if(fs.existsSync(path.join(address,catDirectory,singleSoft,'gerdoo.txt'))){
+                                    let gerdooText = fs.readFileSync(path.join(address,catDirectory,singleSoft,'gerdoo.txt'),'utf8');
+
+                                    // <ig> is for installation guide
+                                    
+                                    let ig = /<ig>((?:.|\s)*)<\/ig>/i.exec(gerdooText)[1];
+                                    
+                                    // <d> is for description
+
+                                    let desc = /<d>((?:.|\s)*)<\/d>/i.exec(gerdooText)[1];
+
+                                    // <s> is for supported oses
+
+                                    let supportedOSes = /<s>((?:.|\s)*)<\/s>/i.exec(gerdooText)[1].trim().split('\n');
+
+                                    // let's add it to the DB
+
+                                    let softImage = null;
+
+                                    if(fs.existsSync(path.join(address,catDirectory,singleSoft,'1.gif'))){
+                                        softImage = FileManager.copyToLocale(path.join(address,catDirectory,singleSoft,'1.gif'));
+                                    }
+
+                                    let setup = null;
+
+                                    if(fs.existsSync(path.join(address,catDirectory,singleSoft,'setup.exe'))){
+                                        setup = fs.existsSync(path.join(address,catDirectory,singleSoft,'setup.exe'));
+                                    }
+
+                                    await software.add(singleSoft, null, DVDNumber, newCat._id, [], supportedOSes, softImage, setup, `${catDirectory}/${singleSoft}`, null, false, null, desc, null, ig, null, null, null, null)
+
+                                }else{
+                                    await software.add(singleSoft, null, DVDNumber, newCat._id, []);
+                                }
                             }
 
                         }
