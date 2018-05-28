@@ -711,6 +711,11 @@
                                                     </div>
                                                 </div>
 
+                                                <div class='row'>
+                                                    <button type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-primary" data-target="#add-os-modal" data-toggle="modal">افزودن</button>
+                                                    
+                                                </div>
+
                                             </div>
 
                                             <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
@@ -1329,6 +1334,35 @@
         </div>
     </div>
 
+    <!-- add os -->
+
+    <div tabindex="-1" class="modal fade" id="add-os-modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header pmd-modal-bordered">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h2 class="pmd-card-title-text">افزودن سیستم عامل</h2>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-md-6 col-sm-6">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                    <label>عنوان</label>
+                                    <input type="text" class="mat-input form-control" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="pmd-modal-action">
+                    <button class="modalActionButton btn pmd-ripple-effect btn-primary" type="button">افزودن</button>
+                    <button data-dismiss="modal" class="btn pmd-ripple-effect btn-default" type="button">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- scripts -->
 
     <script>
@@ -1377,6 +1411,7 @@
 
         require('../js/views/pack/dataManagers/GeneralInfoManager.js');
         require('../js/views/pack/dataManagers/PackContentManager.js');
+        require('../js/views/pack/dataManagers/OSesManager.js');
 
 
     </script>
