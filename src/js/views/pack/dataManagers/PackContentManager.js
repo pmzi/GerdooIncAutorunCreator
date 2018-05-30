@@ -154,7 +154,7 @@ class PackContentManager {
 
             dvd.add(inputs[0].value).then(() => {
                 if (inputs[1].value !== '') {
-                    this.addDVDContentFromFolder(inputs[0].value, inputs[1].value).then(()=>{
+                    this.addDVDContentFromFolder(inputs[0].value, inputs[1].value).then(() => {
                         this.load();
                         $('#add-disk-modal').modal('hide');
                     })
@@ -228,6 +228,78 @@ class PackContentManager {
 
         });
 
+        // event for save software
+
+        $('#saveSoftware').click(() => {
+            console.log("hey")
+
+            // let's get the contents
+
+            let inputs = $('.tabWrapper input:not([type=checkbox])');
+            let selects = $('.tabWrapper select');
+            let quills = $('.tabWrapper .quillEditor>div:first-of-type');
+
+            let textarea = $('.tabWrapper textarea');
+
+
+            // let's set the _id
+            let id = $('#generalTab').attr('data-id');
+            // setting the dvd number
+            let DVDNumber = $(selects[0]).find('option:selected').val();
+            // setting the cat  
+            let cat = $(selects[1]).find('option:selected').val();
+            // setting the name 
+            let title = inputs[0].value;
+            // setting the version
+            let version = inputs[1].value;
+            // setting the image address
+            let image = $('#softwareImageWrapper img').attr('src');
+            // setting the oses
+            let selectedOSes = $('.tabWrapper input:checked')
+            let oses = [];
+            for (let os of selectedOSes) {
+                oses.push($(os).val());   
+            }
+            // setting the setup
+            let setup = inputs[2].value;
+            // setting the program address
+            let programAddress = inputs[3].value;
+            // setting the tags
+            let tagsElems = $('.tabWrapper .tagsCont>a');
+            let tags = [];
+            for (let tag of tagsElems) {
+                tags.push(tag.textContent.trim());
+            }
+            // setting web address
+            let webArress = inputs[4].value;
+            // getting isRecommended
+            let isRecommended = false;
+            if($('#isRecommended').is(':checked')){
+                isRecommended = true;
+            }
+            // set faDesc
+            let faDesk = quills[0].innerHTML;
+            // setting en desc
+            let enDesk = quills[1].innerHTML;
+            // setting the fa guide
+            let faGuide = quills[2].innerHTML;
+            // setting the en guide
+            let enGuide = quills[3].innerHTML;
+            // setting the crack
+            let crack = inputs[4].value;
+            // setting the patch
+            let patch = inputs[5].value;
+            // setting the serial numbers
+            let serial = textarea.textContent;
+
+            // let's save the software
+
+            software.save(id,title,version,DVDNumber,cat,tags,oses,image,setup,programAddress,webArress,isRecommended,faDesk,enDesk,faGuide,enGuide,crack,patch,serial).then(()=>{
+                this.load();
+            })
+
+        })
+
     }
 
     initSoftwareEvents() {
@@ -245,14 +317,14 @@ class PackContentManager {
                 let inputs = $('.tabWrapper input:not([type=checkbox])');
                 let selects = $('.tabWrapper select');
                 let quills = $('.tabWrapper .quillEditor>div:first-of-type');
-                
+
                 let textarea = $('.tabWrapper textarea');
 
 
                 // let's set the _id
-                $('#generalTab').attr('data-id',result._id);
+                $('#generalTab').attr('data-id', result._id);
                 // let's set the name on the data-name
-                $('#generalTab').attr('data-name',result.title);
+                $('#generalTab').attr('data-name', result.title);
                 // setting the dvd number
                 $(selects[0]).find(`[value=${result.DVDnumber}]`).attr('selected', 'true').trigger('change');
                 // setting the cat  
@@ -267,10 +339,10 @@ class PackContentManager {
                 $('#softwareImageWrapper img').attr('src', result.image);
                 // setting the oses
                 console.log($('.tabWrapper input:checked'))
-                $('.tabWrapper input:checked').attr('checked',false)
-                for(let os of result.oses){
-                    if(os.trim()!=''){
-                        $('.tabWrapper').find(`input[type=checkbox][value=${os}]`).prop('checked',true);
+                $('.tabWrapper input:checked').attr('checked', false)
+                for (let os of result.oses) {
+                    if (os.trim() != '') {
+                        $('.tabWrapper').find(`input[type=checkbox][value=${os}]`).prop('checked', true);
                     }
                 }
                 // setting the setup
@@ -280,10 +352,10 @@ class PackContentManager {
                 // setting the tags
                 let tagsCont = $('.tabWrapper .tagsCont');
                 tagsCont.empty();
-                for(let tag of result.tags){
+                for (let tag of result.tags) {
                     tagsCont.append(`<a class="list-group-item" href="javascript:void(0);">${tag}</a>`);
                 }
-                $('.tagsCont>a').off('click').click(function(){
+                $('.tagsCont>a').off('click').click(function () {
                     $(this).remove();
                 });
                 // setting web address
@@ -316,23 +388,23 @@ class PackContentManager {
 
                 for (let catDirectory of catsDirectories) {
                     // Adding the category
-                    if (fs.existsSync(path.join(address,catDirectory)) && fs.lstatSync(path.join(address,catDirectory)).isDirectory()) {
+                    if (fs.existsSync(path.join(address, catDirectory)) && fs.lstatSync(path.join(address, catDirectory)).isDirectory()) {
                         let newCat = await cat.add(catDirectory, DVDNumber, []);
 
                         let softwaresInTheCat = fs.readdirSync(path.join(address, catDirectory));
 
                         for (let singleSoft of softwaresInTheCat) {
-                            if (fs.existsSync(path.join(address,singleSoft)) && fs.lstatSync(path.join(address,singleSoft)).isDirectory()) {
+                            if (fs.existsSync(path.join(address, singleSoft)) && fs.lstatSync(path.join(address, singleSoft)).isDirectory()) {
 
                                 // check if gerdoo.txt file exists
 
-                                if(fs.existsSync(path.join(address,catDirectory,singleSoft,'gerdoo.txt'))){
-                                    let gerdooText = fs.readFileSync(path.join(address,catDirectory,singleSoft,'gerdoo.txt'),'utf8');
+                                if (fs.existsSync(path.join(address, catDirectory, singleSoft, 'gerdoo.txt'))) {
+                                    let gerdooText = fs.readFileSync(path.join(address, catDirectory, singleSoft, 'gerdoo.txt'), 'utf8');
 
                                     // <ig> is for installation guide
-                                    
+
                                     let ig = /<ig>((?:.|\s)*)<\/ig>/i.exec(gerdooText)[1];
-                                    
+
                                     // <d> is for description
 
                                     let desc = /<d>((?:.|\s)*)<\/d>/i.exec(gerdooText)[1];
@@ -345,19 +417,19 @@ class PackContentManager {
 
                                     let softImage = null;
 
-                                    if(fs.existsSync(path.join(address,catDirectory,singleSoft,'1.gif'))){
-                                        softImage = FileManager.copyToLocale(path.join(address,catDirectory,singleSoft,'1.gif'));
+                                    if (fs.existsSync(path.join(address, catDirectory, singleSoft, '1.gif'))) {
+                                        softImage = FileManager.copyToLocale(path.join(address, catDirectory, singleSoft, '1.gif'));
                                     }
 
                                     let setup = null;
 
-                                    if(fs.existsSync(path.join(address,catDirectory,singleSoft,'setup.exe'))){
-                                        setup = fs.existsSync(path.join(address,catDirectory,singleSoft,'setup.exe'));
+                                    if (fs.existsSync(path.join(address, catDirectory, singleSoft, 'setup.exe'))) {
+                                        setup = fs.existsSync(path.join(address, catDirectory, singleSoft, 'setup.exe'));
                                     }
 
                                     await software.add(singleSoft, null, DVDNumber, newCat._id, [], supportedOSes, softImage, setup, `${catDirectory}/${singleSoft}`, null, false, null, desc, null, ig, null, null, null, null)
 
-                                }else{
+                                } else {
                                     await software.add(singleSoft, null, DVDNumber, newCat._id, []);
                                 }
                             }
