@@ -1,4 +1,10 @@
-const generalInfo = require('../../../models/GeneralInfo');
+const GeneralInfo = require('../../../models/GeneralInfo');
+
+//
+
+const generalInfo = new GeneralInfo();
+
+//
 
 class GeneralInfoManager{
 

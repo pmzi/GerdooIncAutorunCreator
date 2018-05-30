@@ -3,7 +3,13 @@ const {
 } = require('electron');
 const fs = require('fs');
 const path = require('path');
-const pack = require('../../../models/Pack');
+const Pack = require('../../../models/Pack');
+
+//
+
+const pack = new Pack();
+
+//
 
 class PackManager {
 

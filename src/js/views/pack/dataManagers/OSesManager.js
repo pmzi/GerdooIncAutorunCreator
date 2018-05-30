@@ -1,4 +1,10 @@
-const packOS = require('../../../models/PackOS');
+const PackOS = require('../../../models/PackOS');
+
+//
+
+const packOS = new PackOS();
+
+//
 
 class OSesManager {
 

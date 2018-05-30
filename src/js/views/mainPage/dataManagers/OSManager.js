@@ -1,5 +1,11 @@
 const OS = require('../../../models/OS');
 
+//
+
+const os = new OS();
+
+//
+
 class OSManager{
 
     constructor() {
@@ -15,7 +21,7 @@ class OSManager{
     loadOSes() {
         return new Promise((resolve, reject) => {
 
-            OS.fetchAll((err, OSes) => {
+            os.fetchAll((err, OSes) => {
 
                 let target = $("#OSesTable tbody")
 
@@ -58,7 +64,7 @@ class OSManager{
 
         $('#add-os-modal .modalActionButton').off('click').click(() => {
 
-            OS.add($("#add-os-modal input[type=text]").val(), (err, newPack) => {
+            os.add($("#add-os-modal input[type=text]").val(), (err, newPack) => {
 
                 $("#add-os-modal").modal('hide');
 
@@ -89,7 +95,7 @@ class OSManager{
 
     deleteOS(id){
 
-        OS.delete(id,()=>{
+        os.delete(id,()=>{
             this.loadOSes();
         });
 

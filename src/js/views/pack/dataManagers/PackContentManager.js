@@ -1,7 +1,16 @@
 const DVD = require('../../../models/DVD');
-const software = require('../../../models/Software');
+const Software = require('../../../models/Software');
 const FileManager = require('../../globals/FileManager');
-const cat = require('../../../models/Cat');
+const Cat = require('../../../models/Cat');
+
+//
+
+const cat = new Cat();
+const software = new Software();
+const dvd = new DVD();
+
+//
+
 const path = require('path');
 
 const fs = require('fs');
@@ -33,7 +42,7 @@ class PackContentManager {
 
             $('#softwares>ul').empty();
 
-            let DVDs = await DVD.fetchAll();
+            let DVDs = await dvd.fetchAll();
 
             for (let singleDVD of DVDs) {
 
@@ -95,7 +104,7 @@ class PackContentManager {
     loadDiskNumbers() {
 
         return new Promise((resolve, reject) => {
-            DVD.getDVDNumbers().then((result) => {
+            dvd.getDVDNumbers().then((result) => {
 
                 $('.DVDNumbers').each(function () {
                     $(this).empty();
@@ -143,7 +152,7 @@ class PackContentManager {
 
             // inputs[0] is dvd number && inputs[1] is dvd content address
 
-            DVD.add(inputs[0].value).then(() => {
+            dvd.add(inputs[0].value).then(() => {
                 if (inputs[1].value !== '') {
                     this.addDVDContentFromFolder(inputs[0].value, inputs[1].value).then(()=>{
                         this.load();
