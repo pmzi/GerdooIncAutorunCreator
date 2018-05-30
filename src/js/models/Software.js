@@ -110,7 +110,7 @@ class Software extends Model {
                     },
                     {
                         tags:{
-                            $in: [new RegExp(string,'i')]
+                            $regex: new RegExp(string,'i')
                         },
                         DVDNumber,
                         cat: catId

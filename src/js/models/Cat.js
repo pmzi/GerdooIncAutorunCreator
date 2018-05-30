@@ -73,7 +73,7 @@ class Cat extends Model {
                     },
                     {
                         tags:{
-                            $in: [new RegExp(string,'i')]
+                            $regex: new RegExp(string,'i')
                         },
                         DVDNumber
                     }
