@@ -47,6 +47,20 @@ class Cat extends Model {
         });
     }
 
+    getById(id){
+        return new Promise((resolve, reject) => {
+            this.db.findOne({
+                _id:id
+            },(err, result) => {
+                if (err === null) {
+                    resolve(result);
+                } else {
+                    reject();
+                }
+            });
+        });
+    }
+
     add(title, DVDNumber, tags) {
 
         DVDNumber = parseInt(DVDNumber);
@@ -67,6 +81,28 @@ class Cat extends Model {
 
         });
 
+    }
+
+    edit(id, title, DVDNumber, tags) {
+        DVDNumber = parseInt(DVDNumber);
+
+        return new Promise((resolve, reject) => {
+
+            this.db.update({
+                _id: id
+            }, {
+                title,
+                DVDNumber,
+                tags
+            }, (err) => {
+                if (err === null) {
+                    resolve();
+                } else {
+                    reject(err);
+                }
+            });
+
+        });
     }
 
     deleteById(id) {

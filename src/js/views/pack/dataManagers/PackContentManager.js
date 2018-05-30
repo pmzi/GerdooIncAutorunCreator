@@ -300,13 +300,83 @@ class PackContentManager {
 
         })
 
+        // event for deleting item(dvd - cat - software)
+
+        $('#delete-alert-modal .modalActionButton').click(()=>{
+
+            let itemToDelete = $('#softwareMenu .active').parent();
+
+            if($(itemToDelete).parent().hasClass('softWrapper')){
+                // it's a software
+                software.deleteById($(itemToDelete).attr('data-software-id')).then(()=>{
+                    this.load();
+                })
+            }else if($(itemToDelete).parent().hasClass('catWrapper')){
+                // it's a cat
+                let catId = $(itemToDelete).attr('data-cat-id');
+                cat.deleteById(catId).then(()=>{
+                    software.deleteByCat(catId).then(()=>{
+                        this.load();
+                    })
+                })
+            }else{
+                // it's a dvd
+                let DVDNumber = $(itemToDelete).attr('data-dvd-number');
+                dvd.deleteByNumber(DVDNumber).then(()=>{
+                    cat.deleteByDVD(DVDNumber).then(()=>{
+                        software.deleteByDVD(DVDNumber).then(()=>{
+                            this.load();
+                        })
+                    })
+                })
+            }
+
+            $('#delete-alert-modal').modal('hide');
+
+        });
+
+        // event for editing category
+
+        // for loading
+
+        $('#softwareMenu>footer li:nth-of-type(3)').click(()=>{
+            let id = $('#softwareMenu .active').parent().attr('data-cat-id');
+            cat.getById(id).then((item)=>{
+                $('#edit-cat-modal input[type=text]').val(item.title);
+                $(`#edit-cat-modal select[val=${item.DVDNumber}]`).attr('selected', true);
+                let tagCont = $('#edit-cat-modal .tagsCont');
+                tagCont.empty();
+                for(let tag of item.tags){
+                    tagCont.append(`<a class="list-group-item" href="javascript:void(0);">${tag}</a>`);
+                }
+                $('#edit-cat-modal').modal('show');
+            });
+        });
+
+        // for edit itself
+
+        $('#edit-cat-modal .modalActionButton').click(()=>{
+            let id = $('#softwareMenu .active').parent().attr('data-cat-id');
+            let title = $('#edit-cat-modal input[type=text]').val();
+            let DVDNumber = $('#edit-cat-modal select').val();
+            let tagsElems = $('#edit-cat-modal .tagsCont>a');
+            let tags = [];
+            for(let tag of tagsElems){
+                tags.push(tag.textContent);
+            }
+            console.log("ss")
+            cat.edit(id, title, DVDNumber, tags).then(()=>{
+                this.load();
+            })
+        });
+
     }
 
     initSoftwareEvents() {
 
         let that = this;
 
-        $('#softwares ul.softWrapper>li').off('click').click(function (e) {
+        $('#softwares ul.softWrapper>li').click(function (e) {
             e.stopPropagation()
             let softwareId = $(this).attr('data-software-id');
 
