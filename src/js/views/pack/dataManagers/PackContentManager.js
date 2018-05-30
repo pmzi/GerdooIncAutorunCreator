@@ -258,7 +258,7 @@ class PackContentManager {
             let selectedOSes = $('.tabWrapper input:checked')
             let oses = [];
             for (let os of selectedOSes) {
-                oses.push($(os).val());   
+                oses.push($(os).val());
             }
             // setting the setup
             let setup = inputs[2].value;
@@ -274,7 +274,7 @@ class PackContentManager {
             let webArress = inputs[4].value;
             // getting isRecommended
             let isRecommended = false;
-            if($('#isRecommended').is(':checked')){
+            if ($('#isRecommended').is(':checked')) {
                 isRecommended = true;
             }
             // set faDesc
@@ -294,7 +294,7 @@ class PackContentManager {
 
             // let's save the software
 
-            software.save(id,title,version,DVDNumber,cat,tags,oses,image,setup,programAddress,webArress,isRecommended,faDesk,enDesk,faGuide,enGuide,crack,patch,serial).then(()=>{
+            software.save(id, title, version, DVDNumber, cat, tags, oses, image, setup, programAddress, webArress, isRecommended, faDesk, enDesk, faGuide, enGuide, crack, patch, serial).then(() => {
                 this.load();
             })
 
@@ -360,6 +360,12 @@ class PackContentManager {
                 });
                 // setting web address
                 inputs[4].value = result.webAddress;
+                // setting isRecommended
+                if (result.isRecommended) {
+                    $('#isRecommended').prop('checked',true)
+                }else{
+                    $('#isRecommended').prop('checked',false)
+                }
                 // set faDesc
                 quills[0].innerHTML = result.faDesc;
                 // setting en desc

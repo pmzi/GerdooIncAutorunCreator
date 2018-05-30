@@ -24,7 +24,7 @@ class PackManager {
             targetCont.empty();
             let packs = await pack.fetchAll();
             for (let singlePack of packs) {
-                if(singlePack._id === window._id){
+                if (singlePack._id === window._id) {
                     continue;
                 }
                 targetCont.append(`<div class="checkbox">
@@ -60,11 +60,11 @@ class PackManager {
 
                     let textarea = $('.tabWrapper textarea');
 
-                    
+
                     // setting the image address
                     // let's first transfer the image
-                    if(properSoftware.image !== null){
-                        let imageAddress = FileManager.copyToLocale(path.join(__dirname,'../../../',properSoftware.image));
+                    if (properSoftware.image !== null) {
+                        let imageAddress = FileManager.copyToLocale(path.join(__dirname, '../../../', properSoftware.image));
                         $('#softwareImageWrapper img').attr('src', imageAddress);
                     }
                     // setting the oses
@@ -88,6 +88,12 @@ class PackManager {
                     });
                     // setting web address
                     inputs[4].value = properSoftware.webAddress;
+                    // setting isRecommended
+                    if (properSoftware.isRecommended) {
+                        $('#isRecommended').prop('checked', true)
+                    } else {
+                        $('#isRecommended').prop('checked', false)
+                    }
                     // set faDesc
                     quills[0].innerHTML = properSoftware.faDesc;
                     // setting en desc
