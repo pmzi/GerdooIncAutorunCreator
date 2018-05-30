@@ -364,10 +364,10 @@ class PackContentManager {
             for(let tag of tagsElems){
                 tags.push(tag.textContent);
             }
-            console.log("ss")
             cat.edit(id, title, DVDNumber, tags).then(()=>{
                 this.load();
             })
+            $('#edit-cat-modal').modal('hide');
         });
 
     }
