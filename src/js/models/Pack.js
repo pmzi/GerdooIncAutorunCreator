@@ -1,42 +1,81 @@
-
-
 const Model = require('./Model');
 
-class Pack extends Model{
+class Pack extends Model {
 
-    constructor(){
+    constructor() {
 
         super();
 
         this.dbName = 'Packs';
-        
+
         // let's load the DB
 
         this.loadDatabase(true);
 
     }
 
-    fetchAll(cb){
-
-        this.db.find({}).sort({updatedAt: -1}).exec(cb);
+    fetchAll() {
+        return new Promise((resolve, reject)=>{
+            this.db.find({}).sort({
+                updatedAt: -1
+            }).exec((err, result)=>{
+                if(err === null){
+                    resolve(result);
+                }else{
+                    reject(err);
+                }
+            });
+        });
 
     }
-    
-    add(packName, cb){
+
+    add(packName) {
         
-        this.db.insert({name: packName}, cb);
+        return new Promise((resolve, reject)=>{
+            this.db.insert({
+                name: packName
+            }, (err, result)=>{
+                if(err === null){
+                    resolve(result);
+                }else{
+                    reject(err);
+                }
+            });
+        });
 
     }
 
-    delete(id, cb){
+    delete(id) {
 
-        this.db.remove({_id:id}, cb);
+        return new Promise((resolve, reject) => {
+            this.db.remove({
+                _id: id
+            }, (err,result)=>{
+                if(err === null){
+                    resolve(result);
+                }else{
+                    reject(err);
+                }
+            });
+
+        })
+
 
     }
 
-    getById(id,cb){
+    getById(id) {
 
-        this.db.findOne({_id:id},cb)
+        return new Promise((resolve, reject)=>{
+            this.db.findOne({
+                _id: id
+            }, (err, result)=>{
+                if(err === null){
+                    resolve(result);
+                }else{
+                    reject(err);
+                }
+            })
+        });
 
     }
 
