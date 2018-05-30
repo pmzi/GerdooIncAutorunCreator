@@ -101,7 +101,7 @@ class PackContentManager {
 
     }
 
-    filterByCat(catId) {
+    async filterByCat(catId) {
         return new Promise(async (resolve, reject) => {
 
             // let's empty the menu
@@ -153,7 +153,60 @@ class PackContentManager {
         });
     }
 
-    filterByDVDNumber() {
+    async filterByDVDNumber(DVDNumber) {
+
+        return new Promise(async (resolve, reject) => {
+
+            // let's empty the menu
+
+            $('#softwares>ul').empty();
+
+            // let's add DVD's element
+
+            $('#softwares>ul').append(`<li data-dvd-number='${DVDNumber}'><div>
+                <i class="material-icons">adjust</i>
+                <span>DVD ${DVDNumber}</span>
+            </div><ul class='catWrapper'></ul></li>`);
+
+            let currDVDElem = $(`#softwares>ul>li[data-dvd-number=${DVDNumber}]>ul`);
+
+            let cats = await cat.getTitlesByDVDNumber(DVDNumber);
+
+            for (let singleCat of cats) {
+                // let's add cat's element
+
+                currDVDElem.append(`<li data-cat-id='${singleCat._id}'><div>
+                    <i class="material-icons">events</i>
+                    <span>${singleCat.title}</span>
+                </div><ul class='softWrapper'></ul></li>`);
+
+                let currCatElem = $(`#softwares [data-cat-id=${singleCat._id}]>ul`);
+
+                let softwares = await software.getSoftwaresByCat(singleCat._id);
+
+                for (let singleSoftware of softwares) {
+                    // let's add software's element
+
+                    currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
+                        <div>
+                            <i class="material-icons">events</i>
+                            <span>${singleSoftware.title}</span>
+                        </div>
+                    </li>`);
+                }
+
+
+            }
+
+            // We are finished;)
+
+            $('#softwares').trigger('reload');
+
+            this.initSoftwareEvents();
+
+            resolve();
+
+        });
 
     }
 
@@ -430,10 +483,16 @@ class PackContentManager {
             $('#edit-cat-modal').modal('hide');
         });
 
+        // filter by DVDNumber
+
+        $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(2) button').click(() => {
+            let DVDNumber = $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(2) select').val();
+            this.filterByDVDNumber(DVDNumber)
+        })
 
         // filter by cat
 
-        $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(3) button').click(()=>{
+        $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(3) button').click(() => {
             let catId = $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(3) select').val();
             this.filterByCat(catId)
         })
