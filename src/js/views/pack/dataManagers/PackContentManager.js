@@ -251,6 +251,8 @@ class PackContentManager {
 
                 // let's set the _id
                 $('#generalTab').attr('data-id',result._id);
+                // let's set the name on the data-name
+                $('#generalTab').attr('data-name',result.title);
                 // setting the dvd number
                 $(selects[0]).find(`[value=${result.DVDnumber}]`).attr('selected', 'true').trigger('change');
                 // setting the cat  
