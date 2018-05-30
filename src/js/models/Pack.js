@@ -81,4 +81,4 @@ class Pack extends Model {
 
 }
 
-module.exports = new Pack;
+module.exports = Pack;

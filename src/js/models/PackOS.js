@@ -56,4 +56,4 @@ class PackOS extends Model{
 
 }
 
-module.exports = new PackOS;
+module.exports = PackOS;

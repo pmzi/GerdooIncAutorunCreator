@@ -71,4 +71,4 @@ class Cat extends Model {
 
 }
 
-module.exports = new Cat;
+module.exports = Cat;

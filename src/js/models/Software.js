@@ -79,4 +79,4 @@ class Software extends Model{
 
 }
 
-module.exports = new Software;
+module.exports = Software;

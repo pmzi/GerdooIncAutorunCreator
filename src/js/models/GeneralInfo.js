@@ -58,4 +58,4 @@ class GeneralInfo extends Model {
 
 }
 
-module.exports = new GeneralInfo;
+module.exports = GeneralInfo;

@@ -70,4 +70,4 @@ class DVD extends Model{
 
 }
 
-module.exports = new DVD;
+module.exports = DVD;

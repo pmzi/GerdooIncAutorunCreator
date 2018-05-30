@@ -34,4 +34,4 @@ class OS extends Model{
 
 }
 
-module.exports = new OS;
+module.exports = OS;
