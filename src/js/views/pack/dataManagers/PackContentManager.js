@@ -97,6 +97,66 @@ class PackContentManager {
 
     }
 
+    search() {
+
+    }
+
+    filterByCat(catId) {
+        return new Promise(async (resolve, reject) => {
+
+            // let's empty the menu
+
+            $('#softwares>ul').empty();
+
+            // let's get the target cat
+
+            let currCat = await cat.getById(catId);
+
+            // let's add DVD's element
+
+            $('#softwares>ul').append(`<li data-dvd-number='${currCat.DVDNumber}'><div>
+                <i class="material-icons">adjust</i>
+                <span>DVD ${currCat.DVDNumber}</span>
+            </div><ul class='catWrapper'></ul></li>`);
+
+            let currDVDElem = $(`#softwares>ul>li[data-dvd-number=${currCat.DVDNumber}]>ul`);
+            // let's add cat's element
+
+            currDVDElem.append(`<li data-cat-id='${currCat._id}'><div>
+                    <i class="material-icons">events</i>
+                    <span>${currCat.title}</span>
+                </div><ul class='softWrapper'></ul></li>`);
+
+            let currCatElem = $(`#softwares [data-cat-id=${currCat._id}]>ul`);
+
+            let softwares = await software.getSoftwaresByCat(currCat._id);
+
+            for (let singleSoftware of softwares) {
+                // let's add software's element
+
+                currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
+                        <div>
+                            <i class="material-icons">events</i>
+                            <span>${singleSoftware.title}</span>
+                        </div>
+                    </li>`);
+            }
+
+            // We are finished;)
+
+            $('#softwares').trigger('reload');
+
+            this.initSoftwareEvents();
+
+            resolve();
+
+        });
+    }
+
+    filterByDVDNumber() {
+
+    }
+
     /**
      * Loads the number of disks in related comboboxes
      */
@@ -302,29 +362,29 @@ class PackContentManager {
 
         // event for deleting item(dvd - cat - software)
 
-        $('#delete-alert-modal .modalActionButton').click(()=>{
+        $('#delete-alert-modal .modalActionButton').click(() => {
 
             let itemToDelete = $('#softwareMenu .active').parent();
 
-            if($(itemToDelete).parent().hasClass('softWrapper')){
+            if ($(itemToDelete).parent().hasClass('softWrapper')) {
                 // it's a software
-                software.deleteById($(itemToDelete).attr('data-software-id')).then(()=>{
+                software.deleteById($(itemToDelete).attr('data-software-id')).then(() => {
                     this.load();
                 })
-            }else if($(itemToDelete).parent().hasClass('catWrapper')){
+            } else if ($(itemToDelete).parent().hasClass('catWrapper')) {
                 // it's a cat
                 let catId = $(itemToDelete).attr('data-cat-id');
-                cat.deleteById(catId).then(()=>{
-                    software.deleteByCat(catId).then(()=>{
+                cat.deleteById(catId).then(() => {
+                    software.deleteByCat(catId).then(() => {
                         this.load();
                     })
                 })
-            }else{
+            } else {
                 // it's a dvd
                 let DVDNumber = $(itemToDelete).attr('data-dvd-number');
-                dvd.deleteByNumber(DVDNumber).then(()=>{
-                    cat.deleteByDVD(DVDNumber).then(()=>{
-                        software.deleteByDVD(DVDNumber).then(()=>{
+                dvd.deleteByNumber(DVDNumber).then(() => {
+                    cat.deleteByDVD(DVDNumber).then(() => {
+                        software.deleteByDVD(DVDNumber).then(() => {
                             this.load();
                         })
                     })
@@ -339,14 +399,14 @@ class PackContentManager {
 
         // for loading
 
-        $('#softwareMenu>footer li:nth-of-type(3)').click(()=>{
+        $('#softwareMenu>footer li:nth-of-type(3)').click(() => {
             let id = $('#softwareMenu .active').parent().attr('data-cat-id');
-            cat.getById(id).then((item)=>{
+            cat.getById(id).then((item) => {
                 $('#edit-cat-modal input[type=text]').val(item.title);
                 $(`#edit-cat-modal select[val=${item.DVDNumber}]`).attr('selected', true);
                 let tagCont = $('#edit-cat-modal .tagsCont');
                 tagCont.empty();
-                for(let tag of item.tags){
+                for (let tag of item.tags) {
                     tagCont.append(`<a class="list-group-item" href="javascript:void(0);">${tag}</a>`);
                 }
                 $('#edit-cat-modal').modal('show');
@@ -355,20 +415,28 @@ class PackContentManager {
 
         // for edit itself
 
-        $('#edit-cat-modal .modalActionButton').click(()=>{
+        $('#edit-cat-modal .modalActionButton').click(() => {
             let id = $('#softwareMenu .active').parent().attr('data-cat-id');
             let title = $('#edit-cat-modal input[type=text]').val();
             let DVDNumber = $('#edit-cat-modal select').val();
             let tagsElems = $('#edit-cat-modal .tagsCont>a');
             let tags = [];
-            for(let tag of tagsElems){
+            for (let tag of tagsElems) {
                 tags.push(tag.textContent);
             }
-            cat.edit(id, title, DVDNumber, tags).then(()=>{
+            cat.edit(id, title, DVDNumber, tags).then(() => {
                 this.load();
             })
             $('#edit-cat-modal').modal('hide');
         });
+
+
+        // filter by cat
+
+        $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(3) button').click(()=>{
+            let catId = $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(3) select').val();
+            this.filterByCat(catId)
+        })
 
     }
 
@@ -432,9 +500,9 @@ class PackContentManager {
                 inputs[4].value = result.webAddress;
                 // setting isRecommended
                 if (result.isRecommended) {
-                    $('#isRecommended').prop('checked',true)
-                }else{
-                    $('#isRecommended').prop('checked',false)
+                    $('#isRecommended').prop('checked', true)
+                } else {
+                    $('#isRecommended').prop('checked', false)
                 }
                 // set faDesc
                 quills[0].innerHTML = result.faDesc;
