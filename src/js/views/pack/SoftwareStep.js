@@ -45,6 +45,15 @@ class SoftwareStep {
 
         // For slide down and slide up animation
 
+        $('#softwares ul.softWrapper li').off('click').on('click',function(e){
+            e.stopPropagation()
+            
+            $('#softwares .active').removeClass('active');
+
+            $(this).children('div').toggleClass('active');
+            $('#softwareMenu>footer>ul>li:nth-of-type(3)').addClass('disabled');
+        })
+
         $('#softwares ul:not(.softWrapper) li').off('click').click(function (e) {
             e.stopPropagation()
 

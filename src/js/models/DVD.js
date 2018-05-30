@@ -1,15 +1,13 @@
-
-
 const Model = require('./Model');
 
-class DVD extends Model{
+class DVD extends Model {
 
-    constructor(){
+    constructor() {
 
         super();
 
         this.dbName = `${window._name}/DVDs`;
-        
+
         // let's load the DB
 
         this.loadDatabase(false);
@@ -18,19 +16,24 @@ class DVD extends Model{
 
     }
 
-    index(){
+    index() {
 
-        this.db.ensureIndex({fieldName:'number',unique:true});
+        this.db.ensureIndex({
+            fieldName: 'number',
+            unique: true
+        });
 
     }
 
-    fetchAll(){
-        return new Promise((resolve, reject)=>{
+    fetchAll() {
+        return new Promise((resolve, reject) => {
 
-            this.db.find({}).sort({number:1}).exec((err, result)=>{
-                if(err === null){
+            this.db.find({}).sort({
+                number: 1
+            }).exec((err, result) => {
+                if (err === null) {
                     resolve(result);
-                }else{
+                } else {
                     reject(err);
                 }
             });
@@ -38,16 +41,18 @@ class DVD extends Model{
 
     }
 
-    add(DVDNumber){
+    add(DVDNumber) {
 
         DVDNumber = parseInt(DVDNumber);
 
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
 
-            this.db.insert({number:DVDNumber},(err)=>{
-                if(!err){
+            this.db.insert({
+                number: DVDNumber
+            }, (err) => {
+                if (!err) {
                     resolve();
-                }else{
+                } else {
                     reject(err);
                 }
             });
@@ -56,16 +61,37 @@ class DVD extends Model{
 
     }
 
-    getDVDNumbers(){
-        return new Promise((resolve, reject)=>{
-            this.db.find({},{number:1, _id: 0}).sort({number:1}).exec((err, result)=>{
-                if(err === null){
+    getDVDNumbers() {
+        return new Promise((resolve, reject) => {
+            this.db.find({}, {
+                number: 1,
+                _id: 0
+            }).sort({
+                number: 1
+            }).exec((err, result) => {
+                if (err === null) {
                     resolve(result);
-                }else{
+                } else {
                     reject(err);
                 }
             });
         });
+    }
+
+    deleteByNumber(number) {
+        number = parseInt(number);
+        return new Promise((resolve, reject) => {
+
+            this.db.remove({
+                number
+            }, (err) => {
+                if (err === null) {
+                    resolve();
+                } else {
+                    reject(err);
+                }
+            });
+        })
     }
 
 }

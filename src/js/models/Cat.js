@@ -37,10 +37,10 @@ class Cat extends Model {
                 DVDNumber
             }).sort({
                 title: 1
-            }).exec((err, result)=>{
-                if(err === null){
-                    resolve(result);                    
-                }else{
+            }).exec((err, result) => {
+                if (err === null) {
+                    resolve(result);
+                } else {
                     reject();
                 }
             });
@@ -67,6 +67,35 @@ class Cat extends Model {
 
         });
 
+    }
+
+    deleteById(id) {
+        return new Promise((resolve, reject) => {
+            this.db.remove({
+                _id: id
+            }, (err) => {
+                if (err === null) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            });
+        });
+    }
+
+    deleteByDVD(DVDNumber) {
+        DVDNumber = parseInt(DVDNumber);
+        return new Promise((resolve, reject) => {
+            this.db.remove({
+                DVDNumber
+            }, (err) => {
+                if (err === null) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            });
+        });
     }
 
 }
