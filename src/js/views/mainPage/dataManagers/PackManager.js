@@ -20,7 +20,7 @@ class PackManager {
     loadPacks() {
         return new Promise((resolve, reject) => {
 
-            pack.fetchAll((err, packs) => {
+            pack.fetchAll().then((packs) => {
 
                 let target = $("#packsTable tbody")
 
@@ -79,7 +79,7 @@ class PackManager {
 
         $('#add-pack-modal .modalActionButton').off('click').click(() => {
 
-            pack.add($("#add-pack-modal input[type=text]").val(), (err, newPack) => {
+            pack.add($("#add-pack-modal input[type=text]").val()).then((newPack) => {
 
                 this.copyAssets(newPack.name);
 
@@ -113,7 +113,7 @@ class PackManager {
 
         $('#packsTable .edit').click(function () {
             let id = $(this).parent().parent().attr('data-id');
-            pack.getById(id,(err, packForEdit)=>{
+            pack.getById(id).then((packForEdit)=>{
                 that.addPack(id, packForEdit.name);
             })
             
