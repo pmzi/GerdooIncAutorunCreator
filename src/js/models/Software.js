@@ -77,6 +77,20 @@ class Software extends Model{
 
     }
 
+    getByTitle(title){
+        return new Promise((resolve, reject)=>{
+
+            this.db.findOne({title},(err, result)=>{
+                if(err === null){
+                    resolve(result)
+                }else{
+                    reject(err)
+                }
+            });
+
+        });
+    }
+
 }
 
 module.exports = Software;
