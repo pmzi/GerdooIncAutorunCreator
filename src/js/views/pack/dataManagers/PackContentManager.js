@@ -97,7 +97,70 @@ class PackContentManager {
 
     }
 
-    search() {
+    async search(toSearch) {
+
+        return new Promise(async (resolve, reject) => {
+
+            // let's empty the menu
+
+            $('#softwares>ul').empty();
+
+            let DVDs = await dvd.fetchAll();
+
+            for (let singleDVD of DVDs) {
+
+                // let's add DVD's element
+
+                $('#softwares>ul').append(`<li data-dvd-number='${singleDVD.number}'><div>
+                <i class="material-icons">adjust</i>
+                <span>DVD ${singleDVD.number}</span>
+            </div><ul class='catWrapper'></ul></li>`);
+
+                let currDVDElem = $(`#softwares>ul>li[data-dvd-number=${singleDVD.number}]>ul`);
+
+                let cats = await cat.findClosest(toSearch, singleDVD.number);
+
+                for (let singleCat of cats) {
+                    // let's add cat's element
+
+                    currDVDElem.append(`<li data-cat-id='${singleCat._id}'><div>
+                    <i class="material-icons">events</i>
+                    <span>${singleCat.title}</span>
+                </div><ul class='softWrapper'></ul></li>`);
+
+                    let currCatElem = $(`#softwares [data-cat-id=${singleCat._id}]>ul`);
+
+                    let softwares = await software.getSoftwaresByCat(singleCat._id, singleCat._id, singleDVD.number);
+
+                    for (let singleSoftware of softwares) {
+                        // let's add software's element
+
+                        currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
+                        <div>
+                            <i class="material-icons">events</i>
+                            <span>${singleSoftware.title}</span>
+                        </div>
+                    </li>`);
+                    }
+
+                }
+                
+                if(cats.length == 0 && toSearch != ''){
+                    currDVDElem.parent().remove();
+                }
+
+
+            }
+
+            // We are finished;)
+
+            $('#softwares').trigger('reload');
+
+            this.initSoftwareEvents();
+
+            resolve();
+
+        });
 
     }
 
@@ -482,6 +545,13 @@ class PackContentManager {
             })
             $('#edit-cat-modal').modal('hide');
         });
+
+        // search
+
+        $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(1) button').click(() => {
+            let toSearch = $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(1) input[type=text]').val();
+            this.search(toSearch)
+        })
 
         // filter by DVDNumber
 

@@ -61,6 +61,34 @@ class Cat extends Model {
         });
     }
 
+    findClosest(string, DVDNumber){
+        DVDNumber = parseInt(DVDNumber);
+        return new Promise((resolve, reject) => {
+
+            this.db.find({
+                $or:[
+                    {
+                        title: new RegExp(string,'i'),
+                        DVDNumber
+                    },
+                    {
+                        tags:{
+                            $in: [new RegExp(string,'i')]
+                        },
+                        DVDNumber
+                    }
+                ]
+            }, (err, result) => {
+                if (err === null) {
+                    resolve(result)
+                } else {
+                    reject(err)
+                }
+            });
+
+        });
+    };
+
     add(title, DVDNumber, tags) {
 
         DVDNumber = parseInt(DVDNumber);
