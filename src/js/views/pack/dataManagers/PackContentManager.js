@@ -239,6 +239,9 @@ class PackContentManager {
                 
                 let textarea = $('.tabWrapper textarea');
 
+
+                // let's set the _id
+                $('#generalTab').attr('data-id',result._id);
                 // setting the dvd number
                 $(selects[0]).find(`[value=${result.DVDnumber}]`).attr('selected', 'true').trigger('change');
                 // setting the cat  
