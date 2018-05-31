@@ -100,7 +100,7 @@ class PackManager {
 
         // Delete pack event
 
-        $('#packsTable .delete').click(function () {
+        $('#packsTable .delete').off('click').click(function () {
             let id = $(this).parent().parent().attr('data-id');
             $('#delete-pack-modal .modalActionButton').attr('data-id', id);
             $('#delete-pack-modal').modal('show');
@@ -108,7 +108,7 @@ class PackManager {
 
         // edit pack event
 
-        $('#packsTable .edit').click(function () {
+        $('#packsTable .edit').off('click').click(function () {
             let id = $(this).parent().parent().attr('data-id');
             pack.getById(id).then((packForEdit) => {
                 that.addPack(id, packForEdit.name);
@@ -120,14 +120,18 @@ class PackManager {
 
         let that =  this;
 
-        $('#packsTable .excel').click(function () {
+        $('#packsTable .excel').off('click').click(function () {
+
+            Loading.showLoading();
+
             let id = $(this).parent().parent().attr('data-id');
             let address = dialog.showOpenDialog({
                 properties: ['openDirectory']
             })
             if(address){
                 that.exportExcell(id, address).then(()=>{
-                    console.log("exported")
+                    Loading.hideLoading();
+                    PropellerMessage.showMessage('اطلاعت در داخل اکسل اکسپورت شدند.','success');
                 })
             }
             
