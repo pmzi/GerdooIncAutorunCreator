@@ -101,7 +101,7 @@ class PackManager {
                     quills[0].innerHTML = properSoftware.faDesc;
                     // setting en desc
                     quills[1].innerHTML = properSoftware.enDesc;
-
+                    console.log(properSoftware)
                     // hiding the modal
 
                     $('#search-packs-modal').modal('hide');
@@ -122,13 +122,12 @@ class PackManager {
 
     async searchForSoftware(name, packIds) {
         return new Promise(async (resolve, reject) => {
-            let newSoftware = null;
-            let packName = null;
             let properSoftware = null;
             for (let singlePackId of packIds) {
-                packName = await pack.getById(singlePackId).name;
-                newSoftware = new Software(packName);
+                let packInfo = await pack.getById(singlePackId);
+                let newSoftware = new Software(packInfo.name);
                 properSoftware = await newSoftware.getByTitle(name);
+                console.log(properSoftware,packInfo)
                 if (properSoftware) {
                     break;
                 }
