@@ -2,16 +2,28 @@ const Model = require('./Model');
 
 class Software extends Model {
 
-    constructor() {
+    constructor(dbName) {
 
         super();
 
-        this.dbName = `${window._name}/Softwares`;
+        this.dbName = `${dbName || window._name}/Softwares`;
 
         // let's load the DB
 
         this.loadDatabase(false);
 
+    }
+
+    fetchAll(){
+        return new Promise((resolve, reject)=>{
+            this.db.find({}).sort({title: 1}).exec((err, result)=>{
+                if(err === null){
+                    resolve(result)
+                }else{
+                    reject(err)
+                }
+            });
+        })
     }
 
     getSoftwaresByCat(id) {
@@ -48,13 +60,13 @@ class Software extends Model {
         });
     }
 
-    add(title, version, DVDnumber, cat, tags, oses = [], image = null, setup = null, programAddress = null, webAddress = null, isRecommended = false, faDesc = null, enDesc = null, faGuide = null, enGuide = null, crack = null, patch = null, serial = null) {
-        DVDnumber = parseInt(DVDnumber);
+    add(title, version, DVDNumber, cat, tags, oses = [], image = null, setup = null, programAddress = null, webAddress = null, isRecommended = false, faDesc = null, enDesc = null, faGuide = null, enGuide = null, crack = null, patch = null, serial = null) {
+        DVDNumber = parseInt(DVDNumber);
         return new Promise((resolve, reject) => {
             this.db.insert({
                 title,
                 version,
-                DVDnumber,
+                DVDNumber,
                 cat,
                 tags,
                 oses,
@@ -127,15 +139,15 @@ class Software extends Model {
         });
     };
 
-    save(id, title, version, DVDnumber, cat, tags, oses = [], image = null, setup = null, programAddress = null, webAddress = null, isRecommended = false, faDesc = null, enDesc = null, faGuide = null, enGuide = null, crack = null, patch = null, serial = null) {
-        DVDnumber = parseInt(DVDnumber);
+    save(id, title, version, DVDNumber, cat, tags, oses = [], image = null, setup = null, programAddress = null, webAddress = null, isRecommended = false, faDesc = null, enDesc = null, faGuide = null, enGuide = null, crack = null, patch = null, serial = null) {
+        DVDNumber = parseInt(DVDNumber);
         return new Promise((resolve, reject) => {
             this.db.update({
                 _id: id
             }, {
                 title,
                 version,
-                DVDnumber,
+                DVDNumber,
                 cat,
                 tags,
                 oses,

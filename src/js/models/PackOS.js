@@ -4,11 +4,11 @@ const Model = require('./Model');
 
 class PackOS extends Model{
 
-    constructor(){
+    constructor(dbName){
 
         super();
 
-        this.dbName = `${window._name}/OSes`;
+        this.dbName = `${dbName || window._name}/OSes`;
         
         // let's load the DB
 
@@ -27,6 +27,18 @@ class PackOS extends Model{
             });
         });
 
+    }
+
+    getById(id){
+        return new Promise((resolve, reject)=>{
+            this.db.findOne({_id:id},(err, result)=>{
+                if(err === null){
+                    resolve(result);
+                }else{
+                    reject(err);
+                }
+            });
+        });
     }
     
     add(OSName){

@@ -2,11 +2,11 @@ const Model = require('./Model');
 
 class Cat extends Model {
 
-    constructor() {
+    constructor(dbName) {
 
         super();
 
-        this.dbName = `${window._name}/Cats`;
+        this.dbName = `${dbName || window._name}/Cats`;
 
         // let's load the DB
 
