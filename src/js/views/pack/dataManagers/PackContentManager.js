@@ -28,7 +28,7 @@ class PackContentManager {
 
             this.loadCats();
 
-            this.initEvents();
+            this.initStaticEvents();
 
         })
 
@@ -318,7 +318,7 @@ class PackContentManager {
         });
     }
 
-    initEvents() {
+    initStaticEvents() {
 
         // events for add dvd
 
@@ -423,7 +423,7 @@ class PackContentManager {
 
         // event for save software
 
-        $('#saveSoftware').click(() => {
+        $('#saveSoftware').off('click').click(() => {
 
             Loading.showLoading();
 
@@ -662,7 +662,7 @@ class PackContentManager {
                 // let's set the name on the data-name
                 $('#generalTab').attr('data-name', result.title);
                 // setting the dvd number
-                $(selects[0]).find(`[value=${result.DVDnumber}]`).attr('selected', 'true').trigger('change');
+                $(selects[0]).find(`[value=${result.DVDNumber}]`).attr('selected', 'true').trigger('change');
                 // setting the cat  
                 $(selects[1]).on('changed', function () {
                     $(this).find(`[value=${result.cat}]`).attr('selected', 'true')
