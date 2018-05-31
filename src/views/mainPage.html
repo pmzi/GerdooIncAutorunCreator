@@ -24,7 +24,18 @@
 </head>
 
 <body>
-    <div id="wrapper">
+
+    <div id="loading" data-loading-type="main">
+
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+
+    </div>
+
+    <div id="wrapper" class="blur">
         <aside class="pmd-z-depth" id="mainMenu">
             <img src="../images/logo.gif" />
             <ul>
@@ -89,7 +100,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -160,9 +171,9 @@
                     </p>
                 </div>
                 <div class="pmd-modal-action pmd-modal-bordered text-right">
-                        <button data-dismiss="modal" type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-danger modalActionButton">موافقم</button>
+                    <button data-dismiss="modal" type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-danger modalActionButton">موافقم</button>
                     <button data-dismiss="modal" class="btn pmd-btn-flat pmd-ripple-effect btn-primary" type="button">خیر</button>
-                    
+
                 </div>
             </div>
         </div>
@@ -182,7 +193,7 @@
                     </p>
                 </div>
                 <div class="pmd-modal-action pmd-modal-bordered text-right">
-                        <button data-dismiss="modal" type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-danger modalActionButton">موافقم</button>
+                    <button data-dismiss="modal" type="button" class="btn pmd-btn-flat pmd-ripple-effect btn-danger modalActionButton">موافقم</button>
                     <button data-dismiss="modal" class="btn pmd-btn-flat pmd-ripple-effect btn-primary" type="button">خیر</button>
                 </div>
             </div>
@@ -256,19 +267,23 @@
         }
     </script>
 
-    <script>
-        require('../js/views/mainPage/dataManagers/PackManager.js');
-
-        require('../js/views/mainPage/dataManagers/OSManager.js');
-    </script>
-
     <script src="../js/plugins/jquery-1.12.1.js"></script>
 
     <script src="../js/plugins/bootstrap.min.js"></script>
 
     <script src="../js/plugins/propeller.min.js"></script>
 
+    <script src="../js/views/globals/PropellerMessage.js"></script>
+
+    <script src="../js/views/globals/Loading.js"></script>
+
     <script src="../js/views/mainPage/MainMenu.js"></script>
+
+    <script>
+        require('../js/views/mainPage/dataManagers/PackManager.js');
+
+        require('../js/views/mainPage/dataManagers/OSManager.js');
+    </script>
 
 </body>
 

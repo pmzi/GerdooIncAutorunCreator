@@ -17,7 +17,11 @@ class PackManager {
 
         this.loadPacks().then(() => {
 
-            this.initEvents();
+            this.initStaticEvents();
+
+            // hide the main and first loading
+
+            Loading.hideLoading();
 
         })
 
@@ -72,6 +76,8 @@ class PackManager {
 
                 });
 
+                this.initEvents();
+
                 resolve();
 
             });
@@ -81,9 +87,33 @@ class PackManager {
 
     initEvents() {
 
+        // Delete pack event
+
+        $('#packsTable .delete').click(function () {
+            let id = $(this).parent().parent().attr('data-id');
+            $('#delete-pack-modal .modalActionButton').attr('data-id', id);
+            $('#delete-pack-modal').modal('show');
+        });
+
+        // edit pack event
+
+        $('#packsTable .edit').click(function () {
+            let id = $(this).parent().parent().attr('data-id');
+            pack.getById(id).then((packForEdit) => {
+                that.addPack(id, packForEdit.name);
+            })
+
+        });
+
+    }
+
+    initStaticEvents(){
+
         // add events
 
         $('#add-pack-modal .modalActionButton').off('click').click(() => {
+
+            Loading.showLoading();
 
             pack.add($("#add-pack-modal input[type=text]").val()).then((newPack) => {
 
@@ -93,6 +123,9 @@ class PackManager {
 
                 this.loadPacks().then(() => {
                     this.initEvents();
+
+                    PropellerMessage.showMessage('آیتم با موفقیت افزوده شد.', 'success');
+                    Loading.hideLoading();
                 })
 
                 this.addPack(newPack._id, newPack.name);
@@ -101,54 +134,40 @@ class PackManager {
 
         });
 
-        // Delete pack event
+        // delete event
 
         let that = this;
 
-        $('#packsTable .delete').click(function () {
-            let id = $(this).parent().parent().attr('data-id');
-            $('#delete-pack-modal .modalActionButton').attr('data-id', id);
-            $('#delete-pack-modal').modal('show');
-        });
-
         $('#delete-pack-modal .modalActionButton').click(function () {
-            that.deletePack($(this).attr('data-id'));
-        });
 
-        // edit pack event
+            Loading.showLoading();
 
-        $('#packsTable .edit').click(function () {
-            let id = $(this).parent().parent().attr('data-id');
-            pack.getById(id).then((packForEdit)=>{
-                that.addPack(id, packForEdit.name);
+            pack.delete($(this).attr('data-id')).then(() => {
+                that.loadPacks();
+                PropellerMessage.showMessage('آیتم با موفقیت حذف شد.', 'success');
+                Loading.hideLoading();
             })
-            
-        });
 
+
+
+        });
+        
     }
 
-    deletePack(id) {
-
-        pack.delete(id,()=>{
-            this.loadPacks();
-        });
-
-    }
-
-    copyAssets(name){
+    copyAssets(name) {
 
         // Let's create the pack directory
-        let pathToPack = path.join(__dirname,'../../../../dbs',name);
-        console.log(pathToPack)
+        let pathToPack = path.join(__dirname, '../../../../dbs', name);
+        
         fs.mkdirSync(pathToPack);
 
         // let's create the assets dir
 
-        fs.mkdirSync(path.join(pathToPack,'assets'));
-        
+        fs.mkdirSync(path.join(pathToPack, 'assets'));
+
         // let's copy the oses
-        
-        fs.copyFileSync(path.join(pathToPack, '../', 'OSes.db'), pathToPack+'/OSes.db');
+
+        fs.copyFileSync(path.join(pathToPack, '../', 'OSes.db'), pathToPack + '/OSes.db');
 
 
     }

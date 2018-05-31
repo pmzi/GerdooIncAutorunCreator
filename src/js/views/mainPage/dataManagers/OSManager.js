@@ -6,14 +6,12 @@ const os = new OS();
 
 //
 
-class OSManager{
+class OSManager {
 
     constructor() {
 
-        this.loadOSes().then(() => {
-
-            this.initEvents();
-
+        this.loadOSes().then(()=>{
+            this.initStaticEvents();
         })
 
     }
@@ -21,7 +19,7 @@ class OSManager{
     loadOSes() {
         return new Promise((resolve, reject) => {
 
-            os.fetchAll((err, OSes) => {
+            os.fetchAll().then((OSes) => {
 
                 let target = $("#OSesTable tbody")
 
@@ -45,11 +43,13 @@ class OSManager{
                             </i>
                         </a>
                     </td>
-                </tr>`);                    
+                </tr>`);
 
                     i++;
 
                 });
+
+                this.initEvents();
 
                 resolve();
 
@@ -60,16 +60,33 @@ class OSManager{
 
     initEvents() {
 
+        // delete events
+
+        $('#OSesTable .delete').click(function () {
+            let id = $(this).parent().parent().attr('data-id');
+            $('#delete-os-modal .modalActionButton').attr('data-id', id);
+            $('#delete-os-modal').modal('show');
+        });
+
+    }
+
+    initStaticEvents(){
+
         // add events
 
         $('#add-os-modal .modalActionButton').off('click').click(() => {
 
-            os.add($("#add-os-modal input[type=text]").val(), (err, newPack) => {
+            Loading.showLoading();
+
+            os.add($("#add-os-modal input[type=text]").val()).then((newPack) => {
 
                 $("#add-os-modal").modal('hide');
 
-                this.loadOSes().then(()=>{
-                    this.initEvents();
+                this.loadOSes().then(() => {
+
+                    PropellerMessage.showMessage('آیتم با موفقیت افزوده شد.', 'success');
+                    Loading.hideLoading();
+
                 })
 
             })
@@ -78,25 +95,17 @@ class OSManager{
 
         // delete events
 
-
         let that = this;
 
-        $('#OSesTable .delete').click(function () {
-            let id = $(this).parent().parent().attr('data-id');
-            $('#delete-os-modal .modalActionButton').attr('data-id', id);
-            $('#delete-os-modal').modal('show');
-        });
-
         $('#delete-os-modal .modalActionButton').click(function () {
-            that.deleteOS($(this).attr('data-id'));
-        });
 
-    }
+            Loading.showLoading();
 
-    deleteOS(id){
-
-        os.delete(id,()=>{
-            this.loadOSes();
+            os.delete($(this).attr('data-id')).then(() => {
+                that.loadOSes();
+                PropellerMessage.showMessage('آیتم با موفقیت حذف شد.', 'success');
+                Loading.hideLoading();
+            });
         });
 
     }

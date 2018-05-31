@@ -16,20 +16,46 @@ class OS extends Model{
 
     }
 
-    fetchAll(cb){
+    fetchAll(){
 
-        this.db.find({}).sort({updatedAt: -1}).exec(cb);
+        return new Promise((resolve, reject)=>{
+            this.db.find({}).sort({updatedAt: -1}).exec((err, result)=>{
+                if(err === null){
+                    resolve(result);
+                }else{
+                    reject(err)
+                }
+            });
+        })
 
     }
     
-    add(OSName, cb){
-        
-        this.db.insert({name: OSName}, cb);
+    add(OSName){
+
+        return new Promise((resolve,)=>{
+
+            this.db.insert({name: OSName}, (err)=>{
+                if(err === null){
+                    resolve();
+                }else{
+                    reject(err); 
+                }
+            });
+
+        });
 
     }
 
-    delete(id, cb){
-        this.db.remove({_id:id},cb);
+    delete(id){
+        return new Promise((resolve, reject)=>{
+            this.db.remove({_id:id},(err)=>{
+                if(err === null){
+                    resolve()
+                }else{
+                    reject(err)
+                }
+            });
+        });
     }
 
 }
