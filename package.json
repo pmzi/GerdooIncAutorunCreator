@@ -49,6 +49,7 @@
   "dependencies": {
     "electron-compile": "^6.4.2",
     "electron-squirrel-startup": "^1.0.0",
+    "html2plaintext": "^2.0.1",
     "nedb": "^1.8.0",
     "node-excel-export": "^1.4.3"
   },
