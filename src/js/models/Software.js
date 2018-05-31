@@ -194,7 +194,7 @@ class Software extends Model {
 
             this.db.remove({
                 cat
-            }, (err) => {
+            }, { multi: true }, (err) => {
                 if (err === null) {
                     resolve()
                 } else {

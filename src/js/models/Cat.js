@@ -152,7 +152,7 @@ class Cat extends Model {
         return new Promise((resolve, reject) => {
             this.db.remove({
                 DVDNumber
-            }, (err) => {
+            }, { multi: true }, (err) => {
                 if (err === null) {
                     resolve();
                 } else {

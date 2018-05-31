@@ -2,6 +2,7 @@ const DVD = require('../../../models/DVD');
 const Software = require('../../../models/Software');
 const FileManager = require('../../globals/FileManager');
 const Cat = require('../../../models/Cat');
+const PackOS = require('../../../models/PackOS');
 
 //
 
@@ -565,7 +566,7 @@ class PackContentManager {
             let id = $('#softwareMenu .active').parent().attr('data-cat-id');
             cat.getById(id).then((item) => {
                 $('#edit-cat-modal input[type=text]').val(item.title);
-                $(`#edit-cat-modal select[val=${item.DVDNumber}]`).attr('selected', true);
+                $(`#edit-cat-modal option[value=${item.DVDNumber}]`).attr('selected', true);
                 let tagCont = $('#edit-cat-modal .tagsCont');
                 tagCont.empty();
                 for (let tag of item.tags) {
@@ -736,6 +737,7 @@ class PackContentManager {
                 let catsDirectories = fs.readdirSync(address);
 
                 for (let catDirectory of catsDirectories) {
+                    console.log(catDirectory)
                     // Adding the category
                     if (fs.existsSync(path.join(address, catDirectory)) && fs.lstatSync(path.join(address, catDirectory)).isDirectory()) {
                         let newCat = await cat.add(catDirectory, DVDNumber, []);
@@ -762,9 +764,20 @@ class PackContentManager {
 
                                     let supportedOSes = /<s>((?:.|\s)*)<\/s>/i.exec(gerdooText)[1].trim().split('\n');
 
+                                    // let's convert os names to ids
+
+                                    let finalOSes = [];
+
+                                    let packOS = new PackOS();
+
+                                    for(let singleOS of supportedOSes){
+                                        finalOSes.push((await packOS.getByName(singleOS.trim()))._id);
+                                    }
+
                                     // let's add it to the DB
 
                                     let softImage = null;
+                                    
 
                                     if (fs.existsSync(path.join(address, catDirectory, singleSoft, '1.gif'))) {
                                         softImage = FileManager.copyToLocale(path.join(address, catDirectory, singleSoft, '1.gif'));
@@ -773,10 +786,10 @@ class PackContentManager {
                                     let setup = null;
 
                                     if (fs.existsSync(path.join(address, catDirectory, singleSoft, 'setup.exe'))) {
-                                        setup = fs.existsSync(path.join(address, catDirectory, singleSoft, 'setup.exe'));
+                                        setup = 'setup.exe'
                                     }
 
-                                    await software.add(singleSoft, null, DVDNumber, newCat._id, [], supportedOSes, softImage, setup, `${catDirectory}/${singleSoft}`, null, false, null, desc, null, ig, null, null, null, null)
+                                    await software.add(singleSoft, null, DVDNumber, newCat._id, [], finalOSes, softImage, setup, `${catDirectory}/${singleSoft}`, null, false, null, desc, null, ig, null, null, null, null)
 
                                 } else {
                                     await software.add(singleSoft, null, DVDNumber, newCat._id, []);
