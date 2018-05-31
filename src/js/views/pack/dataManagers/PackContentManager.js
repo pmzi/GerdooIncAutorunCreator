@@ -119,7 +119,7 @@ class PackContentManager {
 
                 let currDVDElem = $(`#softwares>ul>li[data-dvd-number=${singleDVD.number}]>ul`);
 
-                let cats = await cat.findClosest(toSearch, singleDVD.number);
+                let cats = await cat.getTitlesByDVDNumber(singleDVD.number);
 
                 for (let singleCat of cats) {
                     // let's add cat's element
@@ -131,7 +131,7 @@ class PackContentManager {
 
                     let currCatElem = $(`#softwares [data-cat-id=${singleCat._id}]>ul`);
 
-                    let softwares = await software.getSoftwaresByCat(singleCat._id, singleCat._id, singleDVD.number);
+                    let softwares = await software.findClosest(toSearch, singleCat._id, singleDVD.number);
 
                     for (let singleSoftware of softwares) {
                         // let's add software's element
@@ -144,9 +144,17 @@ class PackContentManager {
                     </li>`);
                     }
 
+                    if(softwares.length === 0){
+                        // if cat matches it self
+                        let catMatch = await cat.matchItSelf(toSearch,singleDVD.number,singleCat._id)
+                        if(catMatch.length === 0){
+                            currCatElem.parent().remove();
+                        }
+                    }
+
                 }
 
-                if (cats.length == 0 && toSearch != '') {
+                if ($(currDVDElem).find('li').length == 0 && toSearch != '') {
                     currDVDElem.parent().remove();
                 }
 
