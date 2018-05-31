@@ -1,4 +1,6 @@
-const {dialog} = require('electron').remote;
+const {
+    dialog
+} = require('electron').remote;
 const FileManager = require('../globals/FileManager');
 
 class Step {
@@ -14,6 +16,17 @@ class Step {
     }
 
     initEvents() {
+
+        // event for hiding modal and clear all inputs
+
+        $('.modal').on('hidden.bs.modal', function () {
+            $(this).find('input[type=text]').each((index, elem) => {
+                elem.value = "";
+            });
+            $(this).find('img').each((index, elem) => {
+                $(elem).attr('src', '');
+            });
+        });
 
         let that = this; // some stupid action...
 
@@ -45,19 +58,19 @@ class Step {
             })
         })
 
-    }    
+    }
 
     /**
      * For add tag systems
      */
 
-    initializeTagAddSystem(){ 
-        $('.addTagModalBtn').click(function(){
+    initializeTagAddSystem() {
+        $('.addTagModalBtn').click(function () {
             $('#add-tag-modal').modal('show');
-            $('#add-tag-modal .modalActionButton').off('click').click(()=>{
+            $('#add-tag-modal .modalActionButton').off('click').click(() => {
                 let tagName = $('#add-tag-modal input[type=text]').val();
                 $(this).parent().prev().append(`<a class="list-group-item" href="javascript:void(0);">${tagName}</a>`);
-                $('.tagsCont>a').off('click').click(function(){
+                $('.tagsCont>a').off('click').click(function () {
                     $(this).remove();
                 });
                 $('#add-tag-modal').modal('hide');
@@ -65,10 +78,10 @@ class Step {
         });
     }
 
-    initializeDialogSystem(){
+    initializeDialogSystem() {
 
-        $('.dialogBtn').click(function(){
-            
+        $('.dialogBtn').click(function () {
+
             let exts = $(this).attr('data-exts').split(',');
 
             let name = $(this).attr('data-name');
@@ -82,25 +95,25 @@ class Step {
                     extensions: exts
                 }]
             });
-            if(address){
+            if (address) {
 
                 address = address[0];
 
                 let dataFor = $(this).attr('data-for');
                 let forElem = $(`[data-this=${dataFor}]`);
 
-                switch(forElem.prop('tagName').toLowerCase()){
+                switch (forElem.prop('tagName').toLowerCase()) {
                     case "input":
-                    forElem.val(address);
-                    break;
+                        forElem.val(address);
+                        break;
                     case "img":
 
-                    // copy it to locale
+                        // copy it to locale
 
-                    address = FileManager.copyToLocale(address);
-                    
-                    forElem.attr('src',address);
-                    break;
+                        address = FileManager.copyToLocale(address);
+
+                        forElem.attr('src', address);
+                        break;
                 }
 
             }

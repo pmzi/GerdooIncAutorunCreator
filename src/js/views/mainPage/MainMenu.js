@@ -1,21 +1,34 @@
-const {remote} = require('electron');
+const {
+    remote
+} = require('electron');
 
 // For menu actions
 
-class MainMenu{
-    constructor(){
+class MainMenu {
+    constructor() {
 
-        $(()=>{          
+        $(() => {
             this.initMainMenuEvents();
         })
 
     }
 
-    initMainMenuEvents(){
+    initMainMenuEvents() {
 
-        let that = this;// some stupid action...
+        // event for hiding modal and clear all inputs
 
-        $('#mainMenu>ul>li:not(:last-of-type)').click(function(){
+        $('.modal').on('hidden.bs.modal', function () {
+            $(this).find('input[type=text]').each((index, elem) => {
+                elem.value = "";
+            });
+            $(this).find('img').each((index, elem) => {
+                $(elem).attr('src', '');
+            });
+        });
+
+        let that = this; // some stupid action...
+
+        $('#mainMenu>ul>li:not(:last-of-type)').click(function () {
 
             that.showTab($(this).index());
 
@@ -25,18 +38,18 @@ class MainMenu{
 
         });
 
-        $('#mainMenu>ul>li:last-of-type').click(()=>{
+        $('#mainMenu>ul>li:last-of-type').click(() => {
             this.exitProgram();
         })
 
     }
 
-    showTab(index){
+    showTab(index) {
         $('.tabWrapper.showTab').removeClass('showTab');
         $(".tabWrapper").eq(index).addClass('showTab');
     }
 
-    exitProgram(){
+    exitProgram() {
         remote.getCurrentWindow().close();
     }
 
