@@ -58,13 +58,18 @@ class GeneralInfoManager{
     }
 
     update(){
+
+        // showing the loading
+
+        Loading.showLoading();
         
         let quillEditors = $('.stepWrapper:nth-of-type(1) .quillEditor>div:first-of-type');
         
         let inputs = $('.stepWrapper:nth-of-type(1) input[type=text]');
         
         generalInfo.update(inputs[0].value,quillEditors[0].innerHTML,quillEditors[1].innerHTML,inputs[1].value,quillEditors[2].innerHTML,()=>{
-            console.log('updated')
+            Loading.hideLoading();
+            PropellerMessage.showMessage('تغییرات با موفقیت ذخیره شدند.','success');
         });
 
     }

@@ -57,10 +57,12 @@ class OSesManager {
 
         $('#add-os-modal .modalActionButton').click(()=>{
             let osTitle = $('#add-os-modal input').val();
-
+            Loading.showLoading();
             packOS.add(osTitle).then(()=>{
                 this.load().then(()=>{
                     this.initEvents();
+                    Loading.hideLoading();
+                    PropellerMessage.showMessage('تغییرات با موفقیت ذخیره شدند.','success');
                 })
                 $('#add-os-modal').modal('hide');
             })

@@ -144,8 +144,8 @@ class PackContentManager {
                     }
 
                 }
-                
-                if(cats.length == 0 && toSearch != ''){
+
+                if (cats.length == 0 && toSearch != '') {
                     currDVDElem.parent().remove();
                 }
 
@@ -324,6 +324,8 @@ class PackContentManager {
 
         $('#add-disk-modal .modalActionButton').click(() => {
 
+            Loading.showLoading();
+
             let inputs = $('#add-disk-modal input');
 
             // inputs[0] is dvd number && inputs[1] is dvd content address
@@ -333,10 +335,17 @@ class PackContentManager {
                     this.addDVDContentFromFolder(inputs[0].value, inputs[1].value).then(() => {
                         this.load();
                         $('#add-disk-modal').modal('hide');
+
+                        Loading.hideLoading();
+                        PropellerMessage.showMessage('محتویات بارگذاری شدند.', 'success');
+
                     })
                 } else {
                     this.load();
                     $('#add-disk-modal').modal('hide');
+
+                    Loading.hideLoading();
+                    PropellerMessage.showMessage('دی وی دی با موفقیت افزوده شد.', 'success');
                 }
 
                 this.loadDiskNumbers();
@@ -352,6 +361,8 @@ class PackContentManager {
         // events for add Cat
 
         $('#add-cat-modal .modalActionButton').click(() => {
+
+            Loading.showLoading();
 
             let inputs = $('#add-cat-modal input');
 
@@ -370,6 +381,9 @@ class PackContentManager {
                 this.loadCats();
                 this.load();
 
+                Loading.hideLoading();
+                PropellerMessage.showMessage('کتگوری افزوده شد.', 'success');
+
                 $('#add-cat-modal').modal('hide');
 
             }).catch(() => {
@@ -381,6 +395,8 @@ class PackContentManager {
         // events for add software
 
         $('#add-soft-modal .modalActionButton').click(() => {
+
+            Loading.showLoading();
 
             let inputs = $('#add-soft-modal input');
 
@@ -398,6 +414,9 @@ class PackContentManager {
                 this.load();
                 $('#add-soft-modal').modal('hide');
 
+                Loading.hideLoading();
+                PropellerMessage.showMessage('نرم افزار افزوده شد.', 'success');
+
             }).catch(() => {
 
             })
@@ -407,7 +426,8 @@ class PackContentManager {
         // event for save software
 
         $('#saveSoftware').click(() => {
-            console.log("hey")
+
+            Loading.showLoading();
 
             // let's get the contents
 
@@ -472,6 +492,9 @@ class PackContentManager {
 
             software.save(id, title, version, DVDNumber, cat, tags, oses, image, setup, programAddress, webArress, isRecommended, faDesk, enDesk, faGuide, enGuide, crack, patch, serial).then(() => {
                 this.load();
+
+                Loading.hideLoading();
+                PropellerMessage.showMessage('تغغیرات با موفقیت ذخیره شدند.', 'success');
             })
 
         })
@@ -480,12 +503,18 @@ class PackContentManager {
 
         $('#delete-alert-modal .modalActionButton').click(() => {
 
+            Loading.showLoading();
+
             let itemToDelete = $('#softwareMenu .active').parent();
 
             if ($(itemToDelete).parent().hasClass('softWrapper')) {
                 // it's a software
                 software.deleteById($(itemToDelete).attr('data-software-id')).then(() => {
                     this.load();
+
+                    Loading.hideLoading();
+                        PropellerMessage.showMessage('آیتم با موفقیت حذف شد.','success');
+
                 })
             } else if ($(itemToDelete).parent().hasClass('catWrapper')) {
                 // it's a cat
@@ -493,6 +522,10 @@ class PackContentManager {
                 cat.deleteById(catId).then(() => {
                     software.deleteByCat(catId).then(() => {
                         this.load();
+
+                        Loading.hideLoading();
+                        PropellerMessage.showMessage('آیتم با موفقیت حذف شد.','success');
+
                     })
                 })
             } else {
@@ -502,6 +535,10 @@ class PackContentManager {
                     cat.deleteByDVD(DVDNumber).then(() => {
                         software.deleteByDVD(DVDNumber).then(() => {
                             this.load();
+
+                            Loading.hideLoading();
+                        PropellerMessage.showMessage('آیتم با موفقیت حذف شد.','success');
+
                         })
                     })
                 })
@@ -516,6 +553,9 @@ class PackContentManager {
         // for loading
 
         $('#softwareMenu>footer li:nth-of-type(3)').click(() => {
+
+            Loading.showLoading();
+
             let id = $('#softwareMenu .active').parent().attr('data-cat-id');
             cat.getById(id).then((item) => {
                 $('#edit-cat-modal input[type=text]').val(item.title);
@@ -525,6 +565,9 @@ class PackContentManager {
                 for (let tag of item.tags) {
                     tagCont.append(`<a class="list-group-item" href="javascript:void(0);">${tag}</a>`);
                 }
+
+                Loading.hideLoading();
+
                 $('#edit-cat-modal').modal('show');
             });
         });
@@ -532,6 +575,9 @@ class PackContentManager {
         // for edit itself
 
         $('#edit-cat-modal .modalActionButton').click(() => {
+
+            Loading.showLoading();
+
             let id = $('#softwareMenu .active').parent().attr('data-cat-id');
             let title = $('#edit-cat-modal input[type=text]').val();
             let DVDNumber = $('#edit-cat-modal select').val();
@@ -542,6 +588,12 @@ class PackContentManager {
             }
             cat.edit(id, title, DVDNumber, tags).then(() => {
                 this.load();
+
+                Loading.hideLoading();
+
+                Loading.hideLoading();
+                PropellerMessage.showMessage('آیتم با موفقیت ویرایش شد.','success');
+
             })
             $('#edit-cat-modal').modal('hide');
         });
@@ -549,22 +601,30 @@ class PackContentManager {
         // search
 
         $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(1) button').click(() => {
+            Loading.showLoading();
             let toSearch = $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(1) input[type=text]').val();
-            this.search(toSearch)
+            this.search(toSearch).then(()=>{
+                Loading.hideLoading();
+            })
         })
 
         // filter by DVDNumber
 
         $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(2) button').click(() => {
+            Loading.showLoading();
             let DVDNumber = $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(2) select').val();
-            this.filterByDVDNumber(DVDNumber)
+            this.filterByDVDNumber(DVDNumber).then(()=>{
+                Loading.hideLoading();
+            })
         })
 
         // filter by cat
 
         $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(3) button').click(() => {
+            Loading.showLoading();
             let catId = $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(3) select').val();
             this.filterByCat(catId)
+            Loading.hideLoading();
         })
 
     }
@@ -575,6 +635,9 @@ class PackContentManager {
 
         $('#softwares ul.softWrapper>li').click(function (e) {
             e.stopPropagation()
+
+            Loading.showLoading();
+
             let softwareId = $(this).attr('data-software-id');
 
             software.getById(softwareId).then((result) => {
@@ -647,6 +710,9 @@ class PackContentManager {
                 inputs[5].value = result.patch;
                 // setting the serial numbers
                 textarea.textContent = result.serial;
+
+                Loading.hideLoading();
+
             });
 
         });

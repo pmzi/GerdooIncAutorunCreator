@@ -27,7 +27,7 @@
 
 <body>
 
-    <!-- <div class="loading" data-loading-type="main">
+    <div id="loading" data-loading-type="main">
 
         <div class="spinner">
             <div class="bounce1"></div>
@@ -35,9 +35,9 @@
             <div class="bounce3"></div>
         </div>
 
-    </div> -->
+    </div>
 
-    <div id="wrapper">
+    <div id="wrapper" class="blur">
 
         <header id="steps">
 
@@ -1133,6 +1133,10 @@
 
     <script src="../js/plugins/propeller.min.js"></script>
 
+    <script src="../js/views/globals/PropellerMessage.js"></script>
+
+    <script src="../js/views/globals/Loading.js"></script>
+
     <script src="../js/plugins/quill/quill.js"></script>
 
     <script src="../js/views/pack/SoftwareStep.js"></script>
@@ -1141,8 +1145,6 @@
         require('../js/views/pack/Step.js');
 
         require('../js/views/pack/QuillHandler.js');
-
-        require('../js/views/pack/Loading.js');
 
         // Data managers
 

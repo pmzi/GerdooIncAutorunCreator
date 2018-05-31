@@ -81,6 +81,8 @@ class ThemeManager {
         // for adding a theme
 
         $('#add-theme-modal .modalActionButton').click(() => {
+
+            Loading.showLoading();
             
             let imageAddress = $('#add-theme-modal img').attr('src');
 
@@ -91,6 +93,10 @@ class ThemeManager {
             theme.add(name, imageAddress, inputs[0].value, inputs[1].value, inputs[2].value).then(() => {
                 $('#add-theme-modal').modal('hide');
                 this.load();
+
+                Loading.hideLoading();
+                PropellerMessage.showMessage('تغییرات با موفقیت ذخیره شدند.','success');
+
             })
         });
 

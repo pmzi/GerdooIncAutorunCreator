@@ -43,6 +43,9 @@ class PackManager {
     initStaticEvents() {
 
         $('#search-packs-modal .modalActionButton').click(() => {
+
+            Loading.showLoading();
+
             let selectedPacks = $('#search-packs-modal input[type=checkbox]:checked');
             let name = $('#generalTab').attr('data-name');
             let packIds = [];
@@ -103,7 +106,15 @@ class PackManager {
 
                     $('#search-packs-modal').modal('hide');
 
+                    PropellerMessage.showMessage('مشخصات نرم افزار مورد نظر بارگذاری شد.','success');
+
+                }else{
+                    PropellerMessage.showMessage('نرم افزاری با این مشخصات یافت نشد.','error');
                 }
+
+                Loading.hideLoading();
+                
+
             })
         })
 
