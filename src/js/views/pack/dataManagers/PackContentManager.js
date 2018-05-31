@@ -711,6 +711,10 @@ class PackContentManager {
                 // setting the serial numbers
                 textarea.textContent = result.serial;
 
+                // Let's hide the blur
+
+                $('.tabWrapper.forSoftware').removeClass('blur');
+
                 Loading.hideLoading();
 
             });

@@ -241,6 +241,9 @@ main#stepWrapper
                     height: 100%
                     position: absolute
                     left: 20px
+                    &.forSoftware.blur
+                        filter: blur(10px)
+                        pointer-events: none
                     .pmd-card
                         height: calc(100% - 100px)
                         overflow-y: scroll
