@@ -356,8 +356,6 @@ class PackContentManager {
 
         })
 
-        // events for delete dvd
-
         // events for add Cat
 
         $('#add-cat-modal .modalActionButton').click(() => {
@@ -507,13 +505,21 @@ class PackContentManager {
 
             let itemToDelete = $('#softwareMenu .active').parent();
 
+            if (itemToDelete.length === 0) {
+                // there is now active items
+                Loading.hideLoading();
+                PropellerMessage.showMessage('موردی را انتخاب کنید.', 'error');
+                $('#delete-alert-modal').modal('hide');
+                return;
+            }
+
             if ($(itemToDelete).parent().hasClass('softWrapper')) {
                 // it's a software
                 software.deleteById($(itemToDelete).attr('data-software-id')).then(() => {
                     this.load();
 
                     Loading.hideLoading();
-                        PropellerMessage.showMessage('آیتم با موفقیت حذف شد.','success');
+                    PropellerMessage.showMessage('آیتم با موفقیت حذف شد.', 'success');
 
                 })
             } else if ($(itemToDelete).parent().hasClass('catWrapper')) {
@@ -524,7 +530,7 @@ class PackContentManager {
                         this.load();
 
                         Loading.hideLoading();
-                        PropellerMessage.showMessage('آیتم با موفقیت حذف شد.','success');
+                        PropellerMessage.showMessage('آیتم با موفقیت حذف شد.', 'success');
 
                     })
                 })
@@ -537,7 +543,7 @@ class PackContentManager {
                             this.load();
 
                             Loading.hideLoading();
-                        PropellerMessage.showMessage('آیتم با موفقیت حذف شد.','success');
+                            PropellerMessage.showMessage('آیتم با موفقیت حذف شد.', 'success');
 
                         })
                     })
@@ -592,7 +598,7 @@ class PackContentManager {
                 Loading.hideLoading();
 
                 Loading.hideLoading();
-                PropellerMessage.showMessage('آیتم با موفقیت ویرایش شد.','success');
+                PropellerMessage.showMessage('آیتم با موفقیت ویرایش شد.', 'success');
 
             })
             $('#edit-cat-modal').modal('hide');
@@ -603,7 +609,7 @@ class PackContentManager {
         $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(1) button').click(() => {
             Loading.showLoading();
             let toSearch = $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(1) input[type=text]').val();
-            this.search(toSearch).then(()=>{
+            this.search(toSearch).then(() => {
                 Loading.hideLoading();
             })
         })
@@ -613,7 +619,7 @@ class PackContentManager {
         $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(2) button').click(() => {
             Loading.showLoading();
             let DVDNumber = $('#softHeaderSliderWrapper>.slideWrapper:nth-of-type(2) select').val();
-            this.filterByDVDNumber(DVDNumber).then(()=>{
+            this.filterByDVDNumber(DVDNumber).then(() => {
                 Loading.hideLoading();
             })
         })
