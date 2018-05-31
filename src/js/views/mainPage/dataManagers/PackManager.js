@@ -1,10 +1,21 @@
 const {
     ipcRenderer
 } = require('electron');
+const {dialog} = require('electron').remote;
 const fs = require('fs');
 const path = require('path');
-const Pack = require('../../../models/Pack');
 
+// packages
+
+const excel = require('node-excel-export');
+const h2p = require('html2plaintext');
+
+// models
+
+const Pack = require('../../../models/Pack');
+const Software = require('../../../models/Software');
+const PackOS = require('../../../models/PackOS');
+const Cat = require('../../../models/Cat');
 //
 
 const pack = new Pack();
@@ -105,9 +116,27 @@ class PackManager {
 
         });
 
+        // export excell
+
+        let that =  this;
+
+        $('#packsTable .excel').click(function () {
+            let id = $(this).parent().parent().attr('data-id');
+            let address = dialog.showOpenDialog({
+                properties: ['openDirectory']
+            })
+            if(address){
+                that.exportExcell(id, address).then(()=>{
+                    console.log("exported")
+                })
+            }
+            
+
+        });
+
     }
 
-    initStaticEvents(){
+    initStaticEvents() {
 
         // add events
 
@@ -151,14 +180,14 @@ class PackManager {
 
 
         });
-        
+
     }
 
     copyAssets(name) {
 
         // Let's create the pack directory
         let pathToPack = path.join(__dirname, '../../../../dbs', name);
-        
+
         fs.mkdirSync(pathToPack);
 
         // let's create the assets dir
@@ -182,6 +211,146 @@ class PackManager {
             parent: 'main',
             view: `addPack.html?id=${id}&name=${name}`
         });
+    }
+
+    async exportExcell(packId, address) {
+        return new Promise(async (resolve, reject) => {
+
+            const styles = {
+                headerDark: {
+                    fill: {
+                        fgColor: {
+                            rgb: 'FF000000'
+                        }
+                    },
+                    font: {
+                        color: {
+                            rgb: 'FFFFFFFF'
+                        },
+                        sz: 14,
+                        bold: true
+                    }
+                }
+            };
+            // export specification
+            const specification = {
+                title: {
+                    displayName: 'Title',
+                    headerStyle: styles.headerDark,
+                    width: 220
+                },
+                version: {
+                    displayName: 'Version',
+                    headerStyle: styles.headerDark,
+                    width: 100
+                },
+                diskNumber: {
+                    displayName: 'disk',
+                    headerStyle: styles.headerDark,
+                    width: 30
+                },
+                cat: {
+                    displayName: 'Category',
+                    headerStyle: styles.headerDark,
+                    width: 220
+                },
+                faDesc: {
+                    displayName: 'Persian Description',
+                    headerStyle: styles.headerDark,
+                    width: 500
+                },
+                enDesc: {
+                    displayName: 'English Description',
+                    headerStyle: styles.headerDark,
+                    width: 500
+                },
+                faGuide: {
+                    displayName: 'Persian Installation Guide',
+                    headerStyle: styles.headerDark,
+                    width: 500
+                },
+                enGuide: {
+                    displayName: 'English Installation Guide',
+                    headerStyle: styles.headerDark,
+                    width: 500
+                },
+                oses: {
+                    displayName: 'Supported OSes',
+                    headerStyle: styles.headerDark,
+                    width: 150
+                }
+            }
+            const dataset = []
+
+            // let's fill the dataset
+
+            let packInfo = await pack.getById(packId);
+            
+            let software = new Software(packInfo.name);
+
+            let softwares = await software.fetchAll();
+            
+            for(let soft of softwares){
+
+                let packOS = new PackOS(packInfo.name)
+
+                let oses = [];
+
+                // let's convert id to os name
+
+                for(let osId of soft.oses){
+
+                    let osInfo = await packOS.getById(osId);
+
+                    oses.push(osInfo.name)
+
+                }
+
+                let cat = new Cat(packInfo.name);
+
+                // let's convert cat id to cat name
+
+                let catInfo = await cat.getById(soft.cat)
+
+                // let's fill to temp
+                let temp = {
+                    title: soft.title,
+                    version: soft.version,
+                    diskNumber: soft.DVDNumber,
+                    cat: catInfo.title,
+                    faDesc: h2p(soft.faDesc),
+                    enDesc: h2p(soft.enDesc),
+                    faGuide: h2p(soft.faGuide),
+                    enGuide: h2p(soft.enGuide),
+                    oses
+                };
+
+                // let's push to dataset
+                dataset.push(temp)
+            }
+
+            const report = excel.buildExport(
+                [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
+                    {
+                        name: 'Report', // <- Specify sheet name (optional)
+                        heading: [], // <- Raw heading array (optional)
+                        merges: [], // <- Merge cell ranges
+                        specification: specification, // <- Report specification
+                        data: dataset // <-- Report data
+                    }
+                ]
+            );
+
+            // let's write report to the xlsx file
+
+            fs.writeFileSync(`${address}/${packInfo.name}.xlsx`, report)
+
+            // we are done
+
+            resolve();
+
+        })
+
     }
 
 }
