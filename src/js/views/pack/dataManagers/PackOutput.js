@@ -60,9 +60,6 @@ class PackOutput {
                     Loading.hideLoading();
 
                     PropellerMessage.showMessage("خروجی با موفقیت در محل مورد نظر قرار گرفت.", "success");
-
-                    resolve();
-
                 })
 
             }).catch((e) => {
@@ -104,7 +101,7 @@ class PackOutput {
 
                 // Let's serialize the image
 
-                generalInfo = generalInfo.replace(imageRegex, "\"$1\"");
+                generalInfo = generalInfo.replace(imageRegex, "\"../db/assets/$1\"");
 
                 fs.writeFile(path.join(this.destination, `${window._name}/db`, 'GeneralInfo.db'), generalInfo, () => {
 
@@ -112,7 +109,7 @@ class PackOutput {
 
                         // Let's serialize the image
 
-                        softwares = softwares.replace(imageRegex, "\"$1\"");
+                        softwares = softwares.replace(imageRegex, "\"../db/assets/$1\"");
 
                         fs.writeFile(path.join(this.destination, `${window._name}/db`, 'Softwares.db'), softwares, () => {
 
@@ -138,15 +135,13 @@ class PackOutput {
             }
 
             ncp.limit = 10;
-            resolve()
+            
             ncp(path.join(__dirname, '../../../../', `dbs/${window._name}`), path.join(this.destination, window._name, 'db'), function (err) {
                 if (err) {
                     reject(err)
                 }
                 // Giving it time to close the file
-                setTimeout(() => {
-                    resolve();
-                }, 100)
+                resolve();
 
             });
 

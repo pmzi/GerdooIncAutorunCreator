@@ -75,7 +75,6 @@ class PackManager {
                 let packInfo = await pack.getById(singlePackId);
                 let newSoftware = new Software(packInfo.name);
                 properSoftware = await newSoftware.getByTitle(name);
-                console.log(properSoftware, packInfo)
                 if (properSoftware) {
                     break;
                 }
@@ -102,7 +101,7 @@ class PackManager {
         }
         // setting the oses
         $('.tabWrapper input:checked').attr('checked', false)
-        console.log(properSoftware)
+        
         for (let os of properSoftware.oses) {
             if (os.trim() != '') {
                 $('.tabWrapper').find(`input[type=checkbox][value=${os}]`).prop('checked', true);

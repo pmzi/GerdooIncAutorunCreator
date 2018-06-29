@@ -198,7 +198,7 @@ class PackContentManager {
             // let's add cat's element
 
             currDVDElem.append(`<li data-cat-id='${currCat._id}'><div>
-                    <i class="material-icons">events</i>
+                    <i class="material-icons">category</i>
                     <span>${currCat.title}</span>
                 </div><ul class='softWrapper'></ul></li>`);
 
@@ -211,7 +211,7 @@ class PackContentManager {
 
                 currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
                         <div>
-                            <i class="material-icons">events</i>
+                            <i class="material-icons">insert_drive_file</i>
                             <span>${singleSoftware.title}</span>
                         </div>
                     </li>`);
@@ -251,7 +251,7 @@ class PackContentManager {
                 // let's add cat's element
 
                 currDVDElem.append(`<li data-cat-id='${singleCat._id}'><div>
-                    <i class="material-icons">events</i>
+                    <i class="material-icons">category</i>
                     <span>${singleCat.title}</span>
                 </div><ul class='softWrapper'></ul></li>`);
 
@@ -264,7 +264,7 @@ class PackContentManager {
 
                     currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
                         <div>
-                            <i class="material-icons">events</i>
+                            <i class="material-icons">insert_drive_file</i>
                             <span>${singleSoftware.title}</span>
                         </div>
                     </li>`);
@@ -791,7 +791,7 @@ class PackContentManager {
             // setting the en guide
             quills[3].innerHTML = software.enGuide;
             // setting the crack
-            inputs[4].value = software.crack;
+            inputs[9].value = software.crack;
 
             // we are done
 
@@ -827,11 +827,12 @@ class PackContentManager {
             // setting the image address
             let image = $('#softwareImageWrapper img').attr('src');
             // setting the oses
-            let selectedOSes = $('.tabWrapper input:checked')
+            let selectedOSes = $('#osList input:checked')
             let oses = [];
             for (let os of selectedOSes) {
                 oses.push($(os).val());
             }
+            console.log(oses)
             // setting the setup
             let setup = inputs[2].value;
             // setting the program address
@@ -858,7 +859,7 @@ class PackContentManager {
             // setting the en guide
             let enGuide = quills[3].innerHTML;
             // setting the crack
-            let crack = inputs[4].value;
+            let crack = inputs[9].value;
 
             // let's save the software
 
