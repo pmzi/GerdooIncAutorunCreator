@@ -805,10 +805,6 @@ class PackContentManager {
             quills[3].innerHTML = software.enGuide;
             // setting the crack
             inputs[4].value = software.crack;
-            // setting the patch
-            inputs[5].value = software.patch;
-            // setting the serial numbers
-            textarea.textContent = software.serial;
 
             // we are done
 
@@ -876,14 +872,10 @@ class PackContentManager {
             let enGuide = quills[3].innerHTML;
             // setting the crack
             let crack = inputs[4].value;
-            // setting the patch
-            let patch = inputs[5].value;
-            // setting the serial numbers
-            let serial = textarea.textContent;
 
             // let's save the software
 
-            software.save(id, title, version, DVDNumber, cat, tags, oses, image, setup, programAddress, video, isRecommended, faDesk, enDesk, faGuide, enGuide, crack, patch, serial).then(() => {
+            software.save(id, title, version, DVDNumber, cat, tags, oses, image, setup, programAddress, video, isRecommended, faDesk, enDesk, faGuide, enGuide, crack).then(() => {
                 
                 resolve();
 
