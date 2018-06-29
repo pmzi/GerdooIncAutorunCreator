@@ -60,7 +60,7 @@ class Software extends Model {
         });
     }
 
-    add(title, version, DVDNumber, cat, tags, oses = [], image = null, setup = null, programAddress = null, webAddress = null, isRecommended = false, faDesc = null, enDesc = null, faGuide = null, enGuide = null, crack = null, patch = null, serial = null) {
+    add(title, version, DVDNumber, cat, tags, oses = [], image = null, setup = null, programAddress = null, video = null, isRecommended = false, faDesc = null, enDesc = null, faGuide = null, enGuide = null, crack = null, patch = null, serial = null) {
         DVDNumber = parseInt(DVDNumber);
         return new Promise((resolve, reject) => {
             this.db.insert({
@@ -73,7 +73,7 @@ class Software extends Model {
                 image,
                 setup,
                 programAddress,
-                webAddress,
+                video,
                 isRecommended,
                 faDesc,
                 enDesc,
@@ -149,7 +149,7 @@ class Software extends Model {
         });
     };
 
-    save(id, title, version, DVDNumber, cat, tags, oses = [], image = null, setup = null, programAddress = null, webAddress = null, isRecommended = false, faDesc = null, enDesc = null, faGuide = null, enGuide = null, crack = null, patch = null, serial = null) {
+    save(id, title, version, DVDNumber, cat, tags, oses = [], image = null, setup = null, programAddress = null, video = null, isRecommended = false, faDesc = null, enDesc = null, faGuide = null, enGuide = null, crack = null, patch = null, serial = null) {
         DVDNumber = parseInt(DVDNumber);
         return new Promise((resolve, reject) => {
             this.db.update({
@@ -164,7 +164,7 @@ class Software extends Model {
                 image,
                 setup,
                 programAddress,
-                webAddress,
+                video,
                 isRecommended,
                 faDesc,
                 enDesc,

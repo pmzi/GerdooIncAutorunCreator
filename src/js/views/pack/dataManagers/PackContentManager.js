@@ -456,72 +456,13 @@ class PackContentManager {
 
             Loading.showLoading();
 
-            // let's get the contents
+            this.saveSoftware().then(()=>{
 
-            let inputs = $('.tabWrapper input:not([type=checkbox])');
-            let selects = $('.tabWrapper select');
-            let quills = $('.tabWrapper .quillEditor>div:first-of-type');
-
-            let textarea = $('.tabWrapper textarea');
-
-
-            // let's set the _id
-            let id = $('#generalTab').attr('data-id');
-            // setting the dvd number
-            let DVDNumber = $(selects[0]).find('option:selected').val();
-            // setting the cat  
-            let cat = $(selects[1]).find('option:selected').val();
-            // setting the name 
-            let title = inputs[0].value;
-            // setting the version
-            let version = inputs[1].value;
-            // setting the image address
-            let image = $('#softwareImageWrapper img').attr('src');
-            // setting the oses
-            let selectedOSes = $('.tabWrapper input:checked')
-            let oses = [];
-            for (let os of selectedOSes) {
-                oses.push($(os).val());
-            }
-            // setting the setup
-            let setup = inputs[2].value;
-            // setting the program address
-            let programAddress = inputs[3].value;
-            // setting the tags
-            let tagsElems = $('.tabWrapper .tagsCont>a');
-            let tags = [];
-            for (let tag of tagsElems) {
-                tags.push(tag.textContent.trim());
-            }
-            // setting web address
-            let webArress = inputs[4].value;
-            // getting isRecommended
-            let isRecommended = false;
-            if ($('#isRecommended').is(':checked')) {
-                isRecommended = true;
-            }
-            // set faDesc
-            let faDesk = quills[0].innerHTML;
-            // setting en desc
-            let enDesk = quills[1].innerHTML;
-            // setting the fa guide
-            let faGuide = quills[2].innerHTML;
-            // setting the en guide
-            let enGuide = quills[3].innerHTML;
-            // setting the crack
-            let crack = inputs[4].value;
-            // setting the patch
-            let patch = inputs[5].value;
-            // setting the serial numbers
-            let serial = textarea.textContent;
-
-            // let's save the software
-
-            software.save(id, title, version, DVDNumber, cat, tags, oses, image, setup, programAddress, webArress, isRecommended, faDesk, enDesk, faGuide, enGuide, crack, patch, serial).then(() => {
                 this.load();
 
                 Loading.hideLoading();
                 PropellerMessage.showMessage('تغغیرات با موفقیت ذخیره شدند.', 'success');
+
             })
 
         })
@@ -677,80 +618,17 @@ class PackContentManager {
 
             software.getById(softwareId).then((result) => {
 
-                // Let's load the software
+                // Let's show the software
 
-                let inputs = $('.tabWrapper input:not([type=checkbox])');
-                let selects = $('.tabWrapper select');
-                let quills = $('.tabWrapper .quillEditor>div:first-of-type');
+                that.showSoftware(result).then(()=>{
 
-                let textarea = $('.tabWrapper textarea');
+                    // Let's hide the blur
 
+                    $('.tabWrapper.forSoftware').removeClass('blur');
 
-                // let's set the _id
-                $('#generalTab').attr('data-id', result._id);
-                // let's set the name on the data-name
-                $('#generalTab').attr('data-name', result.title);
-                // setting the dvd number
-                $(selects[0]).find(`[value=${result.DVDNumber}]`).attr('selected', 'true').trigger('change');
-                // setting the cat  
-                $(selects[1]).on('changed', function () {
-                    $(this).find(`[value=${result.cat}]`).attr('selected', 'true')
+                    Loading.hideLoading();
+
                 })
-                // setting the name 
-                inputs[0].value = result.title;
-                // setting the version
-                inputs[1].value = result.version;
-                // setting the image address
-                $('#softwareImageWrapper img').attr('src', result.image);
-                // setting the oses
-                console.log($('.tabWrapper input:checked'))
-                $('.tabWrapper input:checked').attr('checked', false)
-                for (let os of result.oses) {
-                    if (os.trim() != '') {
-                        $('.tabWrapper').find(`input[type=checkbox][value=${os}]`).prop('checked', true);
-                    }
-                }
-                // setting the setup
-                inputs[2].value = result.setup;
-                // setting the program address
-                inputs[3].value = result.programAddress;
-                // setting the tags
-                let tagsCont = $('.tabWrapper .tagsCont');
-                tagsCont.empty();
-                for (let tag of result.tags) {
-                    tagsCont.append(`<a class="list-group-item" href="javascript:void(0);">${tag}</a>`);
-                }
-                $('.tagsCont>a').off('click').click(function () {
-                    $(this).remove();
-                });
-                // setting web address
-                inputs[4].value = result.webAddress;
-                // setting isRecommended
-                if (result.isRecommended) {
-                    $('#isRecommended').prop('checked', true)
-                } else {
-                    $('#isRecommended').prop('checked', false)
-                }
-                // set faDesc
-                quills[0].innerHTML = result.faDesc;
-                // setting en desc
-                quills[1].innerHTML = result.enDesc;
-                // setting the fa guide
-                quills[2].innerHTML = result.faGuide;
-                // setting the en guide
-                quills[3].innerHTML = result.enGuide;
-                // setting the crack
-                inputs[4].value = result.crack;
-                // setting the patch
-                inputs[5].value = result.patch;
-                // setting the serial numbers
-                textarea.textContent = result.serial;
-
-                // Let's hide the blur
-
-                $('.tabWrapper.forSoftware').removeClass('blur');
-
-                Loading.hideLoading();
 
             });
 
@@ -854,6 +732,163 @@ class PackContentManager {
                 $(targetSelect).trigger('changed');
             });
         });
+    }
+
+    async showSoftware(software){
+
+        return new Promise(async(resolve, reject)=>{
+
+            // Let's load the software
+
+            let inputs = $('.tabWrapper input:not([type=checkbox])');
+            let selects = $('.tabWrapper select');
+            let quills = $('.tabWrapper .quillEditor>div:first-of-type');
+
+            let textarea = $('.tabWrapper textarea');
+
+
+            // let's set the _id
+            $('#generalTab').attr('data-id', software._id);
+            // let's set the name on the data-name
+            $('#generalTab').attr('data-name', software.title);
+            // setting the dvd number
+            $(selects[0]).find(`[value=${software.DVDNumber}]`).attr('selected', 'true').trigger('change');
+            // setting the cat  
+            $(selects[1]).on('changed', function () {
+                $(this).find(`[value=${software.cat}]`).attr('selected', 'true')
+            })
+            // setting the name 
+            inputs[0].value = software.title;
+            // setting the version
+            inputs[1].value = software.version;
+            // setting the image address
+            $('#softwareImageWrapper img').attr('src', software.image);
+            // setting the oses
+            console.log($('.tabWrapper input:checked'))
+            $('.tabWrapper input:checked').attr('checked', false)
+            for (let os of software.oses) {
+                if (os.trim() != '') {
+                    $('.tabWrapper').find(`input[type=checkbox][value=${os}]`).prop('checked', true);
+                }
+            }
+            // setting the setup
+            inputs[2].value = software.setup;
+            // setting the program address
+
+            let softwareCat = await cat.getById(software.cat);
+
+            inputs[3].value = software.programAddress ? software.programAddress : `${softwareCat.title}/${software.title}`;
+            // setting the tags
+            let tagsCont = $('.tabWrapper .tagsCont');
+            tagsCont.empty();
+            for (let tag of software.tags) {
+                tagsCont.append(`<a class="list-group-item" href="javascript:void(0);">${tag}</a>`);
+            }
+            $('.tagsCont>a').off('click').click(function () {
+                $(this).remove();
+            });
+            // setting web address
+            inputs[4].value = software.video;
+            // setting isRecommended
+            if (software.isRecommended) {
+                $('#isRecommended').prop('checked', true)
+            } else {
+                $('#isRecommended').prop('checked', false)
+            }
+            // set faDesc
+            quills[0].innerHTML = software.faDesc;
+            // setting en desc
+            quills[1].innerHTML = software.enDesc;
+            // setting the fa guide
+            quills[2].innerHTML = software.faGuide;
+            // setting the en guide
+            quills[3].innerHTML = software.enGuide;
+            // setting the crack
+            inputs[4].value = software.crack;
+            // setting the patch
+            inputs[5].value = software.patch;
+            // setting the serial numbers
+            textarea.textContent = software.serial;
+
+            // we are done
+
+            resolve();
+
+        })
+
+    }
+
+    saveSoftware(){
+
+        return new Promise((resolve, reject)=>{
+
+            // let's get the contents
+
+            let inputs = $('.tabWrapper input:not([type=checkbox])');
+            let selects = $('.tabWrapper select');
+            let quills = $('.tabWrapper .quillEditor>div:first-of-type');
+
+            let textarea = $('.tabWrapper textarea');
+
+
+            // let's set the _id
+            let id = $('#generalTab').attr('data-id');
+            // setting the dvd number
+            let DVDNumber = $(selects[0]).find('option:selected').val();
+            // setting the cat  
+            let cat = $(selects[1]).find('option:selected').val();
+            // setting the name 
+            let title = inputs[0].value;
+            // setting the version
+            let version = inputs[1].value;
+            // setting the image address
+            let image = $('#softwareImageWrapper img').attr('src');
+            // setting the oses
+            let selectedOSes = $('.tabWrapper input:checked')
+            let oses = [];
+            for (let os of selectedOSes) {
+                oses.push($(os).val());
+            }
+            // setting the setup
+            let setup = inputs[2].value;
+            // setting the program address
+            let programAddress = inputs[3].value;
+            // setting the tags
+            let tagsElems = $('.tabWrapper .tagsCont>a');
+            let tags = [];
+            for (let tag of tagsElems) {
+                tags.push(tag.textContent.trim());
+            }
+            // setting web address
+            let video = inputs[4].value;
+            // getting isRecommended
+            let isRecommended = false;
+            if ($('#isRecommended').is(':checked')) {
+                isRecommended = true;
+            }
+            // set faDesc
+            let faDesk = quills[0].innerHTML;
+            // setting en desc
+            let enDesk = quills[1].innerHTML;
+            // setting the fa guide
+            let faGuide = quills[2].innerHTML;
+            // setting the en guide
+            let enGuide = quills[3].innerHTML;
+            // setting the crack
+            let crack = inputs[4].value;
+            // setting the patch
+            let patch = inputs[5].value;
+            // setting the serial numbers
+            let serial = textarea.textContent;
+
+            // let's save the software
+
+            software.save(id, title, version, DVDNumber, cat, tags, oses, image, setup, programAddress, video, isRecommended, faDesk, enDesk, faGuide, enGuide, crack, patch, serial).then(() => {
+                
+                resolve();
+
+            })
+        })
     }
 
 }
