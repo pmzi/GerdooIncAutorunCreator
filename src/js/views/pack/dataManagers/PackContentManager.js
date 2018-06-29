@@ -391,6 +391,10 @@ class PackContentManager {
                 this.loadCats();
                 this.load();
 
+                // trigger dvd selects
+
+                $('.changableDVD').trigger('change');
+
                 Loading.hideLoading();
                 PropellerMessage.showMessage('کتگوری افزوده شد.', 'success');
 
