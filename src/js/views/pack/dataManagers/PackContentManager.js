@@ -636,10 +636,10 @@ class PackContentManager {
                         let newCat = await cat.add(catDirectory, DVDNumber, []);
 
                         let softwaresInTheCat = fs.readdirSync(path.join(address, catDirectory));
-
+                        
                         for (let singleSoft of softwaresInTheCat) {
-                            if (fs.existsSync(path.join(address, singleSoft)) && fs.lstatSync(path.join(address, singleSoft)).isDirectory()) {
-
+                            if (fs.existsSync(path.join(address, catDirectory, singleSoft)) && fs.lstatSync(path.join(address, catDirectory, singleSoft)).isDirectory()) {
+                                console.log(singleSoft)
                                 // check if gerdoo.txt file exists
 
                                 if (fs.existsSync(path.join(address, catDirectory, singleSoft, 'gerdoo.txt'))) {
@@ -682,7 +682,7 @@ class PackContentManager {
                                         setup = 'setup.exe'
                                     }
 
-                                    await software.add(singleSoft, null, DVDNumber, newCat._id, [], finalOSes, softImage, setup, `${catDirectory}/${singleSoft}`, null, false, null, desc, null, ig, null, null, null, null)
+                                    await software.add(singleSoft, null, DVDNumber, newCat._id, [], finalOSes, softImage, setup, `${catDirectory}/${singleSoft}`, null, false, null, desc, null, ig, null, null)
 
                                 } else {
                                     await software.add(singleSoft, null, DVDNumber, newCat._id, []);
