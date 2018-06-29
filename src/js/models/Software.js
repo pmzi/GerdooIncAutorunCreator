@@ -126,6 +126,16 @@ class Software extends Model {
                         },
                         DVDNumber,
                         cat: catId
+                    },
+                    {
+                        DVDNumber,
+                        cat: catId,
+                        faDesc: new RegExp(string,'i')
+                    },
+                    {
+                        DVDNumber,
+                        cat: catId,
+                        enDesc: new RegExp(string,'i')
                     }
                 ]
             }, (err, result) => {

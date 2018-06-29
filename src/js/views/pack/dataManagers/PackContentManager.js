@@ -131,6 +131,26 @@ class PackContentManager {
 
                     let currCatElem = $(`#softwares [data-cat-id=${singleCat._id}]>ul`);
 
+                    let catMatch = await cat.matchItSelf(toSearch,singleDVD.number,singleCat._id)
+
+                    if(catMatch){
+
+                        let softwares = await software.getSoftwaresByCat(singleCat._id);
+
+                        for (let singleSoftware of softwares) {
+                            // let's add software's element
+
+                            currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
+                            <div>
+                                <i class="material-icons">events</i>
+                                <span>${singleSoftware.title}</span>
+                            </div>
+                            </li>`);
+                        }
+
+                        continue;
+                    }
+
                     let softwares = await software.findClosest(toSearch, singleCat._id, singleDVD.number);
 
                     for (let singleSoftware of softwares) {
@@ -145,11 +165,11 @@ class PackContentManager {
                     }
 
                     if(softwares.length === 0){
+
                         // if cat matches it self
-                        let catMatch = await cat.matchItSelf(toSearch,singleDVD.number,singleCat._id)
-                        if(catMatch.length === 0){
-                            currCatElem.parent().remove();
-                        }
+                        
+                        currCatElem.parent().remove();
+
                     }
 
                 }

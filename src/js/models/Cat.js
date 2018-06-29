@@ -110,7 +110,10 @@ class Cat extends Model {
                 ]
             }, (err, result) => {
                 if (err === null) {
-                    resolve(result)
+                    if(result.length !== 0){
+                        resolve(true)
+                    }
+                    resolve(false)
                 } else {
                     reject(err)
                 }
