@@ -79,8 +79,6 @@ class QuillHandler {
             editor.format('align', 'right');
         });
 
-        Loading.hideLoading();
-
     }
 
     addQuillVideo(editor) {

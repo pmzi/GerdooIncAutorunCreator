@@ -17,6 +17,12 @@ class Step {
 
     initEvents() {
 
+        // For hiding loading
+
+        window.onload = ()=>{
+            Loading.hideLoading();
+        }
+
         // event for hiding modal and clear all inputs
 
         $('.modal').on('hidden.bs.modal', function () {
