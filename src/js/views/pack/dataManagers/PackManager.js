@@ -45,67 +45,23 @@ class PackManager {
                 packIds.push($(singlePack).val());
             }
             this.searchForSoftware(name, packIds).then((properSoftware) => {
+
                 if (properSoftware) {
 
-                    // Let's load the software
+                    this.loadSoftware(properSoftware);
 
-                    let inputs = $('.tabWrapper input:not([type=checkbox])');
-                    let selects = $('.tabWrapper select');
-                    let quills = $('.tabWrapper .quillEditor>div:first-of-type');
-
-                    let textarea = $('.tabWrapper textarea');
-
-
-                    // setting the image address
-                    // let's first transfer the image
-                    if (properSoftware.image !== null) {
-                        let imageAddress = FileManager.copyToLocale(path.join(__dirname, '../../../', properSoftware.image));
-                        $('#softwareImageWrapper img').attr('src', imageAddress);
-                    }
-                    // setting the oses
-                    $('.tabWrapper input:checked').attr('checked', false)
-                    console.log(properSoftware)
-                    for (let os of properSoftware.oses) {
-                        if (os.trim() != '') {
-                            $('.tabWrapper').find(`input[type=checkbox][value=${os}]`).prop('checked', true);
-                        }
-                    }
-                    // setting the setup
-                    inputs[2].value = properSoftware.setup;
-                    // setting the tags
-                    let tagsCont = $('.tabWrapper .tagsCont');
-                    tagsCont.empty();
-                    for (let tag of properSoftware.tags) {
-                        tagsCont.append(`<a class="list-group-item" href="javascript:void(0);">${tag}</a>`);
-                    }
-                    $('.tagsCont>a').off('click').click(function () {
-                        $(this).remove();
-                    });
-                    // setting web address
-                    inputs[4].value = properSoftware.webAddress;
-                    // setting isRecommended
-                    if (properSoftware.isRecommended) {
-                        $('#isRecommended').prop('checked', true)
-                    } else {
-                        $('#isRecommended').prop('checked', false)
-                    }
-                    // set faDesc
-                    quills[0].innerHTML = properSoftware.faDesc;
-                    // setting en desc
-                    quills[1].innerHTML = properSoftware.enDesc;
-                    console.log(properSoftware)
                     // hiding the modal
 
                     $('#search-packs-modal').modal('hide');
 
-                    PropellerMessage.showMessage('مشخصات نرم افزار مورد نظر بارگذاری شد.','success');
+                    PropellerMessage.showMessage('مشخصات نرم افزار مورد نظر بارگذاری شد.', 'success');
 
-                }else{
-                    PropellerMessage.showMessage('نرم افزاری با این مشخصات یافت نشد.','error');
+                } else {
+                    PropellerMessage.showMessage('نرم افزاری با این مشخصات یافت نشد.', 'error');
                 }
 
                 Loading.hideLoading();
-                
+
 
             })
         })
@@ -119,13 +75,82 @@ class PackManager {
                 let packInfo = await pack.getById(singlePackId);
                 let newSoftware = new Software(packInfo.name);
                 properSoftware = await newSoftware.getByTitle(name);
-                console.log(properSoftware,packInfo)
+                console.log(properSoftware, packInfo)
                 if (properSoftware) {
                     break;
                 }
             }
             resolve(properSoftware);
         });
+    }
+
+    static loadSoftware(properSoftware) {
+        // Let's load the software
+
+        let inputs = $('.tabWrapper input:not([type=checkbox])');
+        let selects = $('.tabWrapper select');
+        let quills = $('.tabWrapper .quillEditor>div:first-of-type');
+
+        let textarea = $('.tabWrapper textarea');
+
+
+        // setting the image address
+        // let's first transfer the image
+        if (properSoftware.image !== null) {
+            let imageAddress = FileManager.copyToLocale(path.join(__dirname, '../../../', properSoftware.image));
+            $('#softwareImageWrapper img').attr('src', imageAddress);
+        }
+        // setting the oses
+        $('.tabWrapper input:checked').attr('checked', false)
+        console.log(properSoftware)
+        for (let os of properSoftware.oses) {
+            if (os.trim() != '') {
+                $('.tabWrapper').find(`input[type=checkbox][value=${os}]`).prop('checked', true);
+            }
+        }
+        // setting the setup
+        inputs[2].value = properSoftware.setup;
+        // setting the tags
+        let tagsCont = $('.tabWrapper .tagsCont');
+        tagsCont.empty();
+        for (let tag of properSoftware.tags) {
+            tagsCont.append(`<a class="list-group-item" href="javascript:void(0);">${tag}</a>`);
+        }
+        $('.tagsCont>a').off('click').click(function () {
+            $(this).remove();
+        });
+        // setting web address
+        inputs[4].value = properSoftware.video;
+        // setting isRecommended
+        if (properSoftware.isRecommended) {
+            $('#isRecommended').prop('checked', true)
+        } else {
+            $('#isRecommended').prop('checked', false)
+        }
+        // set faDesc
+        let faDesc = this.copyAllImagesOfText(properSoftware.faDesc);
+        quills[0].innerHTML = faDesc;
+        // setting en desc
+        let enDesc = this.copyAllImagesOfText(properSoftware.enDesc);
+        quills[1].innerHTML = properSoftware.enDesc;
+    }
+
+    static copyAllImagesOfText(text) {
+
+        const imageRegex = new RegExp(`"(\.\.\/dbs\/.+?\/assets\/.+?)(\"|")`, 'ig');
+
+        let match;
+
+        while ((match = imageRegex.exec(text)) != null) {
+
+            let newAddress = FileManager.copyToLocale(path.join(__dirname, '../../../', match[1]));
+
+            text = text.replace(new RegExp(match[1], 'ig'), newAddress);
+
+        }
+
+        return text;
+
     }
 
 }
