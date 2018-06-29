@@ -62,7 +62,7 @@ class PackContentManager {
                     // let's add cat's element
 
                     currDVDElem.append(`<li data-cat-id='${singleCat._id}'><div>
-                    <i class="material-icons">events</i>
+                    <i class="material-icons">category</i>
                     <span>${singleCat.title}</span>
                 </div><ul class='softWrapper'></ul></li>`);
 
@@ -75,7 +75,7 @@ class PackContentManager {
 
                         currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
                         <div>
-                            <i class="material-icons">events</i>
+                            <i class="material-icons">insert_drive_file</i>
                             <span>${singleSoftware.title}</span>
                         </div>
                     </li>`);
@@ -125,7 +125,7 @@ class PackContentManager {
                     // let's add cat's element
 
                     currDVDElem.append(`<li data-cat-id='${singleCat._id}'><div>
-                    <i class="material-icons">events</i>
+                    <i class="material-icons">category</i>
                     <span>${singleCat.title}</span>
                 </div><ul class='softWrapper'></ul></li>`);
 
@@ -142,7 +142,7 @@ class PackContentManager {
 
                             currCatElem.append(`<li data-software-id='${singleSoftware._id}'>
                             <div>
-                                <i class="material-icons">events</i>
+                                <i class="material-icons">insert_drive_file</i>
                                 <span>${singleSoftware.title}</span>
                             </div>
                             </li>`);
