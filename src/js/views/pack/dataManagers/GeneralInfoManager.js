@@ -31,7 +31,7 @@ class GeneralInfoManager{
                     let inputs = $('.stepWrapper:nth-of-type(1) input[type=text]');
 
                     inputs[0].value = item.address;
-                    inputs[1].value = item.tabTitle;
+                    inputs[3].value = item.tabTitle;
 
                     quillEditors[0].innerHTML = item.aboutUs;
                     quillEditors[1].innerHTML = item.essentials;
@@ -67,7 +67,7 @@ class GeneralInfoManager{
         
         let inputs = $('.stepWrapper:nth-of-type(1) input[type=text]');
         
-        generalInfo.update(inputs[0].value,quillEditors[0].innerHTML,quillEditors[1].innerHTML,inputs[1].value,quillEditors[2].innerHTML,()=>{
+        generalInfo.update(inputs[0].value,quillEditors[0].innerHTML,quillEditors[1].innerHTML,inputs[3].value,quillEditors[2].innerHTML,()=>{
             Loading.hideLoading();
             PropellerMessage.showMessage('تغییرات با موفقیت ذخیره شدند.','success');
         });
