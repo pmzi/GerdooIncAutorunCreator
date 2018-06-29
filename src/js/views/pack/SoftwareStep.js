@@ -61,11 +61,22 @@ class SoftwareStep {
 
     }
 
+    static initStaticEvents(){
+
+        // For removing software image
+
+        $('#softwareImageWrapper>div>button:last-of-type').click(()=>{
+            $('#softwareImageWrapper>img').attr('src','');
+        });
+
+    }
 
 
 }
 
 SoftwareStep.initHeaderEvents();
+
+SoftwareStep.initStaticEvents();
 
 $('#softwares').on('reload', () => {
     SoftwareStep.initSoftwareSectionEvents();
