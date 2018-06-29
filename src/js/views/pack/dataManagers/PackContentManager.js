@@ -17,25 +17,8 @@ const path = require('path');
 const fs = require('fs');
 
 class PackContentManager {
-    constructor() {
 
-        // loads all the dvds, cats and softwares into the menu
-
-        this.load().then(() => {
-
-            this.initializeChangableDVDs();
-
-            this.loadDiskNumbers();
-
-            this.loadCats();
-
-            this.initStaticEvents();
-
-        })
-
-    }
-
-    async load() {
+    static async load() {
 
         return new Promise(async (resolve, reject) => {
 
@@ -98,7 +81,7 @@ class PackContentManager {
 
     }
 
-    async search(toSearch) {
+    static async search(toSearch) {
 
         return new Promise(async (resolve, reject) => {
 
@@ -193,7 +176,7 @@ class PackContentManager {
 
     }
 
-    async filterByCat(catId) {
+    static async filterByCat(catId) {
         return new Promise(async (resolve, reject) => {
 
             // let's empty the menu
@@ -245,7 +228,7 @@ class PackContentManager {
         });
     }
 
-    async filterByDVDNumber(DVDNumber) {
+    static async filterByDVDNumber(DVDNumber) {
 
         return new Promise(async (resolve, reject) => {
 
@@ -306,7 +289,7 @@ class PackContentManager {
      * Loads the number of disks in related comboboxes
      */
 
-    loadDiskNumbers() {
+    static loadDiskNumbers() {
 
         return new Promise((resolve, reject) => {
             dvd.getDVDNumbers().then((result) => {
@@ -327,7 +310,7 @@ class PackContentManager {
      * Loads the cats in related comboboxes
      */
 
-    loadCats() {
+    static loadCats() {
         return new Promise((resolve, reject) => {
 
             cat.getAllTitles().then((result) => {
@@ -347,7 +330,7 @@ class PackContentManager {
         });
     }
 
-    initStaticEvents() {
+    static initStaticEvents() {
 
         // events for add dvd
 
@@ -605,7 +588,7 @@ class PackContentManager {
 
     }
 
-    initSoftwareEvents() {
+    static initSoftwareEvents() {
 
         let that = this;
 
@@ -636,7 +619,7 @@ class PackContentManager {
 
     }
 
-    async addDVDContentFromFolder(DVDNumber, address) {
+    static async addDVDContentFromFolder(DVDNumber, address) {
         return new Promise(async (resolve, reject) => {
             if (fs.existsSync(address)) {
 
@@ -719,7 +702,7 @@ class PackContentManager {
 
     }
 
-    initializeChangableDVDs() {
+    static initializeChangableDVDs() {
 
         // set the action for the onchange event
         $('.changableDVD').off('change DVDsLoaded').on('change DVDsLoaded', function () {
@@ -734,7 +717,7 @@ class PackContentManager {
         });
     }
 
-    async showSoftware(software){
+    static async showSoftware(software){
 
         return new Promise(async(resolve, reject)=>{
 
@@ -814,7 +797,7 @@ class PackContentManager {
 
     }
 
-    saveSoftware(){
+    static saveSoftware(){
 
         return new Promise((resolve, reject)=>{
 
@@ -885,4 +868,16 @@ class PackContentManager {
 
 }
 
-new PackContentManager();
+// loads all the dvds, cats and softwares into the menu
+
+PackContentManager.load().then(() => {
+
+    PackContentManager.initializeChangableDVDs();
+
+    PackContentManager.loadDiskNumbers();
+
+    PackContentManager.loadCats();
+
+    PackContentManager.initStaticEvents();
+
+})

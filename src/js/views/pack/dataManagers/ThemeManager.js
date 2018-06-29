@@ -9,14 +9,8 @@ const theme = new Theme();
 //
 
 class ThemeManager {
-    constructor() {
 
-        this.load();
-        this.initStaticEvents();
-
-    }
-
-    load() {
+    static load() {
 
         return new Promise(async (resolve, reject) => {
             let themes = await theme.fetchAll();
@@ -62,7 +56,7 @@ class ThemeManager {
 
     }
 
-    initEvents() {
+    static initEvents() {
 
         // for deleting a theme
         
@@ -76,7 +70,7 @@ class ThemeManager {
 
     }
 
-    initStaticEvents() {
+    static initStaticEvents() {
 
         // for adding a theme
 
@@ -104,4 +98,5 @@ class ThemeManager {
 
 }
 
-new ThemeManager();
+ThemeManager.load();
+ThemeManager.initStaticEvents();

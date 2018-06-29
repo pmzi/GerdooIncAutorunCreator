@@ -8,15 +8,7 @@ const os = new OS();
 
 class OSManager {
 
-    constructor() {
-
-        this.loadOSes().then(()=>{
-            this.initStaticEvents();
-        })
-
-    }
-
-    loadOSes() {
+    static loadOSes() {
         return new Promise((resolve, reject) => {
 
             os.fetchAll().then((OSes) => {
@@ -58,7 +50,7 @@ class OSManager {
         })
     }
 
-    initEvents() {
+    static initEvents() {
 
         // delete events
 
@@ -70,7 +62,7 @@ class OSManager {
 
     }
 
-    initStaticEvents(){
+    static initStaticEvents(){
 
         // add events
 
@@ -112,4 +104,6 @@ class OSManager {
 
 }
 
-new OSManager();
+OSManager.loadOSes().then(()=>{
+    OSManager.initStaticEvents();
+})

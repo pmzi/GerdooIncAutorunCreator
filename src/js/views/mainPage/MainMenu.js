@@ -5,15 +5,8 @@ const {
 // For menu actions
 
 class MainMenu {
-    constructor() {
 
-        $(() => {
-            this.initMainMenuEvents();
-        })
-
-    }
-
-    initMainMenuEvents() {
+    static initMainMenuEvents() {
 
         // event for hiding modal and clear all inputs
 
@@ -44,15 +37,17 @@ class MainMenu {
 
     }
 
-    showTab(index) {
+    static showTab(index) {
         $('.tabWrapper.showTab').removeClass('showTab');
         $(".tabWrapper").eq(index).addClass('showTab');
     }
 
-    exitProgram() {
+    static exitProgram() {
         remote.getCurrentWindow().close();
     }
 
 }
 
-new MainMenu();
+$(() => {
+    MainMenu.initMainMenuEvents();
+})

@@ -5,17 +5,7 @@ const FileManager = require('../globals/FileManager');
 
 class Step {
 
-    constructor() {
-
-        this.initEvents();
-
-        this.initializeTagAddSystem();
-
-        this.initializeDialogSystem();
-
-    }
-
-    initEvents() {
+    static initEvents() {
 
         // For hiding loading
 
@@ -70,7 +60,7 @@ class Step {
      * For add tag systems
      */
 
-    initializeTagAddSystem() {
+    static initializeTagAddSystem() {
         $('.addTagModalBtn').click(function () {
             $('#add-tag-modal').modal('show');
             $('#add-tag-modal .modalActionButton').off('click').click(() => {
@@ -84,7 +74,7 @@ class Step {
         });
     }
 
-    initializeDialogSystem() {
+    static initializeDialogSystem() {
 
         $('.dialogBtn').click(function () {
 
@@ -129,4 +119,8 @@ class Step {
 
 }
 
-new Step();
+Step.initEvents();
+
+Step.initializeTagAddSystem();
+
+Step.initializeDialogSystem();

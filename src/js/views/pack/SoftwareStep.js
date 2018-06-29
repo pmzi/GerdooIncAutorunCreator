@@ -1,16 +1,8 @@
 class SoftwareStep {
 
-    constructor() {
-        this.initHeaderEvents();
-
-        $('#softwares').on('reload',()=>{
-            this.initSoftwareSectionEvents();
-        });
-    }
-
     // Header methods start
 
-    initHeaderEvents() {
+    static initHeaderEvents() {
         // for header buttons(search, filter by cat, filter by dvd)
 
         const that = this;
@@ -20,11 +12,7 @@ class SoftwareStep {
         });
     }
 
-    search() {
-
-    }
-
-    changeHeaderSlide(index) {
+    static changeHeaderSlide(index) {
         $('#softHeaderSliderWrapper .slideWrapper.forSlide').removeClass('forSlide');
         $('#softHeaderSliderWrapper .slideWrapper.backSlide').removeClass('backSlide');
 
@@ -41,13 +29,13 @@ class SoftwareStep {
 
     // Soft list methods
 
-    initSoftwareSectionEvents() {
+    static initSoftwareSectionEvents() {
 
         // For slide down and slide up animation
 
-        $('#softwares ul.softWrapper li').off('click').on('click',function(e){
+        $('#softwares ul.softWrapper li').off('click').on('click', function (e) {
             e.stopPropagation()
-            
+
             $('#softwares .active').removeClass('active');
 
             $(this).children('div').toggleClass('active');
@@ -63,9 +51,9 @@ class SoftwareStep {
 
             $(this).children('div').toggleClass('active');
 
-            if($(this).parent().hasClass('catWrapper')){
+            if ($(this).parent().hasClass('catWrapper')) {
                 $('#softwareMenu>footer>ul>li:nth-of-type(3)').removeClass('disabled');
-            }else{
+            } else {
                 $('#softwareMenu>footer>ul>li:nth-of-type(3)').addClass('disabled');
             }
 
@@ -73,8 +61,12 @@ class SoftwareStep {
 
     }
 
-    
+
 
 }
 
-new SoftwareStep();
+SoftwareStep.initHeaderEvents();
+
+$('#softwares').on('reload', () => {
+    SoftwareStep.initSoftwareSectionEvents();
+});

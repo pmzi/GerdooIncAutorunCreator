@@ -5,13 +5,7 @@ const FileManager = require('../globals/FileManager');
 
 class QuillHandler {
 
-    constructor() {
-
-        this.initQuills();
-
-    }
-
-    initQuills() {
+    static initQuills() {
         let configs = {
             modules: {
                 toolbar: [
@@ -81,7 +75,7 @@ class QuillHandler {
 
     }
 
-    addQuillVideo(editor) {
+    static addQuillVideo(editor) {
 
         let videoAddress = dialog.showOpenDialog({
             properties: ['openFile'],
@@ -103,7 +97,7 @@ class QuillHandler {
 
     }
 
-    addQuillImage(editor) {
+    static addQuillImage(editor) {
         let imageAddress = dialog.showOpenDialog({
             properties: ['openFile'],
             filters: [{
@@ -124,14 +118,14 @@ class QuillHandler {
 
     }
 
-    insertVideoToEditor(editor, url) {
+    static insertVideoToEditor(editor, url) {
         // push image url to rich editor.
         const range = editor.getSelection();
 
         editor.insertEmbed(range.index, 'video',  url);
     }
 
-    insertImageToEditor(editor, url) {
+    static insertImageToEditor(editor, url) {
         // push image url to rich editor.
         const range = editor.getSelection();
 
@@ -140,4 +134,4 @@ class QuillHandler {
 
 }
 
-new QuillHandler();
+QuillHandler.initQuills();

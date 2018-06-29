@@ -8,17 +8,7 @@ const packOS = new PackOS();
 
 class OSesManager {
 
-    constructor() {
-
-        this.load().then(() => {
-            this.initEvents();
-
-            this.initStaticEvents();
-        })
-
-    }
-
-    load() {
+    static load() {
         return new Promise((resolve, reject) => {
             $('#osList').empty();
 
@@ -41,7 +31,7 @@ class OSesManager {
 
     }
 
-    initEvents() {
+    static initEvents() {
 
         // Event for delete OS
 
@@ -49,9 +39,7 @@ class OSesManager {
 
     }
 
-
-
-    initStaticEvents(){
+    static initStaticEvents(){
 
         // Event for add os modal
 
@@ -72,4 +60,10 @@ class OSesManager {
 
 }
 
-new OSesManager();
+OSesManager.load().then(() => {
+
+    OSesManager.initEvents();
+
+    OSesManager.initStaticEvents();
+
+})

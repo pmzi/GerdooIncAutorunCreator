@@ -24,21 +24,7 @@ const pack = new Pack();
 
 class PackManager {
 
-    constructor() {
-
-        this.loadPacks().then(() => {
-
-            this.initStaticEvents();
-
-            // hide the main and first loading
-
-            Loading.hideLoading();
-
-        })
-
-    }
-
-    loadPacks() {
+    static loadPacks() {
         return new Promise((resolve, reject) => {
 
             pack.fetchAll().then((packs) => {
@@ -96,7 +82,7 @@ class PackManager {
         })
     }
 
-    initEvents() {
+    static initEvents() {
 
         // Delete pack event
 
@@ -140,7 +126,7 @@ class PackManager {
 
     }
 
-    initStaticEvents() {
+    static initStaticEvents() {
 
         // add events
 
@@ -187,7 +173,7 @@ class PackManager {
 
     }
 
-    copyAssets(name) {
+    static copyAssets(name) {
 
         // Let's create the pack directory
         let pathToPack = path.join(__dirname, '../../../../dbs', name);
@@ -206,7 +192,7 @@ class PackManager {
     }
 
 
-    addPack(id, name) {
+    static addPack(id, name) {
         ipcRenderer.send('newWindow', {
             width: 1300,
             height: 650,
@@ -217,7 +203,7 @@ class PackManager {
         });
     }
 
-    async exportExcell(packId, address) {
+    static async exportExcell(packId, address) {
         return new Promise(async (resolve, reject) => {
 
             const styles = {
@@ -359,4 +345,12 @@ class PackManager {
 
 }
 
-new PackManager();
+PackManager.loadPacks().then(() => {
+
+    PackManager.initStaticEvents();
+
+    // hide the main and first loading
+
+    Loading.hideLoading();
+
+})

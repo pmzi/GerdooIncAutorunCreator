@@ -10,15 +10,7 @@ const pack = new Pack();
 
 class PackManager {
 
-    constructor() {
-
-        this.load().then(() => {
-            this.initStaticEvents();
-        })
-
-    }
-
-    async load() {
+    static async load() {
         return new Promise(async (resolve, reject) => {
             let targetCont = $('#search-packs-modal .modal-body');
             targetCont.empty();
@@ -40,7 +32,7 @@ class PackManager {
     }
 
 
-    initStaticEvents() {
+    static initStaticEvents() {
 
         $('#search-packs-modal .modalActionButton').click(() => {
 
@@ -120,7 +112,7 @@ class PackManager {
 
     }
 
-    async searchForSoftware(name, packIds) {
+    static async searchForSoftware(name, packIds) {
         return new Promise(async (resolve, reject) => {
             let properSoftware = null;
             for (let singlePackId of packIds) {
@@ -138,4 +130,6 @@ class PackManager {
 
 }
 
-new PackManager();
+PackManager.load().then(() => {
+    PackManager.initStaticEvents();
+})

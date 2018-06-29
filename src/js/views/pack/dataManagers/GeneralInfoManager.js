@@ -8,17 +8,7 @@ const generalInfo = new GeneralInfo();
 
 class GeneralInfoManager{
 
-    constructor() {
-
-        this.loadInfo().then(() => {
-
-            this.initEvents();
-
-        })
-
-    }
-
-    loadInfo() {
+    static loadInfo() {
         return new Promise((resolve, reject) => {
 
             generalInfo.fetch((err, item)=>{
@@ -45,7 +35,7 @@ class GeneralInfoManager{
         })
     }
 
-    initEvents() {
+    static initEvents() {
 
         // save event
 
@@ -57,7 +47,7 @@ class GeneralInfoManager{
 
     }
 
-    update(){
+    static update(){
 
         // showing the loading
 
@@ -76,4 +66,8 @@ class GeneralInfoManager{
 
 }
 
-new GeneralInfoManager();
+GeneralInfoManager.loadInfo().then(() => {
+
+    GeneralInfoManager.initEvents();
+
+})
