@@ -111,6 +111,12 @@ class QuillHandler {
 
         });
 
+        // GeneralInfo tab wapper scrolls down after Quill initializes
+
+        // Let's scroll it up
+
+        $('main#stepWrapper #stepManagerWrapper>.stepWrapper:first-of-type').scrollTop(0);
+
     }
 
     /**
