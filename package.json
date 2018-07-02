@@ -1,8 +1,8 @@
 {
-  "name": "gerdooincautoruncreator",
-  "productName": "gerdooincautoruncreator",
+  "name": "gerdoo",
+  "productName": "gerdoo",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Gerdoo AC",
   "main": "src/js/app.js",
   "scripts": {
     "start": "electron-forge start",
@@ -18,7 +18,7 @@
     "forge": {
       "make_targets": {
         "win32": [
-          "squirrel"
+          "zip"
         ],
         "darwin": [
           "zip"
@@ -29,7 +29,8 @@
         ]
       },
       "electronPackagerConfig": {
-        "packageManager": "npm"
+        "packageManager": "npm",
+        "asar":false
       },
       "electronWinstallerConfig": {
         "name": "gerdooincautoruncreator"
@@ -50,6 +51,7 @@
     "electron-compile": "^6.4.2",
     "electron-squirrel-startup": "^1.0.0",
     "html2plaintext": "^2.0.1",
+    "ncp": "^2.0.0",
     "nedb": "^1.8.0",
     "node-excel-export": "^1.4.3"
   },
