@@ -1,10 +1,6 @@
-// Models
+// Models refrence
 
-const GeneralInfo = require('../../../models/GeneralInfo');
-
-// Models instantiate
-
-const generalInfo = new GeneralInfo();
+const generalInfo = window.dbs.generalInfo;
 
 // GeneralInfoManager class which handles events and data related to GeneralInfo
 

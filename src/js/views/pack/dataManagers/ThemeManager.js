@@ -1,7 +1,3 @@
-// Models
-
-const Theme = require('../../../models/Theme');
-
 // Utilities
 
 const FileManager = require('../../globals/FileManager');
@@ -10,9 +6,9 @@ const FileManager = require('../../globals/FileManager');
 
 const path = require('path');
 
-// Instantiating the models
+// Models refrence
 
-const theme = new Theme();
+const theme = window.dbs.theme;
 
 // ThemeManager class which handles events and data related to themes
 

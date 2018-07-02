@@ -1,24 +1,14 @@
-// Models
-
-const DVD = require('../../../models/DVD');
-
-const Software = require('../../../models/Software');
-
-const Cat = require('../../../models/Cat');
-
-const PackOS = require('../../../models/PackOS');
-
 // Filemanager utility
 
 const FileManager = require('../../globals/FileManager');
 
-// Let's instantiate the models
+// Models refrence
 
-const cat = new Cat();
+const cat = window.dbs.cat;
 
-const software = new Software();
+const software = window.dbs.software;
 
-const dvd = new DVD();
+const dvd = window.dbs.dvd;
 
 // Some Node utilities
 

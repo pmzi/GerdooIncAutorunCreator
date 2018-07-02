@@ -1,10 +1,6 @@
-// Models
+// Getting refrence to DB
 
-const OS = require('../../../models/OS');
-
-// Instantiate the models
-
-const os = new OS();
+const os = window.dbs.os;
 
 // OSManager class which handles events and data, related to OSes
 

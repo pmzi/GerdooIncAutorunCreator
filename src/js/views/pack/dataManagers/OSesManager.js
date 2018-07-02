@@ -1,10 +1,6 @@
-// Models
+// Models refrence
 
-const PackOS = require('../../../models/PackOS');
-
-// Models instantiate
-
-const packOS = new PackOS();
+const packOS = window.dbs.packOS;
 
 // OSesManager class which handles events and data related to OSes
 

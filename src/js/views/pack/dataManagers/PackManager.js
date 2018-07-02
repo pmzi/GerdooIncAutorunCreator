@@ -1,7 +1,5 @@
 // Models
 
-const Pack = require('../../../models/Pack');
-
 const Software = require('../../../models/Software');
 
 // Utilities
@@ -12,9 +10,9 @@ const FileManager = require('../../globals/FileManager');
 
 const path = require('path');
 
-// Instatioating models
+// Models refrence
 
-const pack = new Pack();
+const pack = window.dbs.pack;
 
 // PackManager class which handles events and data related to Packs
 
@@ -210,7 +208,7 @@ class PackManager {
 
         // First, let's transfer the image to the current pack assets folder
         
-        if (properSoftware.image !== null) {
+        if (properSoftware.image !== null && properSoftware.image.trim() !== '') {
 
             // Transfering image
 

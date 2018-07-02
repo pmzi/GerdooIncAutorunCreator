@@ -19,17 +19,15 @@ const h2p = require('html2plaintext');
 
 // Models
 
-const Pack = require('../../../models/Pack');
-
 const Software = require('../../../models/Software');
 
 const PackOS = require('../../../models/PackOS');
 
 const Cat = require('../../../models/Cat');
 
-// Instantiating models
+// Getting refrence to DB
 
-const pack = new Pack();
+const pack = window.dbs.pack
 
 // PackManager class which handles events and data, related to Packs
 
