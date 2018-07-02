@@ -1,6 +1,12 @@
 const Model = require('./Model');
 
+// The Pack model
+
 class Pack extends Model {
+
+    /**
+     * @constructor loads the DB
+     */
 
     constructor() {
 
@@ -13,6 +19,11 @@ class Pack extends Model {
         this.loadDatabase(true);
 
     }
+
+    /**
+     * Fetches all of the Packs
+     * @returns {Promise}
+     */
 
     fetchAll() {
         return new Promise((resolve, reject)=>{
@@ -29,6 +40,12 @@ class Pack extends Model {
 
     }
 
+    /**
+     * Adds a new pack
+     * @param {String} packName - The name of the pack
+     * @returns {Promise}
+     */
+
     add(packName) {
         
         return new Promise((resolve, reject)=>{
@@ -44,6 +61,12 @@ class Pack extends Model {
         });
 
     }
+
+    /**
+     * Deletes a pack by it's ID
+     * @param {Number} id - The ID of the pack
+     * @returns {Promise}
+     */
 
     delete(id) {
 
@@ -62,6 +85,12 @@ class Pack extends Model {
 
 
     }
+
+    /**
+     * Gets a pack by it's ID
+     * @param {Number} id - The ID of the pack
+     * @returns {Promise}
+     */
 
     getById(id) {
 

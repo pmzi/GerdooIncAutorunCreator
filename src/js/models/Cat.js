@@ -1,6 +1,13 @@
 const Model = require('./Model');
 
+// The Cat model
+
 class Cat extends Model {
+
+    /**
+     * @constructor loads the DB
+     * @param {String} dbName - The name of the DB
+     */
 
     constructor(dbName) {
 
@@ -8,11 +15,16 @@ class Cat extends Model {
 
         this.dbName = `${dbName || window._name}/Cats`;
 
-        // let's load the DB
+        // Let's load the DB
 
         this.loadDatabase(false);
 
     }
+
+    /**
+     * Gets all titles of the cats
+     * @returns {Promise}
+     */
 
     getAllTitles() {
 
@@ -29,6 +41,12 @@ class Cat extends Model {
         });
 
     }
+
+    /**
+     * Gets titles of the cats which are in the given DVDNumber
+     * @param {Number} DVDnumber - The DVDNumber wich we are going to look through
+     * @returns {Promise}
+     */
 
     getTitlesByDVDNumber(DVDNumber) {
         DVDNumber = parseInt(DVDNumber);
@@ -47,6 +65,12 @@ class Cat extends Model {
         });
     }
 
+    /**
+     * Gets a cat by id
+     * @param {Number} id - The id of the cat
+     * @returns {Promise}
+     */
+
     getById(id){
         return new Promise((resolve, reject) => {
             this.db.findOne({
@@ -60,6 +84,13 @@ class Cat extends Model {
             });
         });
     }
+
+    /**
+     * Searches cats and returns cats which match the condition
+     * @param {string} string - The string which we are going to search with
+     * @param {Number} DVDNumber - The DVDNumber that cats should be in
+     * @returns {Promise}
+     */
 
     findClosest(string, DVDNumber){
         DVDNumber = parseInt(DVDNumber);
@@ -88,6 +119,14 @@ class Cat extends Model {
 
         });
     };
+
+    /**
+     * Checks whether the condition matches the given cat or not
+     * @param {String} string - The string which we are going to match with
+     * @param {Number} DVDnumber - The DVDNumber that the cat should be in
+     * @param {String} catId - The id of the cat which we are going to check
+     * @returns {Promise}
+     */
 
     matchItSelf(string, DVDNumber, catId){
         DVDNumber = parseInt(DVDNumber);
@@ -122,6 +161,14 @@ class Cat extends Model {
         });
     }
 
+    /**
+     * Adds a cat to the DB
+     * @param {String} title - The title of the cat
+     * @param {Number} DVDNumber - The DVDNumber of the cat
+     * @param {Array} tags - The tags of the cat
+     * @returns {Promise}
+     */
+
     add(title, DVDNumber, tags) {
 
         DVDNumber = parseInt(DVDNumber);
@@ -143,6 +190,15 @@ class Cat extends Model {
         });
 
     }
+
+    /**
+     * Edits an existing cat
+     * @param {String} id - The id of the cat we are going to edit
+     * @param {String} title - The new title of the cat
+     * @param {Number} DVDNumber - The new DVDNumber of the cat
+     * @param {Array} tags - The new tags of the cat
+     * @returns {Promise}
+     */
 
     edit(id, title, DVDNumber, tags) {
         DVDNumber = parseInt(DVDNumber);
@@ -166,6 +222,12 @@ class Cat extends Model {
         });
     }
 
+    /**
+     * Deletes a cat by it's id
+     * @param {String} id - The id of the cat
+     * @returns {Promise}
+     */
+
     deleteById(id) {
         return new Promise((resolve, reject) => {
             this.db.remove({
@@ -179,6 +241,12 @@ class Cat extends Model {
             });
         });
     }
+
+    /**
+     * Deletes cats inside the given DVDNumber
+     * @param {Number} DVDNumber - The DVDNumber we are going to delete cats with
+     * @returns {Promise}
+     */
 
     deleteByDVD(DVDNumber) {
         DVDNumber = parseInt(DVDNumber);

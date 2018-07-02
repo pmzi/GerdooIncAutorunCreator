@@ -2,7 +2,13 @@
 
 const Model = require('./Model');
 
+// The OS model
+
 class OS extends Model{
+
+    /**
+     * @constructor loads the DB
+     */
 
     constructor(){
 
@@ -15,6 +21,11 @@ class OS extends Model{
         this.loadDatabase(true);
 
     }
+
+    /**
+     * Fetches all the OSes
+     * @returns {Promise}
+     */
 
     fetchAll(){
 
@@ -29,6 +40,12 @@ class OS extends Model{
         })
 
     }
+
+    /**
+     * Adds new OS
+     * @param {String} OSName - The name of the OS
+     * @returns {Promise}
+     */
     
     add(OSName){
 
@@ -45,6 +62,12 @@ class OS extends Model{
         });
 
     }
+
+    /**
+     * Deletes an OS by it's id
+     * @param {Number} id - The id of the OS
+     * @returns {Promise}
+     */
 
     delete(id){
         return new Promise((resolve, reject)=>{

@@ -1,6 +1,13 @@
 const Model = require('./Model');
 
+// The PackOS model
+
 class PackOS extends Model {
+
+    /**
+     * @constructor loads the DB
+     * @param {String} dbName - The name of the DB
+     */
 
     constructor(dbName) {
 
@@ -13,6 +20,11 @@ class PackOS extends Model {
         this.loadDatabase(false);
 
     }
+
+    /**
+     * Fetches all of the OSes
+     * @returns {Promise}
+     */
 
     fetchAll() {
         return new Promise((resolve, reject) => {
@@ -29,6 +41,12 @@ class PackOS extends Model {
 
     }
 
+    /**
+     * Gets an OS by it's ID
+     * @param {Number} id - The id of the OS
+     * @returns {Promise}
+     */
+
     getById(id) {
         return new Promise((resolve, reject) => {
             this.db.findOne({
@@ -42,6 +60,11 @@ class PackOS extends Model {
             });
         });
     }
+
+    /**
+     * Gets an OS by it's name
+     * @param {String} name - The name of the OS
+     */
 
     getByName(name) {
         return new Promise((resolve, reject) => {
@@ -57,6 +80,12 @@ class PackOS extends Model {
         });
     }
 
+    /**
+     * Adds an OS
+     * @param {String} OSName - The name of the OS
+     * @returns {Promise}
+     */
+
     add(OSName) {
         return new Promise((resolve, reject) => {
             this.db.insert({
@@ -71,6 +100,12 @@ class PackOS extends Model {
         })
 
     }
+
+    /**
+     * Deletes an OS by it's ID
+     * @param {Number} id - The ID of the OS
+     * @returns {Promise}
+     */
 
     delete(id) {
         return new Promise((resolve, reject) => {

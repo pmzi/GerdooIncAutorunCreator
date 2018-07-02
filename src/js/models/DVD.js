@@ -1,6 +1,12 @@
 const Model = require('./Model');
 
+// The DVD model
+
 class DVD extends Model {
+
+    /**
+     * @constructor loads the DB
+     */
 
     constructor() {
 
@@ -8,13 +14,19 @@ class DVD extends Model {
 
         this.dbName = `${window._name}/DVDs`;
 
-        // let's load the DB
+        // Let's load the DB
 
         this.loadDatabase(false);
+
+        // Let's index some properties
 
         this.index();
 
     }
+
+    /**
+     * Indexes some properties
+     */
 
     index() {
 
@@ -24,6 +36,11 @@ class DVD extends Model {
         });
 
     }
+
+    /**
+     * Gets all teh DVDs from the DB
+     * @returns {Promise}
+     */
 
     fetchAll() {
         return new Promise((resolve, reject) => {
@@ -40,6 +57,12 @@ class DVD extends Model {
         })
 
     }
+
+    /**
+     * Adds a new DVDNumber
+     * @param {Number} DVDNumber - The DVDNumber to add
+     * @returns {Promise}
+     */
 
     add(DVDNumber) {
 
@@ -61,6 +84,11 @@ class DVD extends Model {
 
     }
 
+    /**
+     * Gets only DVDNumbers
+     * @returns {Promise}
+     */
+
     getDVDNumbers() {
         return new Promise((resolve, reject) => {
             this.db.find({}, {
@@ -77,6 +105,12 @@ class DVD extends Model {
             });
         });
     }
+
+    /**
+     * Deletes a DVDNumber by it's number
+     * @param {Number} number - The DVDNumber we are going to delete the DVD with
+     * @returns {Promise}
+     */
 
     deleteByNumber(number) {
         number = parseInt(number);
