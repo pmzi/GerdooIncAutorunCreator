@@ -1,6 +1,13 @@
+// PropellerMessage class shows a message for informing the user about stuffs
+
 class PropellerMessage{
 
+    /**
+     * Shows a message containing message and other properties which is based on the Popeller component
+     */
+
     static showMessage(message, type, positionX = 'right',positionY = 'bottom',effect = 'fadeInUp',actionText,action) {
+
         var $positionX = positionX,
             $positionY = positionY,
             $dataEffect = effect,
@@ -96,6 +103,5 @@ class PropellerMessage{
                 });
             });
     }
-    
 
 }
