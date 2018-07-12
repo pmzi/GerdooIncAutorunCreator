@@ -101,7 +101,7 @@ class PackOutput {
             }).catch((e) => {
 
                 // Some error occured
-                
+
                 PropellerMessage.showMessage("مشکلی رخ داد.", "error");
 
                 Loading.hideLoading();
@@ -166,7 +166,7 @@ class PackOutput {
 
             // Let's read GeneralInfo DB
 
-            fs.readFile(path.join(this.destination, `${window._name}/db`, 'GeneralInfo.db'), "utf8", (err, generalInfo) => {
+            fs.readFile(path.join(this.destination, window._name, 'resources/app/src/db/', 'GeneralInfo.db'), "utf8", (err, generalInfo) => {
 
                 // Let's search and replace the imge addresses of the GeneralInfo DB
 
@@ -174,11 +174,11 @@ class PackOutput {
 
                 // Let's write to GeneralInfo DB file
 
-                fs.writeFile(path.join(this.destination, `${window._name}/db`, 'GeneralInfo.db'), generalInfo, () => {
+                fs.writeFile(path.join(this.destination, window._name, 'resources/app/src/db/', 'GeneralInfo.db'), generalInfo, () => {
 
                     // Let's read Softwares DB
 
-                    fs.readFile(path.join(this.destination, `${window._name}/db`, 'Softwares.db'), "utf8", (err, softwares) => {
+                    fs.readFile(path.join(this.destination, window._name, 'resources/app/src/db/', 'Softwares.db'), "utf8", (err, softwares) => {
 
                         // Let's search and replace the imge addresses of the Sotwares DB
 
@@ -186,7 +186,7 @@ class PackOutput {
 
                         // Let's write to Softwares DB file
 
-                        fs.writeFile(path.join(this.destination, `${window._name}/db`, 'Softwares.db'), softwares, () => {
+                        fs.writeFile(path.join(this.destination, window._name, 'resources/app/src/db/', 'Softwares.db'), softwares, () => {
 
                             // We are done :-)
 
@@ -212,24 +212,15 @@ class PackOutput {
 
         return new Promise((resolve, reject) => {
 
-            // Checks whether Destination/{Pack Name} directory exists or now, if not -> creates it
-
-            if (!fs.existsSync(path.join(this.destination, window._name))) {
-
-                // Let's create the directory
-
-                fs.mkdirSync(path.join(this.destination, window._name));
-
-            }
-
             // Setting the limit of number of files being copied at the same timt to 10
 
             ncp.limit = 10;
 
             // Let's copy the DBs to the destination
-            
-            ncp(path.join(__dirname, '../../../../', `dbs/${window._name}`), path.join(this.destination, window._name, 'db'), function (err) {
+
+            ncp(path.join(__dirname, '../../../../', `dbs/${window._name}`), path.join(this.destination, window._name, 'resources/app/src/db/'), function (err) {
                 if (err) {
+                    console.log(err)
                     reject(err)
                 }
 
@@ -253,8 +244,39 @@ class PackOutput {
     static copyAutorun(type) {
 
         return new Promise((resolve, reject) => {
+            
+            // Checks whether Destination/{Pack Name} directory exists or now, if not -> creates it
 
-            resolve();
+            if (!fs.existsSync(path.join(this.destination, window._name))) {
+
+                // Let's create the directory
+
+                fs.mkdirSync(path.join(this.destination, window._name));
+
+            }
+
+            let destiny = path.join(this.destination, window._name);
+
+            switch(type){
+                case 0:
+                    ncp.limit = 10;
+                
+                    let source = path.join(__dirname, '../../../../../','autoruns/gerdooincautorunuser-win32-ia32');
+                    
+
+                    ncp(source, destiny, (err)=> {
+                        if (err) {
+                        return console.error(err);
+                        }
+
+                        fs.renameSync(destiny + `/resources/electron.txt`, destiny + '/resources/electron.asar');
+                        
+                        resolve();
+                    });
+                break;
+            }
+
+            
 
         })
 
