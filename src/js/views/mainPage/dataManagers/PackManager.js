@@ -172,11 +172,11 @@ class PackManager {
             })
 
             // Check whether user selected any addresses or not
-
-            if(address){
+            
+            if(address && address !== null){
 
                 // Let's export the excel
-
+                
                 that.exportExcell(id, address).then(()=>{
 
                     // Let's hide the loading and inform the user
@@ -187,6 +187,8 @@ class PackManager {
 
                 })
 
+            }else{
+                Loading.hideLoading();
             }
 
         });

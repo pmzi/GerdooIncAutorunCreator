@@ -90,7 +90,6 @@ class GeneralInfo extends Model {
     update(address, aboutUs, essentials, tabTitle, tabContent) {
 
         return new Promise((resolve, reject)=>{
-            debugger;
 
             this.fetch().then((item) => {
                 console.log(item)
@@ -117,13 +116,8 @@ class GeneralInfo extends Model {
                         aboutUs,
                         essentials,
                         tabTitle,
-                        tabContent).then((err)=>{
-                            console.log(err)
-                            if(err === null){
-                                resolve();
-                            }
-    
-                            reject();
+                        tabContent).then(()=>{
+                            resolve();
                         })
                 }
             })
