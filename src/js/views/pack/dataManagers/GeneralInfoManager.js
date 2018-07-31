@@ -2,6 +2,10 @@
 
 const generalInfo = window.dbs.generalInfo;
 
+// Validator
+
+const Validator = require('../../globals/Validator');
+
 // GeneralInfoManager class which handles events and data related to GeneralInfo
 
 class GeneralInfoManager{
@@ -70,6 +74,12 @@ class GeneralInfoManager{
         // Let's showing the loading
 
         Loading.showLoading();
+
+        if(Validator.validate($('.stepWrapper:nth-of-type(1)'))){
+            Loading.hideLoading();
+            PropellerMessage.showMessage('بعضی از فیلدها فاقد اعتبارند.','error');
+            return;
+        }
 
         // Let's gather the data
         
