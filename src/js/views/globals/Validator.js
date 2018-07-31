@@ -90,7 +90,20 @@ class Validator{
         });
         $(parent).find('.has-error').each(function(){
             this.classList.remove('has-error');
-            $(this).find('input').next().next().remove();
+            let input;
+            if(this.querySelector('input')){
+                input = $(this).find("input")
+            }else{
+                input = $(this).find("select")
+            }
+            if($(input).next().next().hasClass('control-label')){
+                $(input).next().next().remove()
+                return;
+            }
+            if($(input).next().hasClass('control-label')){
+                $(input).next().remove()
+                return;
+            }
         });
     }
 
