@@ -16,7 +16,6 @@ class Step {
      */
 
     static initEvents() {
-
         // For hiding loading
 
         window.onload = ()=>{
