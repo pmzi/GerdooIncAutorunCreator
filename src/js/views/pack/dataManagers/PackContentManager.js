@@ -2,6 +2,10 @@
 
 const FileManager = require('../../globals/FileManager');
 
+// Validator
+
+const Validator = require('../../globals/Validator');
+
 // Models refrence
 
 const cat = window.dbs.cat;
@@ -643,6 +647,14 @@ class PackContentManager {
             // Let's sjow the loading
 
             Loading.showLoading();
+
+            // Let's validate it
+
+            if(Validator.validate($("#add-soft-modal"))){
+                Loading.hideLoading();
+                PropellerMessage.showMessage('بعضی از فیلدها فاقد اعتبارند.','error');
+                return;
+            }
 
             // Let's get the inputs of the software's modal
 
