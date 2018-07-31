@@ -93,6 +93,8 @@ class GeneralInfoManager{
             
             // We are done
 
+            Validator.clearSigns($('.stepWrapper:nth-of-type(1)'))
+
             Loading.hideLoading();
 
             PropellerMessage.showMessage('تغییرات با موفقیت ذخیره شدند.','success');
