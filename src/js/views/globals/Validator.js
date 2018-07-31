@@ -64,10 +64,13 @@ class Validator{
     static showMessage(inputElement, message, type){
 
         $(inputElement).parent().addClass('has-error');
-        console.log($(inputElement).next().next())
+        
         if($(inputElement).next().next().hasClass('control-label')){
-            console.log("has")
             $(inputElement).next().next().text(message);
+            return;
+        }
+        if($(inputElement).next().hasClass('control-label')){
+            $(inputElement).next().text(message);
             return;
         }
 
