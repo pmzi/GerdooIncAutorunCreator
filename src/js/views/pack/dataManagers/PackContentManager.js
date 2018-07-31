@@ -1435,6 +1435,14 @@ class PackContentManager {
 
         return new Promise((resolve, reject)=>{
 
+            // Let's validate it
+
+            if(Validator.validate($(".tabWrapper"))){
+                Loading.hideLoading();
+                PropellerMessage.showMessage('بعضی از فیلدها فاقد اعتبارند.','error');
+                return;
+            }
+
             // Let's get the inputs, selects and qull editor boxes
 
             let inputs = $('.tabWrapper input:not([type=checkbox])');
