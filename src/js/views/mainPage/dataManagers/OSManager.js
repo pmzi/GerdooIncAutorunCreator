@@ -2,6 +2,10 @@
 
 const os = window.dbs.os;
 
+// Validator
+
+const Validator = require('../../globals/Validator');
+
 // OSManager class which handles events and data, related to OSes
 
 class OSManager {
@@ -99,6 +103,14 @@ class OSManager {
         // Add OS event
 
         $('#add-os-modal .modalActionButton').off('click').click(() => {
+
+            // Let's validate it
+
+            if(Validator.validate($("#add-os-modal"))){
+                Loading.hideLoading();
+                PropellerMessage.showMessage('بعضی از فیلدها فاقد اعتبارند.','error');
+                return;
+            }
 
             // Let's show the loading
 

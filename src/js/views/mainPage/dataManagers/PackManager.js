@@ -5,6 +5,8 @@ const {
 } = require('electron');
 const {dialog} = require('electron').remote;
 
+const Validator = require('../../globals/Validator');
+
 // NodeJS built-in utilites
 
 const fs = require('fs');
@@ -204,6 +206,14 @@ class PackManager {
         // Add pack event
 
         $('#add-pack-modal .modalActionButton').off('click').click(() => {
+
+            // Let's validate it
+
+            if(Validator.validate($("#add-pack-modal"))){
+                Loading.hideLoading();
+                PropellerMessage.showMessage('بعضی از فیلدها فاقد اعتبارند.','error');
+                return;
+            }
 
             // Let's show the loading
 
