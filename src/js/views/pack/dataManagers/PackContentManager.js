@@ -821,6 +821,12 @@ class PackContentManager {
 
                         this.load();
 
+                        this.loadCats();
+
+                        // Let's trigger DVD related selects so that new cat will be appeared
+
+                        $('.changableDVD').trigger('change');
+
                         // Let's hide the loading and inform the user about this success
 
                         Loading.hideLoading();
@@ -856,6 +862,10 @@ class PackContentManager {
                             // Let's reload the software menu so that deleted dvd and it's childs(Cats & Softwares) will be disappeared
 
                             this.load();
+
+                            // Let's load the disk numbers in selects so that new DVD will be appeared in selects
+
+                            this.loadDiskNumbers();
 
                             // Let's hide the loading and inform the user about the success:)
 
