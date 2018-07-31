@@ -38,8 +38,6 @@ class Step {
 
             // Let's clear validation's signs
 
-            console.log("s")
-
             Validator.clearSigns($(this));
 
         });
