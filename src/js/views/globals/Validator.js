@@ -84,6 +84,16 @@ class Validator{
         $(inputElement).next().next().remove();
     }
 
+    static clearSigns(parent){
+        $(parent).find('.has-success').each(function(){
+            this.classList.remove('has-success');
+        });
+        $(parent).find('.has-error').each(function(){
+            this.classList.remove('has-error');
+            $(this).find('input').next().next().remove();
+        });
+    }
+
 }
 
 module.exports = Validator;
