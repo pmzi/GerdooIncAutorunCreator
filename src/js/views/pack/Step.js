@@ -3,6 +3,10 @@ const {
 } = require('electron').remote;
 const FileManager = require('../globals/FileManager');
 
+// Validator
+
+const Validator = require('../globals/Validator');
+
 // Step class which handles events and functionality of the page
 
 class Step {
@@ -25,9 +29,19 @@ class Step {
             $(this).find('input[type=text]').each((index, elem) => {
                 elem.value = "";
             });
+            $(this).find('input[type=number]').each((index, elem) => {
+                elem.value = "";
+            });
             $(this).find('img').each((index, elem) => {
                 $(elem).attr('src', '');
             });
+
+            // Let's clear validation's signs
+
+            console.log("s")
+
+            Validator.clearSigns($(this));
+
         });
 
         let that = this;
