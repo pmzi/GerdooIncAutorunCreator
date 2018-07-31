@@ -1147,21 +1147,39 @@ class PackContentManager {
 
                                     // <ig> tag is for installation guide
 
-                                    let ig = /<ig>((?:.|\s)*)<\/ig>/i.exec(gerdooText)[1];
+                                    let igArr = /<ig>((?:.|\s)*)<\/ig>/i.exec(gerdooText);
+
+                                    let ig = "";
+
+                                    if(ig.length >= 2){
+                                        ig = igArr[1];
+                                    }
 
                                     // <d> tag is for description
 
-                                    let desc = /<d>((?:.|\s)*)<\/d>/i.exec(gerdooText)[1];
+                                    let descArr = /<d>((?:.|\s)*)<\/d>/i.exec(gerdooText);
+
+                                    let desc = "";
+
+                                    if(descArr.length >= 2){
+                                        desc = descArr[1];
+                                    }
 
                                     // <s> tag is for supported oses(Seorated by \n)
 
-                                    let supportedOSes = /<s>((?:.|\s)*)<\/s>/i.exec(gerdooText)[1].trim().split('\n');
+                                    let supportedOSesArr = /<s>((?:.|\s)*)<\/s>/i.exec(gerdooText);
+
+                                    let supportedOSes = [];
+
+                                    if(supportedOSesArr.legnth >= 2){
+                                        supportedOSes = supportedOSesArr[1].trim().split('\n');
+                                    }
 
                                     // Let's convert os names to IDs
 
                                     let finalOSes = [];
 
-                                    let packOS = new PackOS();
+                                    let packOS = window.packOS;
 
                                     for(let singleOS of supportedOSes){
 
