@@ -1300,6 +1300,10 @@ class PackContentManager {
 
         return new Promise(async(resolve, reject)=>{
 
+            // Let's clear validation signs
+
+            Validator.clearSigns($('.tabWrapper'));
+
             // Let's get the inputs and selects and quill editor boxes
 
             let inputs = $('.tabWrapper input:not([type=checkbox])');
