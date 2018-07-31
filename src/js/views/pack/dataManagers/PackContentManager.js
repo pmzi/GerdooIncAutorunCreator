@@ -508,6 +508,14 @@ class PackContentManager {
 
             Loading.showLoading();
 
+            // Let's validate it
+
+            if(Validator.validate($("#add-disk-modal"))){
+                Loading.hideLoading();
+                PropellerMessage.showMessage('بعضی از فیلدها فاقد اعتبارند.','error');
+                return;
+            }
+
             // Let's get all inputs of the add DVD model
 
             let inputs = $('#add-disk-modal input');
@@ -587,6 +595,14 @@ class PackContentManager {
             // Let's show loading
 
             Loading.showLoading();
+
+            // Let's validate it
+
+            if(Validator.validate($("#add-cat-modal"))){
+                Loading.hideLoading();
+                PropellerMessage.showMessage('بعضی از فیلدها فاقد اعتبارند.','error');
+                return;
+            }
 
             // Let's get the input of the cat model
 
