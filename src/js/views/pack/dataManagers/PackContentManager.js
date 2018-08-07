@@ -865,6 +865,8 @@ class PackContentManager {
 
                             // Let's load the disk numbers in selects so that new DVD will be appeared in selects
 
+                            this.loadCats();
+
                             this.loadDiskNumbers();
 
                             // Let's hide the loading and inform the user about the success:)
@@ -1189,7 +1191,7 @@ class PackContentManager {
 
                                     let ig = "";
 
-                                    if(ig.length >= 2){
+                                    if(igArr !== null){
                                         ig = igArr[1];
                                     }
 
@@ -1199,7 +1201,7 @@ class PackContentManager {
 
                                     let desc = "";
 
-                                    if(descArr.length >= 2){
+                                    if(descArr !== null){
                                         desc = descArr[1];
                                     }
 
@@ -1209,19 +1211,23 @@ class PackContentManager {
 
                                     let supportedOSes = [];
 
-                                    if(supportedOSesArr.legnth >= 2){
-                                        supportedOSes = supportedOSesArr[1].trim().split('\n');
+                                    if(supportedOSesArr !== null){
+                                        supportedOSes = await supportedOSesArr[1].trim().split('\n').filter(item=>item!="");
                                     }
 
                                     // Let's convert os names to IDs
 
                                     let finalOSes = [];
 
-                                    let packOS = window.packOS;
+                                    let packOS = window.dbs.packOS;
 
                                     for(let singleOS of supportedOSes){
 
-                                        finalOSes.push((await packOS.getByName(singleOS.trim()))._id);
+                                        let osName = (await packOS.getByName(singleOS.trim()));
+
+                                        if(osName !== null){
+                                            finalOSes.push(osName._id);
+                                        }
 
                                     }
 
@@ -1245,6 +1251,14 @@ class PackContentManager {
 
 
                 }
+
+                this.loadDiskNumbers();
+
+                this.loadCats();
+
+                // Let's trigger DVD related selects so that new cat will be appeared
+
+                $('.changableDVD').trigger('change');
 
                 // We are good to go
 

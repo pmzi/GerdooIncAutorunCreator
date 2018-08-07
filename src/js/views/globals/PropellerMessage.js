@@ -6,7 +6,7 @@ class PropellerMessage{
      * Shows a message containing message and other properties which is based on the Popeller component
      */
 
-    static showMessage(message, type, positionX = 'right',positionY = 'bottom',effect = 'fadeInUp',actionText,action) {
+    static showMessage(message, type, positionX = 'right',positionY = 'top',effect = 'fadeInUp',actionText,action) {
 
         var $positionX = positionX,
             $positionY = positionY,

@@ -87,7 +87,7 @@ class PackOutput {
 
                 // Let's search the DB for images or video addresses and change them
 
-                this.serializeImages().then(() => {
+                this.serializeImages().then(() => {                    
 
                     // We are done
 
@@ -170,6 +170,8 @@ class PackOutput {
 
                 // Let's search and replace the imge addresses of the GeneralInfo DB
 
+                console.log(generalInfo, err)
+
                 generalInfo = generalInfo.replace(imageRegex, "\"../db/assets/$1\"");
 
                 // Let's write to GeneralInfo DB file
@@ -214,18 +216,21 @@ class PackOutput {
 
             // Setting the limit of number of files being copied at the same timt to 10
 
-            ncp.limit = 10;
+            ncp.limit = 6;
 
             // Let's copy the DBs to the destination
 
-            ncp(path.join(__dirname, '../../../../', `dbs/${window._name}`), path.join(this.destination, window._name, 'resources/app/src/db/'), function (err) {
+            let source = path.join(__dirname, '../../../../', `dbs/${window._name}`);
+
+            let destiny = path.join(this.destination, window._name, 'resources/app/src/db/');
+            
+            ncp(source, destiny, (err)=>{
                 if (err) {
                     console.log(err)
                     reject(err)
                 }
 
                 // We are done :-)
-
                 resolve();
 
             });
@@ -266,12 +271,15 @@ class PackOutput {
 
                     ncp(source, destiny, (err)=> {
                         if (err) {
-                        return console.error(err);
+                            return console.error(err);
                         }
 
-                        fs.renameSync(destiny + `/resources/electron.txt`, destiny + '/resources/electron.asar');
-                        
+                        if(fs.existsSync(destiny + `/resources/electron.txt`)){
+                            fs.renameSync(destiny + `/resources/electron.txt`, destiny + '/resources/electron.asar');
+                        }
+
                         resolve();
+
                     });
                 break;
             }

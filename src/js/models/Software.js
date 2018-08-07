@@ -313,17 +313,15 @@ class Software extends Model {
     deleteByDVD(DVDNumber) {
         DVDNumber = parseInt(DVDNumber);
         return new Promise((resolve, reject) => {
-
             this.db.remove({
                 DVDNumber
-            }, (err) => {
+            }, { multi: true }, (err) => {
                 if (err === null) {
-                    resolve()
+                    resolve();
                 } else {
-                    reject(err)
+                    reject();
                 }
             });
-
         });
     }
 
